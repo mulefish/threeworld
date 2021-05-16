@@ -42,10 +42,11 @@ function EndPoint({ position, onDrag, onEnd }) {
     )
 }
 
-function Line({ defaultStart, defaultEnd }) {
+function Line({ defaultStart, defaultEnd, defaultFinch }) {
     const [start, setStart] = useState(defaultStart)
     const [end, setEnd] = useState(defaultEnd)
-    const vertices = useMemo(() => [start, end].map((v) => new THREE.Vector3(...v)), [start, end])
+    const [finch, setFinch] = useState(defaultFinch)
+    const vertices = useMemo(() => [start, end, finch].map((v) => new THREE.Vector3(...v)), [start, end, finch])
     const update = useCallback((self) => {
         self.verticesNeedUpdate = true
         self.computeBoundingSphere()
@@ -58,6 +59,7 @@ function Line({ defaultStart, defaultEnd }) {
             </line>
             <EndPoint position={start} onDrag={(v) => setStart(v.toArray())} />
             <EndPoint position={end} onDrag={(v) => setEnd(v.toArray())} />
+            <EndPoint position={finch} onDrag={(v) => setFinch(v.toArray())} />
         </Fragment>
     )
 }
@@ -73,13 +75,15 @@ function Controls({ children }) {
         </Fragment>
     )
 }
-
+const r = (range = 200) => {
+    return (Math.random() * (range * 2)) - range
+}
 function App() {
     return (
         <Canvas invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
             <Controls>
-                <Line defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
-                <Line defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} />
+                <Line defaultStart={[r(), r(), r()]} defaultEnd={[r(), r(), r()]} defaultFinch={[r(), r(), r()]} />
+                <Line defaultStart={[r(), r(), r()]} defaultEnd={[100, -100, 0]} defaultFinch={[r(), r(), r()]} />
             </Controls>
         </Canvas>
     )
