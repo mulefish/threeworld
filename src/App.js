@@ -26,13 +26,28 @@ function Plane(props) {
   }));
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]}>
+      {/* <planeBufferGeometry attach="geometry" args={[100, 100]} />
+        <meshLambertMaterial attach="material" color="lightblue" /> */}
       <planeBufferGeometry attach="geometry" args={[100, 100]} />
-      <meshLambertMaterial attach="material" color="lightblue" />
+      <meshBasicMaterial
+        attach="material"
+        color="black"
+        opacity={0.5}
+        transparent
+      />
     </mesh>
   );
 }
 
 export default function App() {
+  let boxes = [
+    <Box position={[5, 1, 0]} />,
+    <Box position={[10, 2, 0]} />,
+    <Box position={[20, 1, 0]} />
+
+  ]
+
+
   return (
     <Canvas>
       <OrbitControls />
@@ -40,7 +55,7 @@ export default function App() {
       <ambientLight intensity={0.5} />
       <spotLight position={[10, 15, 10]} angle={0.3} />
       <Physics>
-        <Box />
+        {boxes}
         <Plane />
       </Physics>
     </Canvas>
