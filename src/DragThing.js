@@ -4,9 +4,12 @@ import * as THREE from 'three'
 import ReactDOM from 'react-dom'
 import React, { Fragment, useRef, useEffect, useState, useCallback, useContext, useMemo } from 'react'
 import { extend, Canvas, useThree } from 'react-three-fiber'
-import { OrbitControls } from '@react-three/drei/OrbitControls'
+//import { OrbitControls } from '@react-three/drei/OrbitControls'
 import { Text } from "troika-three-text";
 import fonts from "./fonts";
+import { OrbitControls, Stars } from "drei";
+
+import { Physics, usePlane, useBox } from "use-cannon";
 
 import './styles.css'
 
@@ -15,6 +18,60 @@ extend({ Text });
 const text =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
+
+
+function Box(props) {
+    const [ref, api] = useBox(() => ({ mass: 1, position: [0, 2, 0] }));
+    return (
+        <mesh
+            onClick={() => {
+                api.velocity.set(0, 2, 0);
+            }}
+            ref={ref}
+            position={[0, 2, 0]}
+        >
+            <boxBufferGeometry attach="geometry" />
+            <meshLambertMaterial attach="material" color="hotpink" />
+        </mesh>
+    );
+}
+
+// function Plane(props) {
+//     const [ref] = usePlane(() => ({
+//         rotation: [-Math.PI / 2, -20, 0],
+//     }));
+//     return (
+//         <mesh rotation={[-Math.PI / 2, -20, 0]}>
+//             {/* <planeBufferGeometry attach="geometry" args={[100, 100]} />
+//               <meshLambertMaterial attach="material" color="lightblue" /> */}
+//             <planeBufferGeometry attach="geometry" args={[100, 100]} />
+//             <meshBasicMaterial
+//                 attach="material"
+//                 color="red"
+//                 opacity={1}
+//                 transparent
+//             />
+//         </mesh>
+//     );
+// }
+function Plane(props) {
+    const [ref] = usePlane(() => ({
+        position: [-100, -0, -100],
+    }));
+    return (
+        <mesh position={[-100, 0, -100]}>
+            {/* <planeBufferGeometry attach="geometry" args={[100, 100]} />
+              <meshLambertMaterial attach="material" color="lightblue" /> */}
+            <planeBufferGeometry attach="geometry" args={[100, 100]} />
+            <meshBasicMaterial
+                attach="material"
+                color="red"
+                opacity={1}
+                transparent
+            />
+        </mesh>
+    );
+}
 
 
 const opts = {
@@ -52,8 +109,8 @@ function EndPoint({ position, onDrag, onEnd }) {
     let bindDrag = useDrag(onDrag, onEnd)
     return (
         <mesh position={position} {...bindDrag} {...bindHover}>
-            <sphereBufferGeometry args={[7.5, 16, 16]} />
-            <meshBasicMaterial color={hovered ? 'hotpink' : 'white'} />
+            <sphereBufferGeometry args={[16, 16, 16]} />
+            <meshBasicMaterial color={hovered ? 'green' : 'white'} />
         </mesh>
     )
 }
@@ -95,11 +152,40 @@ const r = (range = 200) => {
     return (Math.random() * (range * 2)) - range
 }
 export default function DragThing() {
+
+    let boxes = [
+        <Box position={[5, 10, 0]} />,
+        <Box position={[10, 21, 0]} />,
+        <Box position={[20, 11, 0]} />,
+        <Box position={[r(), r(), r()]} />,
+        <Box position={[r(), r(), r()]} />,
+        <Box position={[r(), r(), r()]} />,
+        <Box position={[r(), r(), r()]} />,
+        <Box position={[r(), r(), r()]} />,
+        <Box position={[r(), r(), r()]} />,
+        <Box position={[r(), r(), r()]} />,
+        <Box position={[r(), r(), r()]} />,
+        <Box position={[r(), r(), r()]} />,
+        <Box position={[r(), r(), r()]} />,
+        <Box position={[r(), r(), r()]} />,
+        <Box position={[r(), r(), r()]} />,
+
+    ]
+
     return (
         <Canvas invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
             <Controls>
                 <Line defaultStart={[r(), r(), r()]} defaultEnd={[r(), r(), r()]} defaultFinch={[r(), r(), r()]} />
-                <Line defaultStart={[r(), r(), r()]} defaultEnd={[100, -100, 0]} defaultFinch={[r(), r(), r()]} />
+                <Line defaultStart={[0, 0, 0]} defaultEnd={[0, 0, 200]} defaultFinch={[0, 0, 300]} />
+
+
+                <Stars />
+                <ambientLight intensity={0.5} />
+                <spotLight position={[10, 15, 10]} angle={0.3} />
+                <Physics>
+                    {boxes}
+                    <Plane />
+                </Physics>
 
             </Controls>
             <text
