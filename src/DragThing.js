@@ -21,7 +21,7 @@ const text =
 
 
 function Box(props) {
-    const [ref, api] = useBox(() => ({ mass: 1, position: [0, 2, 0] }));
+    const [ref, api] = useBox(() => ({ mass: 1, position: [0, 20, 0] }));
     return (
         <mesh
             onClick={() => {
@@ -54,24 +54,26 @@ function Box(props) {
 //         </mesh>
 //     );
 // }
+
 function Plane(props) {
     const [ref] = usePlane(() => ({
-        position: [-100, -0, -100],
+        rotation: [-Math.PI / 2, 0, 0],
     }));
     return (
-        <mesh position={[-100, 0, -100]}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]}>
             {/* <planeBufferGeometry attach="geometry" args={[100, 100]} />
-              <meshLambertMaterial attach="material" color="lightblue" /> */}
-            <planeBufferGeometry attach="geometry" args={[100, 100]} />
+          <meshLambertMaterial attach="material" color="lightblue" /> */}
+            <planeBufferGeometry attach="geometry" args={[500, 500]} />
             <meshBasicMaterial
                 attach="material"
-                color="red"
+                color="green"
                 opacity={1}
                 transparent
             />
         </mesh>
     );
 }
+
 
 
 const opts = {
@@ -154,21 +156,18 @@ const r = (range = 200) => {
 export default function DragThing() {
 
     let boxes = [
-        <Box position={[5, 10, 0]} />,
-        <Box position={[10, 21, 0]} />,
-        <Box position={[20, 11, 0]} />,
-        <Box position={[r(), r(), r()]} />,
-        <Box position={[r(), r(), r()]} />,
-        <Box position={[r(), r(), r()]} />,
-        <Box position={[r(), r(), r()]} />,
-        <Box position={[r(), r(), r()]} />,
-        <Box position={[r(), r(), r()]} />,
-        <Box position={[r(), r(), r()]} />,
-        <Box position={[r(), r(), r()]} />,
-        <Box position={[r(), r(), r()]} />,
-        <Box position={[r(), r(), r()]} />,
-        <Box position={[r(), r(), r()]} />,
-        <Box position={[r(), r(), r()]} />,
+        <Box position={[100 + r(), 10 + r(), 0]} />,
+        <Box position={[100 + r(), 10 + r(), 0]} />,
+        <Box position={[100 + r(), 10 + r(), 0]} />,
+        <Box position={[100 + r(), 10 + r(), 0]} />,
+        <Box position={[100 + r(), 10 + r(), 0]} />,
+        <Box position={[100 + r(), 10 + r(), 0]} />,
+        <Box position={[100 + r(), 10 + r(), 0]} />,
+        <Box position={[100 + r(), 10 + r(), 0]} />,
+        <Box position={[100 + r(), 10 + r(), 0]} />,
+        <Box position={[100 + r(), 10 + r(), 0]} />,
+        <Box position={[100 + r(), 10 + r(), 0]} />,
+        <Box position={[100 + r(), 10 + r(), 0]} />,
 
     ]
 
