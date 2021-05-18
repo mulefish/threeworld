@@ -21,14 +21,14 @@ const text =
 
 
 function Box(props) {
-    const [ref, api] = useBox(() => ({ mass: 1, position: [0, 20, 0] }));
+    const [ref, api] = useBox(() => ({ mass: 1, position: props.position }));
     return (
         <mesh
             onClick={() => {
                 api.velocity.set(0, 2, 0);
             }}
             ref={ref}
-            position={[0, 2, 0]}
+            position={[props.position]}
         >
             <boxBufferGeometry attach="geometry" />
             <meshLambertMaterial attach="material" color="hotpink" />
@@ -156,18 +156,17 @@ const r = (range = 200) => {
 export default function DragThing() {
 
     let boxes = [
-        <Box position={[100 + r(), 10 + r(), 0]} />,
-        <Box position={[100 + r(), 10 + r(), 0]} />,
-        <Box position={[100 + r(), 10 + r(), 0]} />,
-        <Box position={[100 + r(), 10 + r(), 0]} />,
-        <Box position={[100 + r(), 10 + r(), 0]} />,
-        <Box position={[100 + r(), 10 + r(), 0]} />,
-        <Box position={[100 + r(), 10 + r(), 0]} />,
-        <Box position={[100 + r(), 10 + r(), 0]} />,
-        <Box position={[100 + r(), 10 + r(), 0]} />,
-        <Box position={[100 + r(), 10 + r(), 0]} />,
-        <Box position={[100 + r(), 10 + r(), 0]} />,
-        <Box position={[100 + r(), 10 + r(), 0]} />,
+        <Box position={[10, 100, r()]} />,
+        <Box position={[11, 80, r()]} />,
+        <Box position={[12, 70, r()]} />,
+        <Box position={[13, 60, r()]} />,
+        <Box position={[14, 50, r()]} />,
+        <Box position={[15, 40, r()]} />,
+        <Box position={[16, 30, r()]} />,
+        <Box position={[17, 20, r()]} />,
+        <Box position={[18, 15, r()]} />,
+        <Box position={[19, 11, r()]} />,
+        <Box position={[20, 10, r()]} />,
 
     ]
 
