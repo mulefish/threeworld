@@ -1,63 +1,45 @@
-import React from "react";
-import { Canvas } from "react-three-fiber";
-import { OrbitControls, Stars } from "drei";
-import { Physics, usePlane, useBox } from "use-cannon";
-import "./styles.css";
+import React, { useMemo } from 'react'
+import { Canvas } from 'react-three-fiber'
 
-function Box(props) {
-  const [ref, api] = useBox(() => ({ mass: 1, position: [0, 2, 0] }));
-  return (
-    <mesh
-      onClick={() => {
-        api.velocity.set(0, 2, 0);
-      }}
-      ref={ref}
-      position={[0, 2, 0]}
-    >
-      <boxBufferGeometry attach="geometry" />
-      <meshLambertMaterial attach="material" color="hotpink" />
-    </mesh>
-  );
-}
 
-function Plane(props) {
-  const [ref] = usePlane(() => ({
-    rotation: [-Math.PI / 2, 0, 0],
-  }));
+function Text({ children, position, scale, color = 'white', fontSize = 45 }) {
+  const canvas = useMemo(() => {
+    var fontface = 'Arial'
+    var fontsize = fontSize
+    var borderThickness = 4
+
+    var canvas = document.createElement('canvas')
+    var context = canvas.getContext('2d')
+    context.textBaseline = 'middle'
+    context.font = `bold ${fontSize}px -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif`
+
+    var metrics = context.measureText(children)
+    console.log(metrics)
+    var textWidth = metrics.width
+
+    context.lineWidth = borderThickness
+
+    context.fillStyle = color
+    context.fillText(children, textWidth - textWidth * 0.8, fontsize)
+    return canvas
+  }, [children])
+
   return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]}>
-      {/* <planeBufferGeometry attach="geometry" args={[100, 100]} />
-        <meshLambertMaterial attach="material" color="lightblue" /> */}
-      <planeBufferGeometry attach="geometry" args={[100, 100]} />
-      <meshBasicMaterial
-        attach="material"
-        color="black"
-        opacity={0.5}
-        transparent
-      />
-    </mesh>
-  );
+    <sprite scale={scale} position={position}>
+      <spriteMaterial sizeAttenuation={false} attach="material" transparent alphaTest={0.5}>
+        <canvasTexture attach="map" image={canvas} />
+      </spriteMaterial>
+    </sprite>
+  )
 }
 
 export default function App() {
-  let boxes = [
-    <Box position={[5, 1, 0]} />,
-    <Box position={[10, 2, 0]} />,
-    <Box position={[20, 1, 0]} />
-
-  ]
-
-
   return (
-    <Canvas>
-      <OrbitControls />
-      <Stars />
-      <ambientLight intensity={0.5} />
-      <spotLight position={[10, 15, 10]} angle={0.3} />
-      <Physics>
-        {boxes}
-        <Plane />
-      </Physics>
+    <Canvas orthographic camera={{ zoom: 20, position: [28, 22, 26] }} colorManagement={false}>
+      <color attach="background" args={['black']} />
+      <Text scale={[4, 4, 4]} opacity={1} position={[0, 0, 0]}>
+        TEXT
+      </Text>
     </Canvas>
-  );
+  )
 }
