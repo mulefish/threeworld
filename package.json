@@ -10,6 +10,7 @@
     "react-scripts": "",
     "react-three-fiber": "",
     "three": "",
+    "three-text2d": "^0.6.0",
     "troika-three-text": "0.33.1",
     "use-cannon": "^0.5.3"
   },
