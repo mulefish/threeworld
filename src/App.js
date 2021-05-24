@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
 import { Canvas } from 'react-three-fiber'
+import SpriteText from 'three-spritetext';
 
 
 function Text({ children, position, scale, color = 'white', fontSize = 45 }) {
