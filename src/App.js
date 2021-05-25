@@ -1,46 +1,112 @@
-import React, { useMemo } from 'react'
-import { Canvas } from 'react-three-fiber'
-import SpriteText from 'three-spritetext';
+import React, { useState } from "react";
+// import ReactDOM from "react-dom";
+import { extend, Canvas } from "react-three-fiber";
 
+import "./styles.css";
 
-function Text({ children, position, scale, color = 'white', fontSize = 45 }) {
-  const canvas = useMemo(() => {
-    var fontface = 'Arial'
-    var fontsize = fontSize
-    var borderThickness = 4
+extend({ Text });
 
-    var canvas = document.createElement('canvas')
-    var context = canvas.getContext('2d')
-    context.textBaseline = 'middle'
-    context.font = `bold ${fontSize}px -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif`
-
-    var metrics = context.measureText(children)
-    console.log(metrics)
-    var textWidth = metrics.width
-
-    context.lineWidth = borderThickness
-
-    context.fillStyle = color
-    context.fillText(children, textWidth - textWidth * 0.8, fontsize)
-    return canvas
-  }, [children])
-
+// Geometry
+function GroundPlane() {
   return (
-    <sprite scale={scale} position={position}>
-      <spriteMaterial sizeAttenuation={false} attach="material" transparent alphaTest={0.5}>
-        <canvasTexture attach="map" image={canvas} />
-      </spriteMaterial>
-    </sprite>
-  )
+    <mesh receiveShadow rotation={[5, 0, 0]} position={[0, -1, 0]}>
+      <planeBufferGeometry attach="geometry" args={[500, 500]} />
+      <meshStandardMaterial attach="material" color="white" />
+    </mesh>
+  );
+}
+function BackDrop() {
+  return (
+    <mesh receiveShadow position={[0, -1, -5]}>
+      <planeBufferGeometry attach="geometry" args={[500, 500]} />
+      <meshStandardMaterial attach="material" color="white" />
+    </mesh>
+  );
+}
+function Sphere() {
+  return (
+    <mesh position={[0, 0, 0]} rotation={[0, 0, 0]}>
+      {/* <sphereGeometry attach="geometry" args={[1, 16, 16]} /> */}
+      <meshStandardMaterial
+        attach="material"
+        color="white"
+        transparent
+        roughness={0.1}
+        metalness={0.1}
+      />
+      {/* {/* <sprite> */}
+      <text>
+        Hello
+        </text>
+      {/* </sprite> */} */}
+    </mesh>
+  );
 }
 
-export default function App() {
+// Lights
+function KeyLight({ brightness, color }) {
   return (
-    <Canvas orthographic camera={{ zoom: 20, position: [28, 22, 26] }} colorManagement={false}>
-      <color attach="background" args={['black']} />
-      <Text scale={[4, 4, 4]} opacity={1} position={[0, 0, 0]}>
-        TEXT
-      </Text>
-    </Canvas>
-  )
+    <rectAreaLight
+      width={3}
+      height={3}
+      color={color}
+      intensity={brightness}
+      position={[-2, 0, 5]}
+      lookAt={[0, 0, 0]}
+      penumbra={1}
+      castShadow
+    />
+  );
 }
+function FillLight({ brightness, color }) {
+  return (
+    <rectAreaLight
+      width={3}
+      height={3}
+      intensity={brightness}
+      color={color}
+      position={[2, 1, 4]}
+      lookAt={[0, 0, 0]}
+      penumbra={2}
+      castShadow
+    />
+  );
+}
+
+function RimLight({ brightness, color }) {
+  return (
+    <rectAreaLight
+      width={2}
+      height={2}
+      intensity={brightness}
+      color={color}
+      position={[1, 4, -2]}
+      rotation={[0, 180, 0]}
+      castShadow
+    />
+  );
+}
+function App() {
+  const [light, setLight] = useState(true);
+  return (
+    <>
+      <Canvas className="canvas">
+        <GroundPlane />
+        <BackDrop />
+        {light && <KeyLight brightness={5.6} color={"#ffc9f9"} />}
+        <FillLight brightness={2.6} color={"#bdefff"} />
+        <RimLight brightness={54} color={"#fff"} />
+        <Sphere />
+      </Canvas>
+      <button
+        onClick={() => {
+          setLight(!light);
+        }}
+      >
+        Toggle
+      </button>
+    </>
+  );
+}
+export default App;
+
