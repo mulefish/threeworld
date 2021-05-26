@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-//import DragThing from './DragThing';
-// import SecondPass from './SecondPass';
+//import App from './App';
+import DragThing from './DragThing';
 
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<DragThing id='DragThing' />, document.getElementById('root'))

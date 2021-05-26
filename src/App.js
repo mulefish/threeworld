@@ -26,7 +26,7 @@ function BackDrop() {
 function Sphere() {
   return (
     <mesh position={[0, 0, 0]} rotation={[0, 0, 0]}>
-      {/* <sphereGeometry attach="geometry" args={[1, 16, 16]} /> */}
+      <sphereGeometry attach="geometry" args={[1, 16, 16]} />
       <meshStandardMaterial
         attach="material"
         color="white"
@@ -88,9 +88,15 @@ function RimLight({ brightness, color }) {
 }
 function App() {
   const [light, setLight] = useState(true);
+
+
   return (
     <>
       <Canvas className="canvas">
+
+
+
+
         <GroundPlane />
         <BackDrop />
         {light && <KeyLight brightness={5.6} color={"#ffc9f9"} />}
