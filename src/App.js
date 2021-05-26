@@ -1,8 +1,8 @@
+import * as THREE from 'three'
 import React, { useState } from "react";
-// import ReactDOM from "react-dom";
 import { extend, Canvas } from "react-three-fiber";
+const loader = new THREE.FontLoader();
 
-import "./styles.css";
 
 extend({ Text });
 
@@ -86,10 +86,30 @@ function RimLight({ brightness, color }) {
     />
   );
 }
+
+function theThing() {
+  alert("the thing")
+  loader.load('fonts/helvetiker_regular.typeface.json', function (font) {
+    const geometry = new THREE.TextGeometry('Hello three.js!', {
+      font: font,
+      size: 80,
+      height: 5,
+      curveSegments: 12,
+      bevelEnabled: true,
+      bevelThickness: 10,
+      bevelSize: 8,
+      bevelOffset: 0,
+      bevelSegments: 5
+    });
+  });
+
+}
+
+
 function App() {
   const [light, setLight] = useState(true);
 
-
+  theThing()
   return (
     <>
       <Canvas className="canvas">
@@ -103,6 +123,10 @@ function App() {
         <FillLight brightness={2.6} color={"#bdefff"} />
         <RimLight brightness={54} color={"#fff"} />
         <Sphere />
+
+        {theThing()}
+
+
       </Canvas>
       <button
         onClick={() => {

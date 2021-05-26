@@ -1,8 +1,9 @@
 
 
 import * as THREE from 'three'
-import React, { Fragment, useRef, useEffect, useState, useCallback, useContext, useMemo } from 'react'
-import { extend, Canvas, useThree } from 'react-three-fiber'
+
+import React, { Fragment, useLayoutEffect, useRef, useEffect, useState, useCallback, useContext, useMemo } from 'react'
+import { extend, useLoader, Canvas, useThree } from 'react-three-fiber'
 import fonts from "./fonts";
 import { OrbitControls, Stars } from "drei";
 import { SpriteText2D, textAlign } from 'three-text2d'
@@ -27,6 +28,29 @@ function Box(props) {
         </mesh>
     );
 }
+/* 
+function theThing() {
+
+    try {
+        const loader = new THREE.FontLoader();
+        loader.load('fonts/helvetiker_regular.typeface.json', function (font) {
+            const geometry = new THREE.TextGeometry('Hello three.js!', {
+                font: font,
+                size: 80,
+                height: 5,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 10,
+                bevelSize: 8,
+                bevelOffset: 0,
+                bevelSegments: 5
+            });
+        });
+    } catch (boom) {
+
+    }
+}
+*/
 
 function useHover() {
     const [hovered, setHover] = useState(false)
@@ -88,11 +112,47 @@ function Line({ defaultStart, defaultEnd, defaultFinch }) {
             </line>
 
 
-
             <EndPoint letter={x} position={start} onDrag={(v) => setStart(v.toArray())} />
             <EndPoint letter={y} position={end} onDrag={(v) => setEnd(v.toArray())} />
             <EndPoint letter={z} position={finch} onDrag={(v) => setFinch(v.toArray())} />
         </Fragment>
+    )
+}
+
+function MyTexty({ children, vAlign = 'center', hAlign = 'center', size = 1.5, color = '#000000', ...props }) {
+    const font = useLoader(THREE.FontLoader, '/bold.blob')
+    const config = useMemo(
+        () => ({ font, size: 40, height: 30, curveSegments: 32, bevelEnabled: true, bevelThickness: 6, bevelSize: 2.5, bevelOffset: 0, bevelSegments: 8 }),
+        [font]
+    )
+    const mesh = useRef()
+    useLayoutEffect(() => {
+        const size = new THREE.Vector3()
+        mesh.current.geometry.computeBoundingBox()
+        mesh.current.geometry.boundingBox.getSize(size)
+        mesh.current.position.x = hAlign === 'center' ? -size.x / 2 : hAlign === 'right' ? 0 : -size.x
+        mesh.current.position.y = vAlign === 'center' ? -size.y / 2 : vAlign === 'top' ? 0 : -size.y
+    }, [children])
+    return (
+        <group {...props} scale={[0.1 * size, 0.1 * size, 0.1]}>
+            <mesh ref={mesh}>
+                <textGeometry args={[children, config]} />
+                <meshNormalMaterial />
+            </mesh>
+        </group>
+    )
+}
+
+
+function Jumbo() {
+    const ref = useRef()
+    //    useFrame(({ clock }) => (ref.current.rotation.x = ref.current.rotation.y = ref.current.rotation.z = Math.sin(clock.getElapsedTime()) * 0.3))
+    return (
+        <group ref={ref}>
+            <Text hAlign="right" position={[-12, 6.5, 0]} children="REACT" />
+            <Text hAlign="right" position={[-12, 0, 0]} children="THREE" />
+            <Text hAlign="right" position={[-12, -6.5, 0]} children="FIBER" />
+        </group>
     )
 }
 
@@ -168,6 +228,7 @@ export default function DragThing() {
                     ) : null}
                 </text> */}
 
+                <Jumbo />
             </Canvas>
             <hr></hr>
         Hello
