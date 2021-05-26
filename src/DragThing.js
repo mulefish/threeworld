@@ -8,16 +8,27 @@ import { extend, Canvas, useThree } from 'react-three-fiber'
 // import { Text } from "troika-three-text";
 import fonts from "./fonts";
 import { OrbitControls, Stars } from "drei";
-
+// import SpriteText from 'three-spritetext';
+import { SpriteText2D, textAlign } from 'three-text2d'
 
 import './styles.css'
 
 // extend({ Text });
 
-const text =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
 
+function Text({ children, position, scale, color = 'red', fontSize = 12 }) {
+
+    console.log("chilrens" + children)
+    console.log("position" + position)
+
+
+    const sprite = useMemo(() => new SpriteText2D(children,
+        { align: textAlign.center, font: `bold ${fontSize}px Arial`, fillStyle: '#00ff00', antialias: false }))
+    return (
+        <primitive scale={[2, 2, 2]} object={sprite} position={position} />
+    )
+}
 
 function Box(props) {
     return (
@@ -68,18 +79,19 @@ function Line({ defaultStart, defaultEnd, defaultFinch }) {
         self.verticesNeedUpdate = true
         self.computeBoundingSphere()
     }, [])
+    const t = new Text({ children: "WHALE", position: start })
+
     return (
         <Fragment>
             <line>
                 <geometry vertices={vertices} onUpdate={update} />
                 <lineBasicMaterial color="white" />
             </line>
-
-
-            <Text opacity={1} position={start}    >
-                whale
-      </Text>
-
+            {t}
+            {/* // maggy 
+            //<Text position={start} >
+                WHALE FISH BOAT OCEAN
+            </Text> */}
 
             <EndPoint position={start} onDrag={(v) => setStart(v.toArray())} />
             <EndPoint position={end} onDrag={(v) => setEnd(v.toArray())} />
@@ -105,38 +117,6 @@ const r = (range = 200) => {
 
 
 
-function Text({ children, position, scale, color = 'green', fontSize = 45 }) {
-    console.log("children " + children)
-    console.log("position " + position)
-    console.log("scale " + scale)
-    console.log("color " + color)
-    console.log("fontSize " + fontSize)
-    console.log("............")
-    const canvas = useMemo(() => {
-        var fontface = 'Arial'
-        var fontsize = fontSize
-        var borderThickness = 4
-
-        var canvas = document.createElement('canvas')
-        var context = canvas.getContext('2d')
-        context.textBaseline = 'middle'
-        var metrics = context.measureText(children)
-        var textWidth = metrics.width
-
-        context.lineWidth = borderThickness
-        context.fillStyle = color
-        context.fillText(children, textWidth - textWidth * 0.8, fontsize)
-        return canvas
-    }, [children])
-
-    return (
-        <sprite scale={scale} position={position}>
-            <spriteMaterial sizeAttenuation={false} attach="material" transparent alphaTest={0.5}>
-                <canvasTexture attach="map" image={canvas} />
-            </spriteMaterial>
-        </sprite>
-    )
-}
 
 export default function DragThing() {
 
@@ -158,6 +138,9 @@ export default function DragThing() {
         height: 500
     };
 
+
+
+
     return (
         <div>
             <Canvas invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }} style={h}>
@@ -166,16 +149,6 @@ export default function DragThing() {
                     <Line defaultStart={[0, 0, 0]} defaultEnd={[0, 0, 200]} defaultFinch={[0, 0, 300]} />
 
 
-                    <Text scale={[20, 20, 20]} opacity={1} position={[0, 0, 0]}>
-                        This is a ball
-      </Text>
-
-
-                    {/* <sprite scale={scale} position={position}>
-                        <spriteMaterial sizeAttenuation={false} attach="material" transparent alphaTest={0.5}>
-                            <canvasTexture attach="map" image={canvas} />
-                        </spriteMaterial>
-                    </sprite> */}
 
 
                     {/* <Stars /> */}
