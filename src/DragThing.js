@@ -1,28 +1,15 @@
 
 
 import * as THREE from 'three'
-// import ReactDOM from 'react-dom'
 import React, { Fragment, useRef, useEffect, useState, useCallback, useContext, useMemo } from 'react'
 import { extend, Canvas, useThree } from 'react-three-fiber'
-//import { OrbitControls } from '@react-three/drei/OrbitControls'
-// import { Text } from "troika-three-text";
 import fonts from "./fonts";
 import { OrbitControls, Stars } from "drei";
-// import SpriteText from 'three-spritetext';
 import { SpriteText2D, textAlign } from 'three-text2d'
 
 import './styles.css'
 
-// extend({ Text });
-
-
-
 function Text({ children, position, scale, color = 'red', fontSize = 12 }) {
-
-    console.log("chilrens" + children)
-    console.log("position" + position)
-
-
     const sprite = useMemo(() => new SpriteText2D(children,
         { align: textAlign.center, font: `bold ${fontSize}px Arial`, fillStyle: '#00ff00', antialias: false }))
     return (
@@ -58,14 +45,20 @@ function useDrag(onDrag, onEnd) {
     useEffect(() => void (activeRef.current = active))
     return { onPointerDown: down, onPointerUp: up, onPointerMove: move }
 }
-
-function EndPoint({ position, onDrag, onEnd }) {
+const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+let count = 0
+function EndPoint({ letter, position, onDrag, onEnd }) {
     let [bindHover, hovered] = useHover()
     let bindDrag = useDrag(onDrag, onEnd)
+
+    const txt = new Text({ children: letter, position })
+    count++
+
     return (
         <mesh position={position} {...bindDrag} {...bindHover}>
             <sphereBufferGeometry args={[2, 16, 16]} />
             <meshBasicMaterial color={hovered ? 'red' : 'blue'} />
+            {txt}
         </mesh>
     )
 }
@@ -79,23 +72,26 @@ function Line({ defaultStart, defaultEnd, defaultFinch }) {
         self.verticesNeedUpdate = true
         self.computeBoundingSphere()
     }, [])
-    const t = new Text({ children: "WHALE", position: start })
 
+
+    const x = letters[count]
+    count++
+    const y = letters[count]
+    count++
+    const z = letters[count]
+    count++
     return (
         <Fragment>
             <line>
                 <geometry vertices={vertices} onUpdate={update} />
                 <lineBasicMaterial color="white" />
             </line>
-            {t}
-            {/* // maggy 
-            //<Text position={start} >
-                WHALE FISH BOAT OCEAN
-            </Text> */}
 
-            <EndPoint position={start} onDrag={(v) => setStart(v.toArray())} />
-            <EndPoint position={end} onDrag={(v) => setEnd(v.toArray())} />
-            <EndPoint position={finch} onDrag={(v) => setFinch(v.toArray())} />
+
+
+            <EndPoint letter={x} position={start} onDrag={(v) => setStart(v.toArray())} />
+            <EndPoint letter={y} position={end} onDrag={(v) => setEnd(v.toArray())} />
+            <EndPoint letter={z} position={finch} onDrag={(v) => setFinch(v.toArray())} />
         </Fragment>
     )
 }
