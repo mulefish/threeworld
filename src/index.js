@@ -17,9 +17,10 @@ function Title({ layers = undefined, ...props }) {
     useEffect(() => {
         group.current.lookAt(0, 0, 0)
     }, [])
-
+    console.log("PROPS: " + JSON.stringify(props, null, 2))
     return (
         <group {...props} ref={group}>
+
             <Text depthTest={false} material-toneMapped={false} {...textProps} layers={layers}>
                 GOAT FINCH SWIFT
       </Text>
