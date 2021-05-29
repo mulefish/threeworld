@@ -10,8 +10,14 @@ import * as THREE from 'three'
 import ReactDOM from 'react-dom'
 import React, { Fragment, useRef, useEffect, useState, useCallback, useContext, useMemo } from 'react'
 import { Canvas, useThree } from 'react-three-fiber'
-import { OrbitControls } from '@react-three/drei/OrbitControls'
+//import { OrbitControls } from '@react-three/drei/OrbitControls'
+import { Text, OrbitControls } from '@react-three/drei'
 import './styles.css'
+
+const textProps = {
+    fontSize: 3.9,
+    font: 'http://fonts.gstatic.com/s/modak/v5/EJRYQgs1XtIEskMA-hI.woff'
+}
 
 function useHover() {
     const [hovered, setHover] = useState(false)
@@ -38,6 +44,14 @@ function EndPoint({ position, onDrag, onEnd }) {
         <mesh position={position} {...bindDrag} {...bindHover}>
             <sphereBufferGeometry args={[7.5, 16, 16]} />
             <meshBasicMaterial color={hovered ? 'hotpink' : 'white'} />
+
+            {/* <group {...props} ref={group}> */}
+
+            <Text depthTest={false} material-toneMapped={false} {...textProps}>
+                GOAT FINCH SWIFT
+</Text>
+            {/* </group> */}
+
         </mesh>
     )
 }
