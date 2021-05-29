@@ -10,6 +10,7 @@ const textProps = {
     fontSize: 3.9,
     font: 'http://fonts.gstatic.com/s/modak/v5/EJRYQgs1XtIEskMA-hI.woff'
 }
+//https://codesandbox.io/s/lbzcs?file=/src/styles.css:0-146
 
 function Title({ layers = undefined, ...props }) {
     const group = useRef()
