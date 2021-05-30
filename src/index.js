@@ -44,8 +44,8 @@ function EndPoint({ position, onDrag, onEnd }) {
         <mesh position={position} {...bindDrag} {...bindHover} >
             {/* <sphereBufferGeometry args={[7.5, 16, 16]} /> */}
             <sphereGeometry attach="geometry" args={[6, 16, 16]} />
-            {/* <meshBasicMaterial color={hovered ? 'hotpink' : 'white'} /> */}
-            <meshStandardMaterial attach="material" color="white" transparent roughness={0.1} metalness={0.1} />
+            <meshBasicMaterial color={hovered ? 'hotpink' : 'white'} />
+            {/* <meshStandardMaterial attach="material" color="white" transparent roughness={0.1} metalness={0.1} /> */}
             <Text depthTest={false} material-toneMapped={false} {...textProps}>
                 WHALEkfgsdkgksdfkskfkf kask
             </Text>
@@ -117,12 +117,17 @@ function Controls({ children }) {
 function App() {
     return (
         <Canvas invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
+            <color attach="background" args={['pink']} />
+            <ambientLight intensity={1} color={0xFFFFFF} />
             <Controls>
+
+                {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+                <pointLight position={[-10, -10, -10]} /> */}
                 {/* <GroundPlane />
                 <BackDrop /> */}
                 {/* <KeyLight brightness={5.6} color="#ffbdf4" />      <FillLight brightness={2.6} color="#bdefff" />      <RimLight brightness={54} color="#fff" /> */}
                 {/* <Light brightness={10} color={"white"} /> */}
-                <GroundPlane />
+                {/* <GroundPlane /> */}
                 <Line defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
                 <Line defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} />
 
