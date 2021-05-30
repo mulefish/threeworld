@@ -16,7 +16,10 @@ import './styles.css'
 
 const textProps = {
     fontSize: 3.9,
-    font: 'http://fonts.gstatic.com/s/modak/v5/EJRYQgs1XtIEskMA-hI.woff'
+    // font: 'http://fonts.gstatic.com/s/modak/v5/EJRYQgs1XtIEskMA-hI.woff'
+    font: '/OnlineWebFonts_COM_5c4a6802514b9c5d5d11de486181ad93/Calibri/Calibri.woff2',
+    color: 'black'
+
 }
 
 function useHover() {
@@ -44,7 +47,7 @@ function EndPoint({ position, onDrag, onEnd }) {
         <mesh position={position} {...bindDrag} {...bindHover} >
             {/* <sphereBufferGeometry args={[7.5, 16, 16]} /> */}
             <sphereGeometry attach="geometry" args={[6, 16, 16]} />
-            <meshBasicMaterial color={hovered ? 'hotpink' : 'white'} />
+            <meshBasicMaterial color={hovered ? 'red' : 'blue'} transparent opacity={0.5} roughness={0.1} metalness={0.1} />
             {/* <meshStandardMaterial attach="material" color="white" transparent roughness={0.1} metalness={0.1} /> */}
             <Text depthTest={false} material-toneMapped={false} {...textProps}>
                 WHALEkfgsdkgksdfkskfkf kask
