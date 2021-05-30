@@ -97,7 +97,7 @@ function Line({ defaultStart, defaultEnd }) {
         <Fragment>
             <line>
                 <geometry vertices={vertices} onUpdate={update} />
-                <lineBasicMaterial color="white" />
+                <lineBasicMaterial color="black" transparent opacity={0.5} />
             </line>
             <EndPoint position={start} onDrag={(v) => setStart(v.toArray())} />
             <EndPoint position={end} onDrag={(v) => setEnd(v.toArray())} />
