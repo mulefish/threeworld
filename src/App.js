@@ -4,7 +4,7 @@ import React, { Fragment, useRef, useEffect, useState, useCallback, useContext, 
 // import ReactDOM, { render } from 'react-dom'
 import * as THREE from 'three'
 import { Canvas, useThree } from 'react-three-fiber'
-import { Text, OrbitControls } from '@react-three/drei'
+import { Text, OrbitControls, Html } from '@react-three/drei'
 
 import { numberToExcelLikeLetters, getData } from './js/utils.js';
 const h = {
@@ -47,9 +47,11 @@ function EndPoint({ position, onDrag, onEnd }) {
       <sphereGeometry attach="geometry" args={[6, 16, 16]} />
       <meshBasicMaterial color={hovered ? 'red' : 'blue'} transparent opacity={0.5} roughness={0.1} metalness={0.1} />
       {/* <meshStandardMaterial attach="material" color="white" transparent roughness={0.1} metalness={0.1} /> */}
-      <Text depthTest={false} material-toneMapped={false} {...textProps}>
-        WHALEkfgsdkgksdfkskfkf kask
+      <sprite>
+        <Text depthTest={false} material-toneMapped={false} {...textProps}>
+          WHALEkfgsdkgksdfkskfkf kask
             </Text>
+      </sprite>
     </mesh>
   )
 }
@@ -107,9 +109,16 @@ function MyIcon({ position, onDrag, onEnd, letter }) {
       <sphereGeometry attach="geometry" args={[6, 16, 16]} />
       <meshBasicMaterial color={hovered ? 'red' : 'yellow'} transparent opacity={0.5} roughness={0.1} metalness={0.1} />
       {/* <meshStandardMaterial attach="material" color="white" transparent roughness={0.1} metalness={0.1} /> */}
-      <Text depthTest={false} material-toneMapped={false} {...textProps}>
-        {letter}
-      </Text>
+      <sprite>
+        {/* <Text depthTest={false} material-toneMapped={false} {...textProps}>
+          {letter}
+        </Text> */}
+        <Html distanceFactor={10}>
+          <div class="content">
+            {letter}
+          </div>
+        </Html>
+      </sprite>
     </mesh>
   )
 }
