@@ -5,8 +5,8 @@ import ReactDOM, { render } from 'react-dom'
 import * as THREE from 'three'
 import { Canvas, useThree } from 'react-three-fiber'
 import { Text, OrbitControls } from '@react-three/drei'
-import './styles.css'
 
+import { numberToExcelLikeLetters } from "./js/utils.js";
 
 const h = {
   height: (window.innerHeight * 0.6) + "px"
@@ -111,6 +111,8 @@ function Controls({ children }) {
 }
 
 function App() {
+  const [n, setN] = useState(1000)
+  const [letter, setLetter] = useState(numberToExcelLikeLetters(n))
   return (
     <div>
       <Canvas style={h} invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
@@ -124,7 +126,7 @@ function App() {
       </Canvas>
       <hr>
       </hr>
-    Hello
+    Hello { letter}
     </div>
   )
 }
