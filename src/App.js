@@ -7,6 +7,11 @@ import { Canvas, useThree } from 'react-three-fiber'
 import { Text, OrbitControls } from '@react-three/drei'
 import './styles.css'
 
+
+const h = {
+  height: (window.innerHeight * 0.6) + "px"
+}
+
 const textProps = {
   fontSize: 3.9,
   // font: 'http://fonts.gstatic.com/s/modak/v5/EJRYQgs1XtIEskMA-hI.woff'
@@ -69,12 +74,7 @@ function KeyLight({ brightness, color }) {
 }
 
 function GroundPlane() { return (<mesh receiveShadow rotation={[5, 0, 0]} position={[0, -1, 0]}>      <planeBufferGeometry attach="geometry" args={[500, 500]} />      <meshStandardMaterial attach="material" color="white" />    </mesh>); }
-
 function BackDrop() { return (<mesh receiveShadow position={[0, -1, -5]}>      <planeBufferGeometry attach="geometry" args={[500, 500]} />      <meshStandardMaterial attach="material" color="white" />    </mesh>); }
-
-
-
-
 function Sphere() { return (<mesh visible userData={{ test: "hello" }} position={[0, 0, 0]} castShadow>      <sphereGeometry attach="geometry" args={[1, 16, 16]} />      <meshStandardMaterial attach="material" color="white" transparent roughness={0.1} metalness={0.1} />    </mesh>); }
 
 
@@ -112,23 +112,20 @@ function Controls({ children }) {
 
 function App() {
   return (
-    <Canvas invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
-      <color attach="background" args={['pink']} />
-      <ambientLight intensity={1} color={0xFFFFFF} />
-      <Controls>
+    <div>
+      <Canvas style={h} invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
+        <color attach="background" args={['0xe0e0e0']} />
+        {/* <ambientLight intensity={1} color={0xe0e0e0} /> */}
+        <Controls>
+          <Line defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
+          <Line defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} />
 
-        {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-                <pointLight position={[-10, -10, -10]} /> */}
-        {/* <GroundPlane />
-                <BackDrop /> */}
-        {/* <KeyLight brightness={5.6} color="#ffbdf4" />      <FillLight brightness={2.6} color="#bdefff" />      <RimLight brightness={54} color="#fff" /> */}
-        {/* <Light brightness={10} color={"white"} /> */}
-        {/* <GroundPlane /> */}
-        <Line defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
-        <Line defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} />
-
-      </Controls>
-    </Canvas>
+        </Controls>
+      </Canvas>
+      <hr>
+      </hr>
+    Hello
+    </div>
   )
 }
 
