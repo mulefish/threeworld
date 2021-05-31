@@ -6,8 +6,7 @@ import * as THREE from 'three'
 import { Canvas, useThree } from 'react-three-fiber'
 import { Text, OrbitControls } from '@react-three/drei'
 
-import { numberToExcelLikeLetters } from "./js/utils.js";
-
+import { numberToExcelLikeLetters, getData } from './js/utils.js';
 const h = {
   height: (window.innerHeight * 0.6) + "px"
 }
@@ -15,7 +14,7 @@ const h = {
 const textProps = {
   fontSize: 3.9,
   // font: 'http://fonts.gstatic.com/s/modak/v5/EJRYQgs1XtIEskMA-hI.woff'
-  font: '/OnlineWebFonts_COM_5c4a6802514b9c5d5d11de486181ad93/Calibri/Calibri.woff2',
+  font: 'OnlineWebFonts_COM_5c4a6802514b9c5d5d11de486181ad93/Calibri/Calibri.woff2',
   color: 'black'
 
 }
@@ -141,19 +140,22 @@ function Controls({ children }) {
 }
 
 function App() {
-  // const [n, setN] = useState(1000)
-  // const [letter, setLetter] = useState(numberToExcelLikeLetters(n))
-  const a = "B"
-  const x = <Letter defaultStart={[-100, 0, 0]} letter={a} ></Letter>
 
-  const a2 = "Z"
-  const x2 = <Letter defaultStart={[-100, 100, -100]} letter={a2} ></Letter>
-
-  let ary = []
-  ary.push(x)
-  ary.push(x2)
-
+  const [ary, setAry] = useState([])
+  useEffect(() => {
+    let a = []
+    const ary2 = getData()
+    ary2.forEach((item, i) => {
+      const loc = [item.x, item.y, item.z]
+      const l = item.l
+      a.push(<Letter key={i} defaultStart={loc} letter={l} ></Letter>)
+    })
+    setAry(a)
+  }, ary)
+  // let ary = []
+  console.log("EAR " + ary.length)
   return (
+
     <div>
       <Canvas style={h} invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
         <color attach="background" args={['0xe0e0e0']} />
