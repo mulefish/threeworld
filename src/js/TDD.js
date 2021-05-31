@@ -1,7 +1,7 @@
 // import { numberToExcelLikeLetters } from "./utils.js";
 
 
-const { numberToExcelLikeLetters, getNewXY_fromAngleAndDistance } = require('./utils.js');
+const { numberToExcelLikeLetters, getNewXY_fromAngleAndDistance, getRawData, getData } = require('./utils.js');
 
 const test_getNewXY_fromAngleAndDistance = () => {
     const givens = [
@@ -48,10 +48,40 @@ const test_letter = () => {
     }
 }
 
+const test_getRawData = () => {
+    const ary = getRawData()
+    if (ary && ary.length > 0) {
+        console.log("PASS test_getRawData")
+    } else {
+        console.log("FAIL test_getRawData")
+    }
+}
 
+const test_getData = () => {
+    const ary = getRawData()
+    const data = getData()
+    let isOk = true
+    if (ary.length !== data.length && data.length > 0) {
+        console.log("FAIL test_getData lengths wrong ")
+        isOk = false
+    }
+    const obj = data[0]
+    if (obj.x && obj.y && obj.z && obj.l && obj.f && obj.ary && obj.ary.length > 0) {
+        // 
+    } else {
+        console.log("FAIL test_getData ill formed obj ")
+    }
+
+    if (isOk === true) {
+        console.log("PASS test_getData")
+    }
+
+}
 
 const init = () => {
     test_letter()
     test_getNewXY_fromAngleAndDistance()
+    test_getRawData()
+    test_getData()
 }
 init()
