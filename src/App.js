@@ -8,7 +8,7 @@ import { Text, OrbitControls, Html } from '@react-three/drei'
 import "./styles.css"
 import { numberToExcelLikeLetters, getData } from './js/utils.js';
 const h = {
-  height: (window.innerHeight * 0.8) + "px",
+  height: (window.innerHeight * 1.0) + "px",
   width: (window.innerWidth * 0.6) + "px",
   border: '3px solid #e0e0e0'
 }
@@ -154,34 +154,40 @@ function Controls({ children }) {
 function App() {
 
   const [ary, setAry] = useState([])
+  const [rows, setRows] = useState([])
   useEffect(() => {
     let a = []
+    let r = []
     const ary2 = getData()
     ary2.forEach((item, i) => {
       const loc = [item.x, item.y, item.z]
-      // console.log(item)
       const l = item.l
       a.push(<Letter key={i} defaultStart={loc} letter={l} ></Letter>)
+      r.push(<tr><td>{l}</td><td>{item.f}</td></tr>)
     })
     setAry(a)
+    setRows(r)
   }, ary)
-  // let ary = []
-  console.log("EAR " + ary.length)
   return (
 
-    <div>
+    <div class="flexbox-container">
       <Canvas style={h} invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
         <color attach="background" args={['0xe0e0e0']} />
         {/* <ambientLight intensity={1} color={0xe0e0e0} /> */}
         <Controls>
-          {/* <Line defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
-          <Line defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} /> */}
+          <Line defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
+          <Line defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} />
           {ary}
         </Controls>
       </Canvas>
-      <hr>
-      </hr>
-    Hello { numberToExcelLikeLetters(322)}
+      <div class='right-box'>
+        <table border='1'>
+          <tbody>
+            {rows}
+          </tbody>
+        </table>
+
+      </div>
     </div>
   )
 }

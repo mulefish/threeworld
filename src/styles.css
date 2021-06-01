@@ -12,6 +12,14 @@
     background-color: #66ff33;
 }
 
+.flexbox-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.right-box {
+  margin-left:10px; 
+}
 
   /* .content {
     padding-top: 10px;
