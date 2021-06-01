@@ -61,33 +61,28 @@ const getRawData = () => {
     ]
     return x;
 }
-// class Rectangle {
-//     constructor(height, width) {
-//         this.height = height;
-//         this.width = width;
-//     }
-// }
-
-// class Item {
-//     constructor(file, i, _width, _height, _depth) {
-//         this.f = file
-//         this.l = numberToExcelLikeLetters(i)
-//         this.width = _width;
-//         this.height = _height;
-//         this.depth = _depth;
-//     }
-// }
 
 function getData() {
+    // 
     const ary = getRawData()
+    if (ary.length > 360) {
+        alert("Lol! So many. Need to figure something else out. ")
+    }
+    const spacer = 360 / ary.length
+
     let data = []
+    let angle = 0
     ary.forEach((item, i) => {
+        const xy = getNewXY_fromAngleAndDistance({ x: 0, y: 0, angle: angle, distance: 200 })
+        angle += spacer
+
         const obj = {
-            x: (Math.random() * 1000) - 500,
-            y: (Math.random() * 1000) - 500,
-            z: (Math.random() * 1000) - 500,
+            x: xy.x,  // (Math.random() * 1000) - 500,
+            y: xy.y, // (Math.random() * 1000) - 500,
+            z: 0, // (Math.random() * 1000) - 500,
             l: numberToExcelLikeLetters(i),
             f: item,
+            // xy: xy,
             ary: item.split("/")
         }
         data.push(obj)

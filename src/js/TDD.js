@@ -5,27 +5,33 @@ const { numberToExcelLikeLetters, getNewXY_fromAngleAndDistance, getRawData, get
 
 const test_getNewXY_fromAngleAndDistance = () => {
     const givens = [
-        { x: 0, y: 0, angle: 0, distance: 0, newX: 0, newY: 0 },
-        { x: 0, y: 0, angle: 0, distance: 100, newX: 100, newY: 0 },
-        { x: 0, y: 0, angle: 90, distance: 100, newX: 0, newY: 100 },
-        { x: 0, y: 0, angle: 180, distance: 100, newX: -100, newY: 0 },
-        { x: 0, y: 0, angle: 270, distance: 100, newX: -0, newY: -100 },
-        { x: 0, y: 0, angle: 360, distance: 100, newX: 100, newY: -0 },
+        { x: 0, y: 0, angle: 0, distance: 0 },
+        { x: 0, y: 0, angle: 0, distance: 100 },
+        { x: 0, y: 0, angle: 90, distance: 100 },
+        { x: 0, y: 0, angle: 180, distance: 100 },
+        { x: 0, y: 0, angle: 270, distance: 100 },
+        { x: 0, y: 0, angle: 360, distance: 100 },
     ]
-    let allGood = true
+    const expected = [
+        { x: 0, y: 0 },
+        { x: 100, y: 0 },
+        { x: 0, y: 100 },
+        { x: -100, y: 0 },
+        { x: -0, y: -100 },
+        { x: 100, y: -0 }
+    ]
+    const actual = []
     givens.forEach((obj, i) => {
-        const r = getNewXY_fromAngleAndDistance(obj)
-        if (r.x != obj.newX) {
-            allGood = false
-        }
-        if (r.y != obj.newY) {
-            allGood = false
-        }
+        const xy = getNewXY_fromAngleAndDistance(obj)
+        actual.push(xy)
     })
-    if (allGood === true) {
+    if (JSON.stringify(actual) === JSON.stringify(expected)) {
         console.log("PASS test_getNewXY_fromAngleAndDistance")
     } else {
         console.log("FAIL test_getNewXY_fromAngleAndDistance")
+        console.log(actual)
+        console.log(expected)
+
     }
 }
 
@@ -58,24 +64,20 @@ const test_getRawData = () => {
 }
 
 const test_getData = () => {
-    const ary = getRawData()
     const data = getData()
+    // console.log(data)
     let isOk = true
-    if (ary.length !== data.length && data.length > 0) {
-        console.log("FAIL test_getData lengths wrong ")
-        isOk = false
-    }
     const obj = data[0]
-    if (obj.x && obj.y && obj.z && obj.l && obj.f && obj.ary && obj.ary.length > 0) {
-        // 
-    } else {
-        console.log("FAIL test_getData ill formed obj ")
+    const x = obj.x
+    const y = obj.y
+    const z = obj.y
+    if (isOk) {
+        if (!isNaN(x) && !isNaN(y) && !isNaN(z)) {
+            console.log("PASS test_getData")
+        } else {
+            console.log("FAIL test_getData")
+        }
     }
-
-    if (isOk === true) {
-        console.log("PASS test_getData")
-    }
-
 }
 
 const init = () => {

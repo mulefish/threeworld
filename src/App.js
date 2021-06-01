@@ -5,10 +5,12 @@ import React, { Fragment, useRef, useEffect, useState, useCallback, useContext, 
 import * as THREE from 'three'
 import { Canvas, useThree } from 'react-three-fiber'
 import { Text, OrbitControls, Html } from '@react-three/drei'
-
+import "./styles.css"
 import { numberToExcelLikeLetters, getData } from './js/utils.js';
 const h = {
-  height: (window.innerHeight * 0.6) + "px"
+  height: (window.innerHeight * 0.8) + "px",
+  width: (window.innerWidth * 0.6) + "px",
+  border: '3px solid #e0e0e0'
 }
 
 const textProps = {
@@ -103,9 +105,9 @@ function Line({ defaultStart, defaultEnd }) {
 function MyIcon({ position, onDrag, onEnd, letter }) {
   let [bindHover, hovered] = useHover()
   let bindDrag = useDrag(onDrag, onEnd)
+  let pos = position[0].toFixed(0) + " " + position[1].toFixed(0) + " " + position[2].toFixed(0)
   return (
     <mesh position={position} {...bindDrag} {...bindHover} >
-      {/* <sphereBufferGeometry args={[7.5, 16, 16]} /> */}
       <sphereGeometry attach="geometry" args={[6, 16, 16]} />
       <meshBasicMaterial color={hovered ? 'red' : 'yellow'} transparent opacity={0.5} roughness={0.1} metalness={0.1} />
       {/* <meshStandardMaterial attach="material" color="white" transparent roughness={0.1} metalness={0.1} /> */}
@@ -115,6 +117,7 @@ function MyIcon({ position, onDrag, onEnd, letter }) {
         </Text> */}
         <Html distanceFactor={10}>
           <div class="content">
+            {/* {pos} */}
             {letter}
           </div>
         </Html>
@@ -156,6 +159,7 @@ function App() {
     const ary2 = getData()
     ary2.forEach((item, i) => {
       const loc = [item.x, item.y, item.z]
+      // console.log(item)
       const l = item.l
       a.push(<Letter key={i} defaultStart={loc} letter={l} ></Letter>)
     })
@@ -170,8 +174,8 @@ function App() {
         <color attach="background" args={['0xe0e0e0']} />
         {/* <ambientLight intensity={1} color={0xe0e0e0} /> */}
         <Controls>
-          <Line defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
-          <Line defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} />
+          {/* <Line defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
+          <Line defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} /> */}
           {ary}
         </Controls>
       </Canvas>

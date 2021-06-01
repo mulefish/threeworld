@@ -1,0 +1,24 @@
+ /* .content {
+    background: #202035;
+    color: white;
+    border-radius: 6px;
+    padding: 10px 15px;
+  }  */
+
+
+  .content {
+    /*This creates a 1px solid red border around your element(div) */
+    border:3px solid #e0e0e0;
+    background-color: #66ff33;
+}
+
+
+  /* .content {
+    padding-top: 10px;
+    transform: translate3d(50%, 0, 0);
+    text-align: left;
+    background: #202035;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+  } */
