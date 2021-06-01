@@ -21,6 +21,8 @@
   margin-left:10px; 
 }
 
+.rowhighlight > td { background: #66ff33;}
+
   /* .content {
     padding-top: 10px;
     transform: translate3d(50%, 0, 0);

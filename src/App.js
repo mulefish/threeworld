@@ -116,7 +116,7 @@ function MyIcon({ position, onDrag, onEnd, letter }) {
           {letter}
         </Text> */}
         <Html distanceFactor={10}>
-          <div class="content">
+          <div class="content" onMouseEnter={() => giveFocusTo({ letter })}>
             {/* {pos} */}
             {letter}
           </div>
@@ -124,6 +124,18 @@ function MyIcon({ position, onDrag, onEnd, letter }) {
       </sprite>
     </mesh>
   )
+}
+let active = undefined
+function giveFocusTo({ letter }) {
+
+  var elems = document.querySelectorAll(".rowhighlight");
+
+  [].forEach.call(elems, function (el) {
+    el.classList.remove("rowhighlight");
+  })
+
+
+  document.getElementById(letter).classList.add("rowhighlight");
 }
 
 function Letter({ defaultStart, letter }) {
@@ -134,10 +146,6 @@ function Letter({ defaultStart, letter }) {
     </Fragment>
   )
 }
-
-
-
-
 
 const camContext = React.createContext()
 function Controls({ children }) {
@@ -163,7 +171,8 @@ function App() {
       const loc = [item.x, item.y, item.z]
       const l = item.l
       a.push(<Letter key={i} defaultStart={loc} letter={l} ></Letter>)
-      r.push(<tr><td>{l}</td><td>{item.f}</td></tr>)
+      //  r.push(<tr class='rowhighlight' id={l}><td>{l}</td><td>{item.f}</td></tr>)
+      r.push(<tr id={l}><td>{l}</td><td>{item.f}</td></tr>)
     })
     setAry(a)
     setRows(r)
