@@ -3,8 +3,8 @@ import React, { Fragment, useRef, useEffect, useState, useCallback, useContext, 
 
 // import ReactDOM, { render } from 'react-dom'
 import * as THREE from 'three'
-import { Canvas, useThree } from 'react-three-fiber'
-import { Text, OrbitControls, Html } from '@react-three/drei'
+// import { Canvas, useThree } from 'react-three-fiber'
+// import { Text, OrbitControls, Html } from '@react-three/drei'
 
 
 function useHover() {

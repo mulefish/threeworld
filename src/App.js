@@ -1,12 +1,15 @@
 
-import React, { Fragment, useRef, useEffect, useState, useCallback, useContext, useMemo } from 'react'
+import React, { Fragment, useRef, useEffect, useState, useCallback, useContext } from 'react'
 
 // import ReactDOM, { render } from 'react-dom'
-import * as THREE from 'three'
+// import * as THREE from 'three'
 import { Canvas, useThree } from 'react-three-fiber'
-import { Text, OrbitControls, Html } from '@react-three/drei'
+// import { Text, OrbitControls, Html } from '@react-three/drei'
+import { OrbitControls, Html } from '@react-three/drei'
 import "./styles.css"
-import { numberToExcelLikeLetters, getData } from './js/utils.js';
+// import { numberToExcelLikeLetters, getData } from './js/utils.js';
+import { getData } from './js/utils.js';
+
 import BallLines from './BallLines.js'
 const h = {
   height: (window.innerHeight * 1.0) + "px",
@@ -14,13 +17,13 @@ const h = {
   border: '3px solid #e0e0e0'
 }
 
-const textProps = {
-  fontSize: 3.9,
-  // font: 'http://fonts.gstatic.com/s/modak/v5/EJRYQgs1XtIEskMA-hI.woff'
-  font: 'OnlineWebFonts_COM_5c4a6802514b9c5d5d11de486181ad93/Calibri/Calibri.woff2',
-  color: 'black'
+// const textProps = {
+//   fontSize: 3.9,
+//   // font: 'http://fonts.gstatic.com/s/modak/v5/EJRYQgs1XtIEskMA-hI.woff'
+//   font: 'OnlineWebFonts_COM_5c4a6802514b9c5d5d11de486181ad93/Calibri/Calibri.woff2',
+//   color: 'black'
 
-}
+// }
 
 function useHover() {
   // What is """Line 25:56:  Unexpected use of comma operator  no-sequences"""?! Hate.
@@ -53,7 +56,7 @@ function MyIcon({ position, onDrag, onEnd, letter }) {
       <sprite>
         <Html distanceFactor={10}>
           <div class="content" onMouseEnter={() => giveFocusTo({ letter })}>
-            {/* {pos} */}
+            {pos}
             {letter}
           </div>
         </Html>
@@ -61,7 +64,7 @@ function MyIcon({ position, onDrag, onEnd, letter }) {
     </mesh>
   )
 }
-let active = undefined
+//let active = undefined
 function giveFocusTo({ letter }) {
 
   var elems = document.querySelectorAll(".rowhighlight");
