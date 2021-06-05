@@ -7,6 +7,7 @@ import { Canvas, useThree } from 'react-three-fiber'
 import { Text, OrbitControls, Html } from '@react-three/drei'
 import "./styles.css"
 import { numberToExcelLikeLetters, getData } from './js/utils.js';
+import BallLines from './BallLines.js'
 const h = {
   height: (window.innerHeight * 1.0) + "px",
   width: (window.innerWidth * 0.6) + "px",
@@ -40,23 +41,23 @@ function useDrag(onDrag, onEnd) {
   return { onPointerDown: down, onPointerUp: up, onPointerMove: move }
 }
 
-function EndPoint({ position, onDrag, onEnd }) {
-  let [bindHover, hovered] = useHover()
-  let bindDrag = useDrag(onDrag, onEnd)
-  return (
-    <mesh position={position} {...bindDrag} {...bindHover} >
-      {/* <sphereBufferGeometry args={[7.5, 16, 16]} /> */}
-      <sphereGeometry attach="geometry" args={[6, 16, 16]} />
-      <meshBasicMaterial color={hovered ? 'red' : 'blue'} transparent opacity={0.5} roughness={0.1} metalness={0.1} />
-      {/* <meshStandardMaterial attach="material" color="white" transparent roughness={0.1} metalness={0.1} /> */}
-      <sprite>
-        <Text depthTest={false} material-toneMapped={false} {...textProps}>
-          WHALEkfgsdkgksdfkskfkf kask
-            </Text>
-      </sprite>
-    </mesh>
-  )
-}
+// function EndPoint({ position, onDrag, onEnd }) {
+//   let [bindHover, hovered] = useHover()
+//   let bindDrag = useDrag(onDrag, onEnd)
+//   return (
+//     <mesh position={position} {...bindDrag} {...bindHover} >
+//       {/* <sphereBufferGeometry args={[7.5, 16, 16]} /> */}
+//       <sphereGeometry attach="geometry" args={[6, 16, 16]} />
+//       <meshBasicMaterial color={hovered ? 'red' : 'blue'} transparent opacity={0.5} roughness={0.1} metalness={0.1} />
+// {/* <meshStandardMaterial attach="material" color="white" transparent roughness={0.1} metalness={0.1} /> */ }
+// <sprite>
+//   <Text depthTest={false} material-toneMapped={false} {...textProps}>
+//     WHALEkfgsdkgksdfkskfkf kask
+//             </Text>
+// </sprite>
+//     </mesh >
+//   )
+// }
 
 // function FillLight({ brightness, color }) { return (<rectAreaLight width={3} height={3} intensity={brightness} color={color} position={[2, 1, 4]} lookAt={[0, 0, 0]} penumbra={2} castShadow />); } function RimLight({ brightness, color }) { return (<rectAreaLight width={2} height={2} intensity={brightness} color={color} position={[1, 4, -2]} rotation={[0, 180, 0]} castShadow />); }
 
@@ -81,7 +82,7 @@ function EndPoint({ position, onDrag, onEnd }) {
 // function BackDrop() { return (<mesh receiveShadow position={[0, -1, -5]}>      <planeBufferGeometry attach="geometry" args={[500, 500]} />      <meshStandardMaterial attach="material" color="white" />    </mesh>); }
 // function Sphere() { return (<mesh visible userData={{ test: "hello" }} position={[0, 0, 0]} castShadow>      <sphereGeometry attach="geometry" args={[1, 16, 16]} />      <meshStandardMaterial attach="material" color="white" transparent roughness={0.1} metalness={0.1} />    </mesh>); }
 
-
+/*
 function Line({ defaultStart, defaultEnd }) {
   const [start, setStart] = useState(defaultStart)
   const [end, setEnd] = useState(defaultEnd)
@@ -101,7 +102,7 @@ function Line({ defaultStart, defaultEnd }) {
     </Fragment>
   )
 }
-
+*/
 function MyIcon({ position, onDrag, onEnd, letter }) {
   let [bindHover, hovered] = useHover()
   let bindDrag = useDrag(onDrag, onEnd)
@@ -184,8 +185,9 @@ function App() {
         <color attach="background" args={['0xe0e0e0']} />
         {/* <ambientLight intensity={1} color={0xe0e0e0} /> */}
         <Controls>
-          <Line defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
-          <Line defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} />
+          {/* <Line defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
+          <Line defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} /> */}
+          <BallLines camContext={camContext} />
           {ary}
         </Controls>
       </Canvas>
