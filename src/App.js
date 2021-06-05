@@ -41,68 +41,7 @@ function useDrag(onDrag, onEnd) {
   return { onPointerDown: down, onPointerUp: up, onPointerMove: move }
 }
 
-// function EndPoint({ position, onDrag, onEnd }) {
-//   let [bindHover, hovered] = useHover()
-//   let bindDrag = useDrag(onDrag, onEnd)
-//   return (
-//     <mesh position={position} {...bindDrag} {...bindHover} >
-//       {/* <sphereBufferGeometry args={[7.5, 16, 16]} /> */}
-//       <sphereGeometry attach="geometry" args={[6, 16, 16]} />
-//       <meshBasicMaterial color={hovered ? 'red' : 'blue'} transparent opacity={0.5} roughness={0.1} metalness={0.1} />
-// {/* <meshStandardMaterial attach="material" color="white" transparent roughness={0.1} metalness={0.1} /> */ }
-// <sprite>
-//   <Text depthTest={false} material-toneMapped={false} {...textProps}>
-//     WHALEkfgsdkgksdfkskfkf kask
-//             </Text>
-// </sprite>
-//     </mesh >
-//   )
-// }
 
-// function FillLight({ brightness, color }) { return (<rectAreaLight width={3} height={3} intensity={brightness} color={color} position={[2, 1, 4]} lookAt={[0, 0, 0]} penumbra={2} castShadow />); } function RimLight({ brightness, color }) { return (<rectAreaLight width={2} height={2} intensity={brightness} color={color} position={[1, 4, -2]} rotation={[0, 180, 0]} castShadow />); }
-
-// function Light({ brightness, color }) { return (<rectAreaLight width={3} height={3} color={color} intensity={brightness} position={[-2, 0, 5]} lookAt={[0, 0, 0]} penumbra={1} castShadow />); }
-
-// function KeyLight({ brightness, color }) {
-//   return (
-//     <rectAreaLight
-//       width={3}
-//       height={3}
-//       color={color}
-//       intensity={brightness}
-//       position={[-2, 0, 5]}
-//       lookAt={[0, 0, 0]}
-//       penumbra={1}
-//       castShadow
-//     />
-//   );
-// }
-
-// function GroundPlane() { return (<mesh receiveShadow rotation={[5, 0, 0]} position={[0, -1, 0]}>      <planeBufferGeometry attach="geometry" args={[500, 500]} />      <meshStandardMaterial attach="material" color="white" />    </mesh>); }
-// function BackDrop() { return (<mesh receiveShadow position={[0, -1, -5]}>      <planeBufferGeometry attach="geometry" args={[500, 500]} />      <meshStandardMaterial attach="material" color="white" />    </mesh>); }
-// function Sphere() { return (<mesh visible userData={{ test: "hello" }} position={[0, 0, 0]} castShadow>      <sphereGeometry attach="geometry" args={[1, 16, 16]} />      <meshStandardMaterial attach="material" color="white" transparent roughness={0.1} metalness={0.1} />    </mesh>); }
-
-/*
-function Line({ defaultStart, defaultEnd }) {
-  const [start, setStart] = useState(defaultStart)
-  const [end, setEnd] = useState(defaultEnd)
-  const vertices = useMemo(() => [start, end].map((v) => new THREE.Vector3(...v)), [start, end])
-  const update = useCallback((self) => {
-    self.verticesNeedUpdate = true
-    self.computeBoundingSphere()
-  }, [])
-  return (
-    <Fragment>
-      <line>
-        <geometry vertices={vertices} onUpdate={update} />
-        <lineBasicMaterial color="black" transparent opacity={0.5} />
-      </line>
-      <EndPoint position={start} onDrag={(v) => setStart(v.toArray())} />
-      <EndPoint position={end} onDrag={(v) => setEnd(v.toArray())} />
-    </Fragment>
-  )
-}
-*/
 function MyIcon({ position, onDrag, onEnd, letter }) {
   let [bindHover, hovered] = useHover()
   let bindDrag = useDrag(onDrag, onEnd)
@@ -111,11 +50,7 @@ function MyIcon({ position, onDrag, onEnd, letter }) {
     <mesh position={position} {...bindDrag} {...bindHover} >
       <sphereGeometry attach="geometry" args={[6, 16, 16]} />
       <meshBasicMaterial color={hovered ? 'red' : 'yellow'} transparent opacity={0.5} roughness={0.1} metalness={0.1} />
-      {/* <meshStandardMaterial attach="material" color="white" transparent roughness={0.1} metalness={0.1} /> */}
       <sprite>
-        {/* <Text depthTest={false} material-toneMapped={false} {...textProps}>
-          {letter}
-        </Text> */}
         <Html distanceFactor={10}>
           <div class="content" onMouseEnter={() => giveFocusTo({ letter })}>
             {/* {pos} */}
