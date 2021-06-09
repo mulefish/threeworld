@@ -100,22 +100,49 @@ function Controls({ children }) {
 
 function App() {
 
-  const [ary, setAry] = useState([])
+  function jiggle() {
+    let r = getData()
+    setReal(r)
+  }
+  function jiggle2() {
+
+    setReal([])
+
+    let ary2 = getData()
+    for (let i = 0; i < ary2.length; i++) {
+      ary2[i].x = -500 + (Math.random() * 1000)
+      ary2[i].y = -500 + (Math.random() * 1000)
+      ary2[i].z = -500 + (Math.random() * 1000)
+
+    }
+    //    console.log(JSON.stringify(ary2, null, 2))
+    setTimeout(() => { setReal(ary2) }, 100);
+    // setReal(ary2)
+
+  }
+
   const [rows, setRows] = useState([])
+  const [ary, setAry] = useState([])
+  const [real, setReal] = useState(getData())
+
+  // const [rows, setRows] = useState([])
   useEffect(() => {
+    //    const [ary, setAry] = useState([])
     let a = []
     let r = []
-    const ary2 = getData()
-    ary2.forEach((item, i) => {
+    real.forEach((item, i) => {
       const loc = [item.x, item.y, item.z]
       const l = item.l
       a.push(<Letter key={i} defaultStart={loc} letter={l} ></Letter>)
-      //  r.push(<tr class='rowhighlight' id={l}><td>{l}</td><td>{item.f}</td></tr>)
       r.push(<tr id={l}><td>{l}</td><td>{item.f}</td></tr>)
     })
     setAry(a)
     setRows(r)
-  }, ary)
+  }, [real])
+
+
+
+
   return (
 
     <div class="flexbox-container">
@@ -130,6 +157,8 @@ function App() {
         </Controls>
       </Canvas>
       <div class='right-box'>
+        <button onClick={jiggle}>jiggle</button>
+        <button onClick={jiggle2}>jiggle2</button>
         <table border='1'>
           <tbody>
             {rows}
