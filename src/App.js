@@ -12,9 +12,10 @@ import { getData } from './js/utils.js';
 
 import BallLines from './BallLines.js'
 const h = {
-  height: (window.innerHeight * 1.0) + "px",
-  width: (window.innerWidth * 0.6) + "px",
-  border: '3px solid #e0e0e0'
+  height: (window.innerHeight * 0.4) + "px",
+  width: (window.innerWidth * 1) + "px",
+  border: '3px solid #e0e0e0',
+  backgroundColor: "blue"
 }
 
 // const textProps = {
@@ -120,19 +121,19 @@ function App() {
 
     <div class="flexbox-container">
       <Canvas style={h} invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
-        <color attach="background" args={['0xe0e0e0']} />
+        <color attach="background" args={['0x0000ff']} />
         {/* <ambientLight intensity={1} color={0xe0e0e0} /> */}
         <Controls>
           {/* <Line defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
           <Line defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} /> */}
           <BallLines camContext={camContext} />
-          {ary}
+          {/* {ary} */}
         </Controls>
       </Canvas>
       <div class='right-box'>
         <table border='1'>
           <tbody>
-            {rows}
+            {/* {rows} */}
           </tbody>
         </table>
 

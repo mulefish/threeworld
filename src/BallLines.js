@@ -77,10 +77,22 @@ function BallLines({
   camContext
 }) {
 
+  let lines = []
+  for (let i = 0; i < 20; i++) {
+    const x1 = -550 + (Math.random() * 1100)
+    const y1 = -550 + (Math.random() * 1100)
+    const z1 = -550 + (Math.random() * 1100)
+    const x2 = -550 + (Math.random() * 1100)
+    const y2 = -550 + (Math.random() * 1100)
+    const z2 = -550 + (Math.random() * 1100)
+    lines.push(<Line camContext={camContext} defaultStart={[x1, y1, z1]} defaultEnd={[x2, y2, z2]} />)
+
+  }
+
+
   return (
     <>
-      <Line camContext={camContext} defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
-      <Line camContext={camContext} defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} />
+      {lines}
     </>
   )
 }
