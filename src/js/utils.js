@@ -73,9 +73,10 @@ function getData() {
     let data = []
     let angle = 0
     ary.forEach((item, i) => {
-        const xy = getNewXY_fromAngleAndDistance({ x: 0, y: 0, angle: angle, distance: 200 })
-        angle += spacer
+        angle = Math.random() * 360
 
+        const xy = getNewXY_fromAngleAndDistance({ x: 0, y: 0, angle: angle, distance: 200 })
+        // angle += spacer
         const obj = {
             x: xy.x,  // (Math.random() * 1000) - 500,
             y: xy.y, // (Math.random() * 1000) - 500,

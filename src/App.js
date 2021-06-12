@@ -1,15 +1,10 @@
 
 import React, { Fragment, useRef, useEffect, useState, useCallback, useContext } from 'react'
 
-// import ReactDOM, { render } from 'react-dom'
-// import * as THREE from 'three'
 import { Canvas, useThree } from 'react-three-fiber'
-// import { Text, OrbitControls, Html } from '@react-three/drei'
 import { OrbitControls, Html } from '@react-three/drei'
 import "./styles.css"
-// import { numberToExcelLikeLetters, getData } from './js/utils.js';
 import { getData } from './js/utils.js';
-
 import BallLines from './BallLines.js'
 const h = {
   height: (window.innerHeight * 1.0) + "px",
@@ -39,11 +34,26 @@ function MyIcon({ position, onDrag, onEnd, letter }) {
   let [bindHover, hovered] = useHover()
   let bindDrag = useDrag(onDrag, onEnd)
   let pos = position[0].toFixed(0) + " " + position[1].toFixed(0) + " " + position[2].toFixed(0)
+  // return (
+  //   <mesh position={position} {...bindDrag} {...bindHover} >
+  //     <sphereGeometry attach="geometry" args={[6, 16, 16]} />
+  //     <meshBasicMaterial color={hovered ? 'red' : 'yellow'} transparent opacity={0.5} roughness={0.1} metalness={0.1} />
+  //     <sprite>
+  //       <Html distanceFactor={10}>
+  //         <div class="content" onMouseEnter={() => giveFocusTo({ letter })}>
+  //           {/* {pos} */}
+  //           {letter}
+  //         </div>
+  //       </Html>
+  //     </sprite>
+  //   </mesh>
+  // )
+
   return (
     <mesh position={position} {...bindDrag} {...bindHover} >
-      <sphereGeometry attach="geometry" args={[6, 16, 16]} />
-      <meshBasicMaterial color={hovered ? 'red' : 'yellow'} transparent opacity={0.5} roughness={0.1} metalness={0.1} />
-      <sprite>
+      <sphereGeometry attach="geometry" args={[12, 16, 16]} />
+      <meshBasicMaterial color={hovered ? '#e0e0e0' : '#afafaf'} transparent opacity={0.1} roughness={0.1} metalness={0.1} />
+      <sprite position={[-8, 10, -6]}>
         <Html distanceFactor={10}>
           <div class="content" onMouseEnter={() => giveFocusTo({ letter })}>
             {/* {pos} */}
@@ -53,6 +63,10 @@ function MyIcon({ position, onDrag, onEnd, letter }) {
       </sprite>
     </mesh>
   )
+
+
+
+
 }
 function giveFocusTo({ letter }) {
   var elems = document.querySelectorAll(".rowhighlight");
