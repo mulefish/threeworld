@@ -17,7 +17,16 @@ const h = {
   border: '3px solid #e0e0e0'
 }
 
+// const textProps = {
+//   fontSize: 3.9,
+//   // font: 'http://fonts.gstatic.com/s/modak/v5/EJRYQgs1XtIEskMA-hI.woff'
+//   font: 'OnlineWebFonts_COM_5c4a6802514b9c5d5d11de486181ad93/Calibri/Calibri.woff2',
+//   color: 'black'
+
+// }
+
 function useHover() {
+  // What is """Line 25:56:  Unexpected use of comma operator  no-sequences"""?! Hate.
   const [hovered, setHover] = useState(false)
   const hover = useCallback((e) => (e.stopPropagation(), setHover(true)), [])
   const unhover = useCallback((e) => setHover(false), [])
@@ -35,6 +44,7 @@ function useDrag(onDrag, onEnd) {
   return { onPointerDown: down, onPointerUp: up, onPointerMove: move }
 }
 
+
 function MyIcon({ position, onDrag, onEnd, letter }) {
   let [bindHover, hovered] = useHover()
   let bindDrag = useDrag(onDrag, onEnd)
@@ -45,8 +55,8 @@ function MyIcon({ position, onDrag, onEnd, letter }) {
       <meshBasicMaterial color={hovered ? 'red' : 'yellow'} transparent opacity={0.5} roughness={0.1} metalness={0.1} />
       <sprite>
         <Html distanceFactor={10}>
-          <div class="content" onMouseEnter={() => giveFocusTo({ letter })}>
-            {/* {pos} */}
+          <div class="noselect" onMouseEnter={() => giveFocusTo({ letter })}>
+            {pos}
             {letter}
           </div>
         </Html>
@@ -54,11 +64,16 @@ function MyIcon({ position, onDrag, onEnd, letter }) {
     </mesh>
   )
 }
+//let active = undefined
 function giveFocusTo({ letter }) {
+
   var elems = document.querySelectorAll(".rowhighlight");
+
   [].forEach.call(elems, function (el) {
     el.classList.remove("rowhighlight");
   })
+
+
   document.getElementById(letter).classList.add("rowhighlight");
 }
 
@@ -100,14 +115,20 @@ function App() {
       ary2[i].z = -500 + (Math.random() * 1000)
 
     }
+    //    console.log(JSON.stringify(ary2, null, 2))
     setTimeout(() => { setReal(ary2) }, 100);
+    // setReal(ary2)
+
   }
 
 
   const [rows, setRows] = useState([])
   const [ary, setAry] = useState([])
   const [real, setReal] = useState(getData())
+
+  // const [rows, setRows] = useState([])
   useEffect(() => {
+    //    const [ary, setAry] = useState([])
     let a = []
     let r = []
     real.forEach((item, i) => {
@@ -120,11 +141,18 @@ function App() {
     setRows(r)
   }, [real])
 
+
+
+
   return (
+
     <div class="flexbox-container">
       <Canvas style={h} invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
         <color attach="background" args={['0xe0e0e0']} />
+        {/* <ambientLight intensity={1} color={0xe0e0e0} /> */}
         <Controls>
+          {/* <Line defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
+          <Line defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} /> */}
           <BallLines camContext={camContext} />
           {ary}
         </Controls>
