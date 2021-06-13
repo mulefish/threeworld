@@ -4,8 +4,9 @@ import React, { Fragment, useRef, useEffect, useState, useCallback, useContext }
 import { Canvas, useThree } from 'react-three-fiber'
 import { OrbitControls, Html } from '@react-three/drei'
 import "./styles.css"
-import { getData } from './js/utils.js';
+import { getData, updateData, getLookup } from './js/utils.js';
 import BallLines from './BallLines.js'
+
 const h = {
   height: (window.innerHeight * 1.0) + "px",
   width: (window.innerWidth * 0.6) + "px",
@@ -103,18 +104,26 @@ function App() {
     let r = getData()
     setReal(r)
   }
+
   function jiggle2() {
 
     setReal([])
 
-    let ary2 = getData()
-    for (let i = 0; i < ary2.length; i++) {
-      ary2[i].x = -500 + (Math.random() * 1000)
-      ary2[i].y = -500 + (Math.random() * 1000)
-      ary2[i].z = -500 + (Math.random() * 1000)
 
-    }
-    setTimeout(() => { setReal(ary2) }, 100);
+    const lookup = getLookup()
+    updateData("Z", [0, 0, 0])
+    updateData("A", [0, 0, 0])
+    updateData("B", [0, 0, 0])
+    const ary = getData()
+
+
+    // for (let i = 0; i < ary2.length; i++) {
+    //   ary2[i].x = -500 + (Math.random() * 1000)
+    //   ary2[i].y = -500 + (Math.random() * 1000)
+    //   ary2[i].z = -500 + (Math.random() * 1000)
+
+    // }
+    setTimeout(() => { setReal(ary) }, 100);
   }
 
 

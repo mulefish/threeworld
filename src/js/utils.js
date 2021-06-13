@@ -1,3 +1,6 @@
+let data = undefined
+let lookup = {}
+
 function numberToExcelLikeLetters(num) {
     // 0 = A
     // 1 = B
@@ -61,39 +64,49 @@ const getRawData = () => {
     ]
     return x;
 }
-
 function getData() {
     // 
-    const ary = getRawData()
-    if (ary.length > 360) {
-        alert("Lol! So many. Need to figure something else out. ")
+    if (data === undefined) {
+        data = []
+        const ary = getRawData()
+
+        ary.forEach((item, i) => {
+            const angle = Math.random() * 360
+
+            const xy = getNewXY_fromAngleAndDistance({ x: 0, y: 0, angle: angle, distance: 200 })
+            const obj = {
+                x: xy.x,
+                y: xy.y,
+                z: 0,
+                l: numberToExcelLikeLetters(i),
+                f: item,
+                ary: item.split("/")
+            }
+            lookup[obj.l] = i;
+            data.push(obj)
+        })
     }
-    const spacer = 360 / ary.length
-
-    let data = []
-    let angle = 0
-    ary.forEach((item, i) => {
-        angle = Math.random() * 360
-
-        const xy = getNewXY_fromAngleAndDistance({ x: 0, y: 0, angle: angle, distance: 200 })
-        // angle += spacer
-        const obj = {
-            x: xy.x,  // (Math.random() * 1000) - 500,
-            y: xy.y, // (Math.random() * 1000) - 500,
-            z: 0, // (Math.random() * 1000) - 500,
-            l: numberToExcelLikeLetters(i),
-            f: item,
-            // xy: xy,
-            ary: item.split("/")
-        }
-        data.push(obj)
-    })
     return data
 }
+function getLookup() {
+    return lookup
+}
+function updateData(letter, newPosAry) {
+    const index = lookup[letter]
+    // // console.log(JSON.stringify(lookup, null, 2))
+    data[index].x = newPosAry[0]
+    data[index].y = newPosAry[1]
+    data[index].z = newPosAry[2]
+    // console.log(" SKSKSKSKSKS " + letter + " and " + newPosAry)
+}
+
 
 module.exports = {
     numberToExcelLikeLetters,
     getNewXY_fromAngleAndDistance,
     getRawData,
-    getData
+    getData,
+    updateData,
+    getLookup
+
 }

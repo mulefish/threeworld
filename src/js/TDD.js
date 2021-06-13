@@ -1,8 +1,4 @@
-// import { numberToExcelLikeLetters } from "./utils.js";
-
-
-const { numberToExcelLikeLetters, getNewXY_fromAngleAndDistance, getRawData, getData } = require('./utils.js');
-const { dataController } = require('./DataController.js');
+const { numberToExcelLikeLetters, getNewXY_fromAngleAndDistance, getRawData, getData, updateData, getLookup } = require('./utils.js');
 
 const test_getNewXY_fromAngleAndDistance = () => {
     const givens = [
@@ -65,8 +61,9 @@ const test_getRawData = () => {
 }
 
 const test_getData = () => {
+    // 1: Data is set and 
+    // 2: Lookup is built
     const data = getData()
-    // console.log(data)
     let isOk = true
     const obj = data[0]
     const x = obj.x
@@ -80,21 +77,33 @@ const test_getData = () => {
         }
     }
 }
-
-const test_dataController = () => {
-    const count = dataController.data.length
-    if (count > 0) {
-        console.log("PASS test_dataController found " + count + " items ")
+const test_updateData = () => {
+    const data = getData()
+    const before = data[25].x
+    updateData("Z", [-9999999, 0, 0])
+    const after = data[25].x
+    const isOk = before > -9999999 && after === -9999999
+    if (isOk) {
+        console.log("PASS test_updateData")
     } else {
-        console.log("FAIL test_dataController")
+        console.log("FAIL test_updateData")
     }
 }
-
+const test_getLookup = () => {
+    const len = Object.keys(getLookup()).length
+    const isOk = len > 24
+    if (isOk) {
+        console.log("PASS test_getLookup " + len)
+    } else {
+        console.log("FAIL test_getLookup " + len)
+    }
+}
 const init = () => {
     test_letter()
     test_getNewXY_fromAngleAndDistance()
     test_getRawData()
     test_getData()
-    test_dataController()
+    test_updateData()
+    test_getLookup()
 }
 init()
