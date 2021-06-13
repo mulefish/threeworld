@@ -2,7 +2,6 @@
 
 
 const { numberToExcelLikeLetters, getNewXY_fromAngleAndDistance, getRawData, getData } = require('./utils.js');
-const { dataController } = require('./DataController.js');
 
 const test_getNewXY_fromAngleAndDistance = () => {
     const givens = [
@@ -81,20 +80,10 @@ const test_getData = () => {
     }
 }
 
-const test_dataController = () => {
-    const count = dataController.data.length
-    if (count > 0) {
-        console.log("PASS test_dataController found " + count + " items ")
-    } else {
-        console.log("FAIL test_dataController")
-    }
-}
-
 const init = () => {
     test_letter()
     test_getNewXY_fromAngleAndDistance()
     test_getRawData()
     test_getData()
-    test_dataController()
 }
 init()
