@@ -1,4 +1,4 @@
-const { numberToExcelLikeLetters, getNewXY_fromAngleAndDistance, getRawData, getData, updateData, getLookup } = require('./utils.js');
+const { numberToExcelLikeLetters, getNewXY_fromAngleAndDistance, getRawData, getData, updateData, getLookup, sortData_byDepth, getFileSystemOrganize } = require('./utils.js');
 
 const test_getNewXY_fromAngleAndDistance = () => {
     const givens = [
@@ -98,6 +98,33 @@ const test_getLookup = () => {
         console.log("FAIL test_getLookup " + len)
     }
 }
+
+const test_sortData_byDepth = () => {
+    sortData_byDepth()
+    let data = getData()
+    let isOk = true
+    for (let i = 1, j = 0; i < data.length; i++, j++) {
+        const a = data[j]
+        const b = data[i]
+        if (a.ary.length > b.ary.length) {
+            isOk = false
+        }
+    }
+    if (isOk === true) {
+        console.log("PASS test_sortData_byDepth")
+    } else {
+        console.log("FAIL test_sortData_byDepth")
+    }
+}
+
+const test_getFileSystemOrganize = () => {
+
+    getFileSystemOrganize()
+    // const generations = getFileSystemOrganize()
+    // console.log(JSON.stringify(generations, null, 22))
+}
+
+
 const init = () => {
     test_letter()
     test_getNewXY_fromAngleAndDistance()
@@ -105,5 +132,7 @@ const init = () => {
     test_getData()
     test_updateData()
     test_getLookup()
+    test_sortData_byDepth()
+    test_getFileSystemOrganize()
 }
 init()

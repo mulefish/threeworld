@@ -117,6 +117,9 @@ function App() {
     const ary = getData()
 
 
+
+
+
     // for (let i = 0; i < ary2.length; i++) {
     //   ary2[i].x = -500 + (Math.random() * 1000)
     //   ary2[i].y = -500 + (Math.random() * 1000)

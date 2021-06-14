@@ -1,3 +1,5 @@
+const { WrapAroundEnding } = require("three");
+
 let data = undefined
 let lookup = {}
 
@@ -35,7 +37,7 @@ const getRawData = () => {
         "src/index.js",
         "src/app.js",
         //
-        "src/redux/",
+        "src/redux",
         "src/redux/thunks.js",
         "src/redux/types.js",
         "src/redux/redux.js",
@@ -64,6 +66,9 @@ const getRawData = () => {
     ]
     return x;
 }
+
+
+
 function getData() {
     // 
     if (data === undefined) {
@@ -74,17 +79,36 @@ function getData() {
             const angle = Math.random() * 360
 
             const xy = getNewXY_fromAngleAndDistance({ x: 0, y: 0, angle: angle, distance: 200 })
+            const ary = item.split("/")
+            const parent = ary[ary.length - 2]
+            const generation = ary.length - 1
             const obj = {
                 x: xy.x,
                 y: xy.y,
                 z: 0,
                 l: numberToExcelLikeLetters(i),
+                id: numberToExcelLikeLetters(i),
                 f: item,
-                ary: item.split("/")
+                ary: ary,
+                generation: generation,
+                parent: parent,
+                word: ary[generation],
+                pid: undefined
             }
             lookup[obj.l] = i;
             data.push(obj)
         })
+
+
+        data.forEach((child) => {
+            data.forEach((parent) => {
+                if (parent.word === child.parent && parent.generation === child.generation - 1) {
+                    child.pid = "__" + parent.id
+                }
+            })
+        })
+
+
     }
     return data
 }
@@ -93,13 +117,22 @@ function getLookup() {
 }
 function updateData(letter, newPosAry) {
     const index = lookup[letter]
-    // // console.log(JSON.stringify(lookup, null, 2))
     data[index].x = newPosAry[0]
     data[index].y = newPosAry[1]
     data[index].z = newPosAry[2]
-    // console.log(" SKSKSKSKSKS " + letter + " and " + newPosAry)
 }
 
+function sortData_byDepth() {
+    data = data.sort((a, b) => (a.ary.length > b.ary.length) ? 1 : -1)
+}
+
+function getFileSystemOrganize() {
+    sortData_byDepth()
+
+    data.forEach((d, i) => {
+        console.log(`${i}   id ${d.id}    pid ${d.pid}   |${d.word}| ary ${JSON.stringify(d.ary)}`)
+    })
+}
 
 module.exports = {
     numberToExcelLikeLetters,
@@ -107,6 +140,7 @@ module.exports = {
     getRawData,
     getData,
     updateData,
-    getLookup
-
+    getLookup,
+    sortData_byDepth,
+    getFileSystemOrganize
 }
