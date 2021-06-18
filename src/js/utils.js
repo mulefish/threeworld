@@ -79,7 +79,10 @@ function getData() {
             const angle = Math.random() * 360
 
             const xy = getNewXY_fromAngleAndDistance({ x: 0, y: 0, angle: angle, distance: 200 })
-            const ary = item.split("/")
+            let ary = item.split("/")
+            if (ary === undefined) {
+                ary = []
+            }
             const parent = ary[ary.length - 2]
             const generation = ary.length - 1
             const obj = {
@@ -123,6 +126,7 @@ function updateData(letter, newPosAry) {
 }
 
 function sortData_byDepth() {
+
     data = data.sort((a, b) => (a.ary.length > b.ary.length) ? 1 : -1)
 }
 
