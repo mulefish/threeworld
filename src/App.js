@@ -109,23 +109,15 @@ function App() {
 
     setReal([])
 
-
     const lookup = getLookup()
-    updateData("Z", [0, 0, 0])
-    updateData("A", [0, 0, 0])
-    updateData("B", [0, 0, 0])
+    for (let key in lookup) {
+      console.log(key + "    " + lookup[key])
+      const x = -500 + (Math.random() * 1000)
+      const y = -500 + (Math.random() * 1000)
+      const z = -500 + (Math.random() * 1000)
+      updateData(key, [x, y, z])
+    }
     const ary = getData()
-
-
-
-
-
-    // for (let i = 0; i < ary2.length; i++) {
-    //   ary2[i].x = -500 + (Math.random() * 1000)
-    //   ary2[i].y = -500 + (Math.random() * 1000)
-    //   ary2[i].z = -500 + (Math.random() * 1000)
-
-    // }
     setTimeout(() => { setReal(ary) }, 100);
   }
 

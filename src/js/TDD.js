@@ -1,4 +1,4 @@
-const { numberToExcelLikeLetters, getNewXY_fromAngleAndDistance, getRawData, getData, updateData, getLookup, sortData_byDepth, getFileSystemOrganize } = require('./utils.js');
+const { getComplexIds, numberToExcelLikeLetters, getNewXY_fromAngleAndDistance, getRawData, getData, updateData, getLookup, sortData_byDepth, getFileSystemOrganize } = require('./utils.js');
 
 const test_getNewXY_fromAngleAndDistance = () => {
     const givens = [
@@ -76,6 +76,7 @@ const test_getData = () => {
             console.log("FAIL test_getData")
         }
     }
+    console.log(JSON.stringify(obj, null, 2))
 }
 const test_updateData = () => {
     const data = getData()
@@ -123,6 +124,55 @@ const test_getFileSystemOrganize = () => {
     // const generations = getFileSystemOrganize()
     // console.log(JSON.stringify(generations, null, 22))
 }
+function test_getComplexIds() {
+    const complex = getComplexIds()
+    for (let k in complex) {
+        const count = complex[k]
+        console.log(count, k)
+    }
+    console.log(" !!!!!!!!! ")
+    const ary = getLookup()
+    const data = getData()
+    console.log(JSON.stringify(ary, null, 2))
+}
+
+
+function finch() {
+    const x = [
+        "src",
+        "src/index.js",
+        "src/app.js",
+        //
+        "src/redux",
+        "src/redux/thunks.js",
+        "src/redux/types.js",
+        "src/redux/redux.js",
+        "src/redux/actions.js",
+        //
+        "src/pages/abc",
+        "src/pages/abc/redux",
+        "src/pages/abc/redux/thunks.js",
+        "src/pages/abc/redux/types.js",
+        "src/pages/abc/redux/redux.js",
+        "src/pages/abc/redux/actions.js",
+        "src/pages/abc/layout.js",
+        "src/pages/abc/index.js",
+        //
+        "src/pages/classify",
+        "src/pages/classify/redux",
+        "src/pages/classify/redux/thunks.js",
+        "src/pages/classify/redux/types.js",
+        "src/pages/classify/redux/redux.js",
+        "src/pages/classify/redux/actions.js",
+        "src/pages/classify/layout.js",
+        "src/pages/classify/index.js",
+        //
+        "src/pages/classify/pdfviewer/layout.js",
+        "src/pages/classify/pdfviewer/index.js"
+    ]
+}
+
+
 
 
 const init = () => {
@@ -130,10 +180,12 @@ const init = () => {
     test_getNewXY_fromAngleAndDistance()
     test_getRawData()
     test_getData()
-    test_updateData()
-    test_getLookup()
-    test_sortData_byDepth()
-    console.log(" ....................... ")
-    test_getFileSystemOrganize()
+    // test_updateData()
+    // test_getLookup()
+    // test_sortData_byDepth()
+    // console.log(" ....................... ")
+    // // test_getFileSystemOrganize()
+    // test_getComplexIds()
+    finch()
 }
 init()
