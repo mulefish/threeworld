@@ -37,32 +37,41 @@ const paths = [
 let uniques = {}
 let uniqueCount = 0
 function uniqueId(ary) {
-
     if (uniques.hasOwnProperty(ary)) {
         // do nothing
     } else {
-        uniqueCount++
         const letter = numberToExcelLikeLetters(uniqueCount)
+        uniqueCount++
         uniques[ary] = letter
     }
-
-
 }
 
-for (let i = 0; i < paths.length; i++) {
-    // console.log(paths[i])
-    const ary = paths[i].split("/")
-    const n = ary.length;
-    for (let j = 1; j <= n; j++) {
-        const sub = ary.slice(0, j)
-        uniqueId(sub)
+function setUniques() {
+    for (let i = 0; i < paths.length; i++) {
+        const ary = paths[i].split("/")
+        const n = ary.length;
+        for (let j = 1; j <= n; j++) {
+            const sub = ary.slice(0, j)
+            uniqueId(sub)
+        }
     }
-    // const sub2 = ary.slice(0, n)
-    // uniqueId(sub2)
-
+    for (let aryAsString in uniques) {
+        const name = uniques[aryAsString]
+        let fullname = ""
+        const a = aryAsString.split(",")
+        for (let i = 1; i <= a.length; i++) {
+            const subary = a.slice(0, i)
+            const ancestor = uniques[subary]
+            //            console.log(subary)
+            fullname += ancestor
+            if (i < a.length) {
+                fullname += "_"
+            }
+        }
+        console.log(`${name} --->  ${fullname}   ---> ${aryAsString}`)
+    }
 }
 
-for (let ary in uniques) {
-    const n = uniques[ary]
-    console.log(n, ary)
-}
+setUniques()
+
+
