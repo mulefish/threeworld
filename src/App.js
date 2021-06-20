@@ -110,9 +110,6 @@ function App() {
     setReal([])
 
     const lookup = getLookup()
-
-    alert(JSON.stringify(lookup, null, 2))
-
     for (let key in lookup) {
       console.log(key + "    " + lookup[key])
       const x = -500 + (Math.random() * 1000)
@@ -133,9 +130,8 @@ function App() {
     let r = []
     real.forEach((item, i) => {
       const loc = [item.x, item.y, item.z]
-      const l = item.l
-      a.push(<Letter key={i} defaultStart={loc} letter={l} ></Letter>)
-      r.push(<tr id={l}><td>{l}</td><td>{item.f}</td></tr>)
+      a.push(<Letter key={i} defaultStart={loc} letter={item.l} ></Letter>)
+      r.push(<tr id={item.l}><td>{item.l}</td><td>{item.fullname}</td></tr>)
     })
     setAry(a)
     setRows(r)
