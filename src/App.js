@@ -4,7 +4,7 @@ import React, { Fragment, useRef, useEffect, useState, useCallback, useContext }
 import { Canvas, useThree } from 'react-three-fiber'
 import { OrbitControls, Html } from '@react-three/drei'
 import "./styles.css"
-import { getData, updateData, getLookup } from './js/utils.js';
+import { getData, updateData, getLookup, getUpdatedData } from './js/utils.js';
 import BallLines from './BallLines.js'
 
 const h = {
@@ -110,6 +110,9 @@ function App() {
     setReal([])
 
     const lookup = getLookup()
+
+    alert(JSON.stringify(lookup, null, 2))
+
     for (let key in lookup) {
       console.log(key + "    " + lookup[key])
       const x = -500 + (Math.random() * 1000)
@@ -117,7 +120,7 @@ function App() {
       const z = -500 + (Math.random() * 1000)
       updateData(key, [x, y, z])
     }
-    const ary = getData()
+    const ary = getUpdatedData()
     setTimeout(() => { setReal(ary) }, 100);
   }
 

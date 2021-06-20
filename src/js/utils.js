@@ -4,15 +4,6 @@ let data = undefined
 let lookup = {}
 let complexIds = {}
 function numberToExcelLikeLetters(num) {
-    // 0 = A
-    // 1 = B
-    // 25 = Z
-    // 26 = AA
-    // 27 = AB
-    // 100 = CW
-    // 1000 = ALM 
-    // 10000 = NTQ 
-    // etc etc 
     let letters = '';
     while (num >= 0) {
         letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[num % 26] + letters;
@@ -71,6 +62,18 @@ function getComplexIds() {
     return complexIds
 }
 
+// let uniques = {}
+// let uniqueCount = 0
+// function uniqueId(ary) {
+//     if (uniques.hasOwnProperty(ary)) {
+//         // do nothing
+//     } else {
+//         uniqueCount++
+//         const letter = numberToExcelLikeLetters(uniqueCount)
+//         uniques[ary] = letter
+//     }
+// }
+/* 
 function getData() {
     // 
     if (data === undefined) {
@@ -115,22 +118,79 @@ function getData() {
                 }
             })
         })
+    }
+    return data
+}
+*/
+
+
+let uniques = {}
+let uniqueCount = 0
+function uniqueId(ary) {
+    if (uniques.hasOwnProperty(ary)) {
+        // do nothing
+    } else {
+        const letter = numberToExcelLikeLetters(uniqueCount)
+        uniqueCount++
+        uniques[ary] = letter
+    }
+}
+function getUpdatedData() {
+    return data;
+}
+function getData() {
+    data = []
+    const paths = getRawData()
+    for (let i = 0; i < paths.length; i++) {
+        const ary = paths[i].split("/")
+        const n = ary.length;
+        for (let j = 1; j <= n; j++) {
+            const sub = ary.slice(0, j)
+            uniqueId(sub)
+        }
+    }
+    for (let aryAsString in uniques) {
+        const name = uniques[aryAsString]
+        let fullname = ""
+        const a = aryAsString.split(",")
+        for (let i = 1; i <= a.length; i++) {
+            const subary = a.slice(0, i)
+            const ancestor = uniques[subary]
+            //            console.log(subary)
+            fullname += ancestor
+            if (i < a.length) {
+                fullname += "_"
+            }
+        }
+        // console.log(`${name} --->  ${fullname}   ---> ${aryAsString}`)
+        const angle = Math.random() * 360
+        const xy = getNewXY_fromAngleAndDistance({ x: 0, y: 0, angle: angle, distance: 200 })
+        const obj = {
+            x: xy.x,
+            y: xy.y,
+            z: 0,
+            l: name,
+            id: name,
+            // f: item,
+            fullname: fullname,
+            // ary: ary,
+            // generation: generation,
+            // parent: parent,
+            // word: ary[generation],
+            pid: undefined
+        }
+        lookup[obj.l] = data.length;
+        data.push(obj)
 
 
 
-
-        // data.forEach((child) => {
-        //     data.forEach((parent) => {
-        //         if (parent.word === child.parent && parent.generation === child.generation - 1) {
-        //             child.pid = "__" + parent.id
-        //         }
-        //     })
-        // })
 
 
     }
     return data
 }
+
+
 function getLookup() {
     return lookup
 }
@@ -163,5 +223,7 @@ module.exports = {
     getLookup,
     sortData_byDepth,
     getFileSystemOrganize,
-    getComplexIds
+    getComplexIds,
+    getUpdatedData
+
 }
