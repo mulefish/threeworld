@@ -92,35 +92,55 @@ const test_getLookup = () => {
     }
 }
 
-// const test_sortData_byDepth = () => {
-//     sortData_byDepth()
-//     let data = getData()
-//     let isOk = true
-//     for (let i = 1, j = 0; i < data.length; i++, j++) {
-//         const a = data[j]
-//         const b = data[i]
-//         if (a.ary.length > b.ary.length) {
-//             isOk = false
-//         }
-//     }
-//     if (isOk === true) {
-//         console.log("PASS test_sortData_byDepth")
-//     } else {
-//         console.log("FAIL test_sortData_byDepth")
-//     }
-// }
+const test_effeciant_rollthrough = () => {
+    const data = getData()
+    let max = 0
+    data.forEach((item) => {
+        if (item.ancestors.length > max) {
+            max = item.ancestors.length
+        }
+    })
+    console.log("test_effeciant_rollthrough and " + data.length)
 
-const test_getFileSystemOrganize = () => {
-    getFileSystemOrganize()
+    const lookup = getLookup()
+    recurse("A", 0, data, lookup, {})
 }
 
+let alreadySeen = {}
+function recurse(letter, loop, data, lookup) {
+    const index = lookup[letter]
+    const obj = data[index]
+    //     console.log(letter, loop, data.length, obj.formalName)
+
+    data.forEach((item) => {
+        if (item.depth === (obj.depth + 1)) {
+            const parent_to_child = letter + " -> " + item.id
+
+            if (alreadySeen.hasOwnProperty(parent_to_child)) {
+                //console.log("SKIP " + parent_to_child)
+            } else {
+
+                console.log(parent_to_child, item.depth, item.formalName)
+
+
+                alreadySeen[parent_to_child] = 1
+                loop++
+                recurse(item.id, loop, data, lookup)
+            }
+
+        }
+
+    })
+
+}
 
 const init = () => {
-    test_letter()
-    test_getNewXY_fromAngleAndDistance()
-    test_getRawData()
-    test_getData()
-    test_getLookup()
-    test_updateData()
+    // test_letter()
+    // test_getNewXY_fromAngleAndDistance()
+    // test_getRawData()
+    // test_getData()
+    // test_getLookup()
+    // test_updateData()
+    test_effeciant_rollthrough()
 }
 init()

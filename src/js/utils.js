@@ -91,13 +91,13 @@ function getData() {
     for (let aryAsString in uniques) {
         const name = uniques[aryAsString]
         let fullname = ""
-        const a = aryAsString.split(",")
-        for (let i = 1; i <= a.length; i++) {
-            const subary = a.slice(0, i)
+        const ancestors = aryAsString.split(",")
+        for (let i = 1; i <= ancestors.length; i++) {
+            const subary = ancestors.slice(0, i)
             const ancestor = uniques[subary]
             //            console.log(subary)
             fullname += ancestor
-            if (i < a.length) {
+            if (i < ancestors.length) {
                 fullname += "_"
             }
         }
@@ -110,10 +110,11 @@ function getData() {
             z: 0,
             l: name,
             id: name,
-            // formalName: aryAsString.replaceAll(",", "HELLO"),
+            depth: ancestors.length - 1,
+            ancestors: ancestors,
             formalName: aryAsString.replace(/,/g, ' '),
             fullname: fullname,
-            pid: undefined
+            // pid: undefined
         }
         lookup[obj.l] = data.length;
         data.push(obj)
