@@ -1,14 +1,8 @@
 
 import React, { Fragment, useRef, useEffect, useState, useCallback, useContext, useMemo } from 'react'
-
-// import ReactDOM, { render } from 'react-dom'
 import * as THREE from 'three'
-// import { Canvas, useThree } from 'react-three-fiber'
-// import { Text, OrbitControls, Html } from '@react-three/drei'
-
 
 function useHover() {
-  // What is """Line 25:56:  Unexpected use of comma operator  no-sequences"""?! Hate.
   const [hovered, setHover] = useState(false)
   const hover = useCallback((e) => (e.stopPropagation(), setHover(true)), [])
   const unhover = useCallback((e) => setHover(false), [])
@@ -25,7 +19,6 @@ function useDrag(onDrag, onEnd, camContext) {
   useEffect(() => void (activeRef.current = active))
   return { onPointerDown: down, onPointerUp: up, onPointerMove: move }
 }
-
 
 function Line({ defaultStart, defaultEnd, camContext }) {
   const [start, setStart] = useState(defaultStart)
@@ -52,26 +45,12 @@ function EndPoint({ position, onDrag, onEnd, camContext }) {
   let bindDrag = useDrag(onDrag, onEnd, camContext)
   return (
     <mesh position={position} {...bindDrag} {...bindHover} >
-      {/* <sphereBufferGeometry args={[7.5, 16, 16]} /> */}
       <sphereGeometry attach="geometry" args={[6, 16, 16]} />
       <meshBasicMaterial color={hovered ? 'black' : 'pink'} transparent opacity={1.0} roughness={0.1} metalness={0.1} />
-      {/* <meshStandardMaterial attach="material" color="white" transparent roughness={0.1} metalness={0.1} /> */}
     </mesh >
   )
 }
 
-
-// const camContext = React.createContext()
-// function Controls({ children }) {
-//   const { gl, camera } = useThree()
-//   const api = useState(true)
-//   return (
-//     <Fragment>
-//       <OrbitControls args={[camera, gl.domElement]} enableDamping enabled={api[0]} />
-//       <camContext.Provider value={api}>{children}</camContext.Provider>
-//     </Fragment>
-//   )
-// }
 
 function BallLines({
   camContext

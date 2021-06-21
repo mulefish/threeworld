@@ -62,67 +62,6 @@ function getComplexIds() {
     return complexIds
 }
 
-// let uniques = {}
-// let uniqueCount = 0
-// function uniqueId(ary) {
-//     if (uniques.hasOwnProperty(ary)) {
-//         // do nothing
-//     } else {
-//         uniqueCount++
-//         const letter = numberToExcelLikeLetters(uniqueCount)
-//         uniques[ary] = letter
-//     }
-// }
-/* 
-function getData() {
-    // 
-    if (data === undefined) {
-        data = []
-        const ary = getRawData()
-
-        ary.forEach((item, i) => {
-            const angle = Math.random() * 360
-
-            const xy = getNewXY_fromAngleAndDistance({ x: 0, y: 0, angle: angle, distance: 200 })
-            let ary = item.split("/")
-            if (ary === undefined) {
-                ary = []
-            }
-            const parent = ary[ary.length - 2]
-            const generation = ary.length - 1
-            const obj = {
-                x: xy.x,
-                y: xy.y,
-                z: 0,
-                l: numberToExcelLikeLetters(i),
-                id: numberToExcelLikeLetters(i),
-                f: item,
-                ary: ary,
-                generation: generation,
-                parent: parent,
-                word: ary[generation],
-                pid: undefined
-            }
-            lookup[obj.l] = i;
-            data.push(obj)
-        })
-        data.forEach((item, i) => {
-            item.ary.forEach((name, j) => {
-                const complex = j + "_" + name
-                if (complexIds.hasOwnProperty(complex)) {
-                    // Keep track of the count mostly because curiousity...
-                    // The keys are really what matter here...
-                    complexIds[complex]++
-                } else {
-                    complexIds[complex] = 1
-                }
-            })
-        })
-    }
-    return data
-}
-*/
-
 
 let uniques = {}
 let uniqueCount = 0
@@ -171,25 +110,16 @@ function getData() {
             z: 0,
             l: name,
             id: name,
-            // f: item,
+            // formalName: aryAsString.replaceAll(",", "HELLO"),
+            formalName: aryAsString.replace(/,/g, ' '),
             fullname: fullname,
-            // ary: ary,
-            // generation: generation,
-            // parent: parent,
-            // word: ary[generation],
             pid: undefined
         }
         lookup[obj.l] = data.length;
         data.push(obj)
-
-
-
-
-
     }
     return data
 }
-
 
 function getLookup() {
     return lookup
@@ -206,14 +136,6 @@ function sortData_byDepth() {
     data = data.sort((a, b) => (a.ary.length > b.ary.length) ? 1 : -1)
 }
 
-function getFileSystemOrganize() {
-    sortData_byDepth()
-
-    data.forEach((d, i) => {
-        console.log(`${i}   id ${d.id}    pid ${d.pid}   |${d.word}| ary ${JSON.stringify(d.ary)}`)
-    })
-}
-
 module.exports = {
     numberToExcelLikeLetters,
     getNewXY_fromAngleAndDistance,
@@ -222,8 +144,6 @@ module.exports = {
     updateData,
     getLookup,
     sortData_byDepth,
-    getFileSystemOrganize,
     getComplexIds,
     getUpdatedData
-
 }

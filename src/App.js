@@ -106,9 +106,7 @@ function App() {
   }
 
   function jiggle2() {
-
     setReal([])
-
     const lookup = getLookup()
     for (let key in lookup) {
       console.log(key + "    " + lookup[key])
@@ -131,7 +129,7 @@ function App() {
     real.forEach((item, i) => {
       const loc = [item.x, item.y, item.z]
       a.push(<Letter key={i} defaultStart={loc} letter={item.l} ></Letter>)
-      r.push(<tr id={item.l}><td>{item.l}</td><td>{item.fullname}</td></tr>)
+      r.push(<tr id={item.l}><td>{item.l}</td><td>{item.fullname}</td><td>{item.formalName}</td></tr>)
     })
     setAry(a)
     setRows(r)
@@ -159,5 +157,4 @@ function App() {
     </div>
   )
 }
-
 export default App;
