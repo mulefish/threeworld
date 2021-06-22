@@ -33,6 +33,9 @@ const getRawData = () => {
         "src/redux/types.js",
         "src/redux/redux.js",
         "src/redux/actions.js",
+
+
+
         //
         "src/pages/abc",
         "src/pages/abc/redux",

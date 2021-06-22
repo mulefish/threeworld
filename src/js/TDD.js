@@ -107,27 +107,28 @@ const test_effeciant_rollthrough = () => {
 }
 
 let alreadySeen = {}
+let emitcount = 0
 function recurse(letter, loop, data, lookup) {
     const index = lookup[letter]
     const obj = data[index]
     //     console.log(letter, loop, data.length, obj.formalName)
-
+    //console.log(JSON.stringify(data[10], null, 2))
     data.forEach((item) => {
         if (item.depth === (obj.depth + 1)) {
-            const parent_to_child = letter + " -> " + item.id
+            const parent_to_child = letter + "_" + item.id
 
             if (alreadySeen.hasOwnProperty(parent_to_child)) {
                 //console.log("SKIP " + parent_to_child)
             } else {
-
-                console.log(parent_to_child, item.depth, item.formalName)
-
-
-                alreadySeen[parent_to_child] = 1
-                loop++
-                recurse(item.id, loop, data, lookup)
+                // console.log(parent_to_child, item.fullname, obj.fullname, item.depth, item.formalName)
+                if (item.fullname.includes(obj.fullname)) {
+                    emitcount++
+                    console.log(`${data.length - 1} ${emitcount} ${parent_to_child} and ${item.fullname} ${item.id}   and   ${obj.fullname}  ${item.formalName}`)
+                    alreadySeen[parent_to_child] = 1
+                    loop++
+                    recurse(item.id, loop, data, lookup)
+                }
             }
-
         }
 
     })
