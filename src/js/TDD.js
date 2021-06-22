@@ -1,4 +1,4 @@
-const { numberToExcelLikeLetters, getNewXY_fromAngleAndDistance, getRawData, getData, updateData, getLookup, getFileSystemOrganize } = require('./utils.js');
+const { numberToExcelLikeLetters, getNewXY_fromAngleAndDistance, getRawData, getData, updateData, getLookup, getFromToCollection_recurse_step1 } = require('./utils.js');
 
 const test_getNewXY_fromAngleAndDistance = () => {
     const givens = [
@@ -91,57 +91,26 @@ const test_getLookup = () => {
         console.log("FAIL test_getLookup " + len)
     }
 }
+function test_getFromToCollection_recurse_step1() {
+    // This is a test of one of the more complex things in this project.
 
-const test_effeciant_rollthrough = () => {
-    const data = getData()
-    let max = 0
-    data.forEach((item) => {
-        if (item.ancestors.length > max) {
-            max = item.ancestors.length
-        }
-    })
-    console.log("test_effeciant_rollthrough and " + data.length)
-
-    const lookup = getLookup()
-    recurse("A", 0, data, lookup, {})
+    getData()
+    const arrayOfPoints = getFromToCollection_recurse_step1()
+    // console.log(JSON.stringify(arrayOfPoints, null, 2))
+    const isOk = arrayOfPoints.length > 5 && arrayOfPoints[0].hasOwnProperty("from") && arrayOfPoints[0].hasOwnProperty("to")
+    if (isOk === true) {
+        console.log("PASS test_getFromToCollection_recurse_step1 ( recursive magic! )")
+    } else {
+        console.log("FAIL test_getFromToCollection_recurse_step1 ( recursive magic! )")
+    }
 }
-
-let alreadySeen = {}
-let emitcount = 0
-function recurse(letter, loop, data, lookup) {
-    const index = lookup[letter]
-    const obj = data[index]
-    //     console.log(letter, loop, data.length, obj.formalName)
-    //console.log(JSON.stringify(data[10], null, 2))
-    data.forEach((item) => {
-        if (item.depth === (obj.depth + 1)) {
-            const parent_to_child = letter + "_" + item.id
-
-            if (alreadySeen.hasOwnProperty(parent_to_child)) {
-                //console.log("SKIP " + parent_to_child)
-            } else {
-                // console.log(parent_to_child, item.fullname, obj.fullname, item.depth, item.formalName)
-                if (item.fullname.includes(obj.fullname)) {
-                    emitcount++
-                    console.log(`${data.length - 1} ${emitcount} ${parent_to_child} and ${item.fullname} ${item.id}   and   ${obj.fullname}  ${item.formalName}`)
-                    alreadySeen[parent_to_child] = 1
-                    loop++
-                    recurse(item.id, loop, data, lookup)
-                }
-            }
-        }
-
-    })
-
-}
-
 const init = () => {
-    // test_letter()
-    // test_getNewXY_fromAngleAndDistance()
-    // test_getRawData()
-    // test_getData()
-    // test_getLookup()
-    // test_updateData()
-    test_effeciant_rollthrough()
+    test_letter()
+    test_getNewXY_fromAngleAndDistance()
+    test_getRawData()
+    test_getData()
+    test_getLookup()
+    test_updateData()
+    test_getFromToCollection_recurse_step1()
 }
 init()

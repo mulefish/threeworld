@@ -136,9 +136,53 @@ function updateData(letter, newPosAry) {
 }
 
 function sortData_byDepth() {
-
     data = data.sort((a, b) => (a.ary.length > b.ary.length) ? 1 : -1)
 }
+
+
+const getFromToCollection_recurse_step1 = () => {
+    let max = 0
+    data.forEach((item) => {
+        if (item.ancestors.length > max) {
+            max = item.ancestors.length
+        }
+    })
+    const accumulated = getFromToCollection_recurse_step2("A", 0, data, [])
+    return accumulated
+}
+let alreadySeen = {}
+let emitcount = 0
+function getFromToCollection_recurse_step2(letter, loop, data, ary) {
+    const index = lookup[letter]
+    const obj = data[index]
+    data.forEach((item) => {
+        if (item.depth === (obj.depth + 1)) {
+            const parent_to_child = letter + "_" + item.id
+
+            if (alreadySeen.hasOwnProperty(parent_to_child)) {
+                // skip!
+            } else {
+                if (item.fullname.includes(obj.fullname)) {
+                    emitcount++
+                    // console.log(`${data.length - 1} ${emitcount} ${parent_to_child} and ${item.fullname} ${item.id}   and   ${obj.fullname}  ${item.formalName}`)
+                    alreadySeen[parent_to_child] = 1
+                    loop++
+                    const fromTo = {
+                        "from": obj.id,
+                        "to": item.id
+                    }
+                    ary.push(fromTo)
+                    getFromToCollection_recurse_step2(item.id, loop, data, ary)
+                }
+            }
+        }
+    })
+    return ary
+}
+
+
+
+
 
 module.exports = {
     numberToExcelLikeLetters,
@@ -149,5 +193,7 @@ module.exports = {
     getLookup,
     sortData_byDepth,
     getComplexIds,
-    getUpdatedData
+    getUpdatedData,
+    getFromToCollection_recurse_step1
+
 }
