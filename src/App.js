@@ -4,8 +4,11 @@ import React, { Fragment, useRef, useEffect, useState, useCallback, useContext }
 import { Canvas, useThree } from 'react-three-fiber'
 import { OrbitControls, Html } from '@react-three/drei'
 import "./styles.css"
-import { getData, updateData, getLookup, getUpdatedData } from './js/utils.js';
+import { getData, updateData, getLookup, getUpdatedData, getFromToCollection_recurse_step1 } from './js/utils.js';
 import BallLines from './BallLines.js'
+
+
+
 
 const h = {
   height: (window.innerHeight * 1.0) + "px",
@@ -99,6 +102,16 @@ function Controls({ children }) {
 }
 
 function App() {
+  const [fromTo, setFromTo] = useState([])
+
+  useEffect(() => {
+    if (fromTo.length === 0) {
+      setFromTo(getFromToCollection_recurse_step1())
+    }
+    console.log("fromTo: " + fromTo.length)
+  }, [fromTo])
+
+
 
   function jiggle() {
     let r = getData()
@@ -152,7 +165,6 @@ function App() {
             {rows}
           </tbody>
         </table>
-
       </div>
     </div>
   )
