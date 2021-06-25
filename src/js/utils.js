@@ -180,7 +180,16 @@ function getFromToCollection_recurse_step2(letter, loop, data, ary) {
     return ary
 }
 
-
+function getHoL_fromAry(arrayOfPoints) {
+    let HoL = {}
+    arrayOfPoints.forEach((item) => {
+        if (!HoL.hasOwnProperty(item.from)) {
+            HoL[item.from] = []
+        }
+        HoL[item.from].push(item.to)
+    })
+    return HoL
+}
 
 
 
@@ -194,6 +203,7 @@ module.exports = {
     sortData_byDepth,
     getComplexIds,
     getUpdatedData,
-    getFromToCollection_recurse_step1
+    getFromToCollection_recurse_step1,
+    getHoL_fromAry
 
 }
