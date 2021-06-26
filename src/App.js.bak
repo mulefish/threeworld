@@ -1,32 +1,23 @@
 
 import React, { Fragment, useRef, useEffect, useState, useCallback, useContext } from 'react'
 
-// import ReactDOM, { render } from 'react-dom'
-// import * as THREE from 'three'
 import { Canvas, useThree } from 'react-three-fiber'
-// import { Text, OrbitControls, Html } from '@react-three/drei'
 import { OrbitControls, Html } from '@react-three/drei'
 import "./styles.css"
-// import { numberToExcelLikeLetters, getData } from './js/utils.js';
-import { getData } from './js/utils.js';
+import { getData, updateData, getLookup, getUpdatedData, getFromToCollection_recurse_step1 } from './js/utils.js';
+// import BallLines from './BallLines.js'
+  import LettersAndLines from './LettersAndLines.js'
 
-import BallLines from './BallLines.js'
+
+
+
 const h = {
   height: (window.innerHeight * 1.0) + "px",
   width: (window.innerWidth * 0.6) + "px",
   border: '3px solid #e0e0e0'
 }
 
-// const textProps = {
-//   fontSize: 3.9,
-//   // font: 'http://fonts.gstatic.com/s/modak/v5/EJRYQgs1XtIEskMA-hI.woff'
-//   font: 'OnlineWebFonts_COM_5c4a6802514b9c5d5d11de486181ad93/Calibri/Calibri.woff2',
-//   color: 'black'
-
-// }
-
 function useHover() {
-  // What is """Line 25:56:  Unexpected use of comma operator  no-sequences"""?! Hate.
   const [hovered, setHover] = useState(false)
   const hover = useCallback((e) => (e.stopPropagation(), setHover(true)), [])
   const unhover = useCallback((e) => setHover(false), [])
@@ -44,36 +35,35 @@ function useDrag(onDrag, onEnd) {
   return { onPointerDown: down, onPointerUp: up, onPointerMove: move }
 }
 
-
 function MyIcon({ position, onDrag, onEnd, letter }) {
   let [bindHover, hovered] = useHover()
   let bindDrag = useDrag(onDrag, onEnd)
   let pos = position[0].toFixed(0) + " " + position[1].toFixed(0) + " " + position[2].toFixed(0)
+
   return (
     <mesh position={position} {...bindDrag} {...bindHover} >
-      <sphereGeometry attach="geometry" args={[6, 16, 16]} />
-      <meshBasicMaterial color={hovered ? 'red' : 'yellow'} transparent opacity={0.5} roughness={0.1} metalness={0.1} />
-      <sprite>
+      <sphereGeometry attach="geometry" args={[12, 16, 16]} />
+      <meshBasicMaterial color={hovered ? '#e0e0e0' : '#afafaf'} transparent opacity={0.1} roughness={0.1} metalness={0.1} />
+      <sprite position={[-8, 10, -6]}>
         <Html distanceFactor={10}>
-          <div class="noselect" onMouseEnter={() => giveFocusTo({ letter })}>
-            {pos}
+          <div class="content" onMouseEnter={() => giveFocusTo({ letter })}>
+            {/* {pos} */}
             {letter}
           </div>
         </Html>
       </sprite>
     </mesh>
   )
+
+
+
+
 }
-//let active = undefined
 function giveFocusTo({ letter }) {
-
   var elems = document.querySelectorAll(".rowhighlight");
-
   [].forEach.call(elems, function (el) {
     el.classList.remove("rowhighlight");
   })
-
-
   document.getElementById(letter).classList.add("rowhighlight");
 }
 
@@ -99,61 +89,58 @@ function Controls({ children }) {
 }
 
 function App() {
+  const [fromTo, setFromTo] = useState([])
+
+  useEffect(() => {
+    if (fromTo.length === 0) {
+      setFromTo(getFromToCollection_recurse_step1())
+    }
+    console.log("fromTo: " + fromTo.length)
+  }, [fromTo])
+
+
 
   function jiggle() {
     let r = getData()
     setReal(r)
   }
+
   function jiggle2() {
-
     setReal([])
-
-    let ary2 = getData()
-    for (let i = 0; i < ary2.length; i++) {
-      ary2[i].x = -500 + (Math.random() * 1000)
-      ary2[i].y = -500 + (Math.random() * 1000)
-      ary2[i].z = -500 + (Math.random() * 1000)
-
+    const lookup = getLookup()
+    for (let key in lookup) {
+      console.log(key + "    " + lookup[key])
+      const x = -500 + (Math.random() * 1000)
+      const y = -500 + (Math.random() * 1000)
+      const z = -500 + (Math.random() * 1000)
+      updateData(key, [x, y, z])
     }
-    //    console.log(JSON.stringify(ary2, null, 2))
-    setTimeout(() => { setReal(ary2) }, 100);
-    // setReal(ary2)
-
+    const ary = getUpdatedData()
+    setTimeout(() => { setReal(ary) }, 100);
   }
 
 
   const [rows, setRows] = useState([])
   const [ary, setAry] = useState([])
   const [real, setReal] = useState(getData())
-
-  // const [rows, setRows] = useState([])
   useEffect(() => {
-    //    const [ary, setAry] = useState([])
     let a = []
     let r = []
     real.forEach((item, i) => {
       const loc = [item.x, item.y, item.z]
-      const l = item.l
-      a.push(<Letter key={i} defaultStart={loc} letter={l} ></Letter>)
-      r.push(<tr id={l}><td>{l}</td><td>{item.f}</td></tr>)
+      a.push(<Letter key={i} defaultStart={loc} letter={item.l} ></Letter>)
+      r.push(<tr id={item.l}><td>{item.l}</td><td>{item.fullname}</td><td>{item.formalName}</td></tr>)
     })
     setAry(a)
     setRows(r)
   }, [real])
 
-
-
-
   return (
-
     <div class="flexbox-container">
       <Canvas style={h} invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
         <color attach="background" args={['0xe0e0e0']} />
-        {/* <ambientLight intensity={1} color={0xe0e0e0} /> */}
         <Controls>
-          {/* <Line defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
-          <Line defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} /> */}
-          <BallLines camContext={camContext} />
+          <LettersAndLines camContext={camContext} />
           {ary}
         </Controls>
       </Canvas>
@@ -165,10 +152,8 @@ function App() {
             {rows}
           </tbody>
         </table>
-
       </div>
     </div>
   )
 }
-
 export default App;

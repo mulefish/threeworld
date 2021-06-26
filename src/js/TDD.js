@@ -104,46 +104,23 @@ function test_getFromToCollection_recurse_step1() {
         console.log("FAIL test_getFromToCollection_recurse_step1 ( recursive magic! )")
     }
     return arrayOfPoints
-    // console.log(JSON.stringify(arrayOfPoints, null, 2))
-
-    // let HoL = {}
-    // arrayOfPoints.forEach((item) => {
-    //     if (!HoL.hasOwnProperty(item.from)) {
-    //         HoL[item.from] = []
-    //     }
-    //     HoL[item.from].push(item.to)
-    // })
-
-    // let keys = Object.keys(HoL)
-    // keys = keys.sort()
-    // let j = 0
-    // keys.forEach((k) => {
-    //     let ary = HoL[k]
-    //     console.log(k)
-    //     ary.forEach((a) => {
-    //         console.log("\t", j, a)
-    //         j++
-    //     })
-    // })
-
 }
 function test_getHoL_fromAry(arrayOfPoints) {
     const HoL = getHoL_fromAry(arrayOfPoints)
 
     let keys = Object.keys(HoL)
     keys = keys.sort()
-    let j = 0
-
+    let j = 0 
     keys.forEach((k) => {
         let ary = HoL[k]
-        //console.log(k)
+        console.log(k)
         ary.forEach((a) => {
-            //console.log("\t", j, a)
+            console.log("\t", j, a)
             j++
         })
     })
 
-    const isOk = j > 10 && keys.length < j
+    const isOk = j > 1 && keys.length < j
     if (isOk) {
         console.log("PASS test_getHoL_fromAry j " + j + " and " + keys.length + "  isOk " + isOk)
     } else {

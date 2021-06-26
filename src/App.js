@@ -5,7 +5,8 @@ import { Canvas, useThree } from 'react-three-fiber'
 import { OrbitControls, Html } from '@react-three/drei'
 import "./styles.css"
 import { getData, updateData, getLookup, getUpdatedData, getFromToCollection_recurse_step1 } from './js/utils.js';
-import BallLines from './BallLines.js'
+// import BallLines from './BallLines.js'
+  import LettersAndLines from './LettersAndLines.js'
 
 
 
@@ -38,20 +39,6 @@ function MyIcon({ position, onDrag, onEnd, letter }) {
   let [bindHover, hovered] = useHover()
   let bindDrag = useDrag(onDrag, onEnd)
   let pos = position[0].toFixed(0) + " " + position[1].toFixed(0) + " " + position[2].toFixed(0)
-  // return (
-  //   <mesh position={position} {...bindDrag} {...bindHover} >
-  //     <sphereGeometry attach="geometry" args={[6, 16, 16]} />
-  //     <meshBasicMaterial color={hovered ? 'red' : 'yellow'} transparent opacity={0.5} roughness={0.1} metalness={0.1} />
-  //     <sprite>
-  //       <Html distanceFactor={10}>
-  //         <div class="content" onMouseEnter={() => giveFocusTo({ letter })}>
-  //           {/* {pos} */}
-  //           {letter}
-  //         </div>
-  //       </Html>
-  //     </sprite>
-  //   </mesh>
-  // )
 
   return (
     <mesh position={position} {...bindDrag} {...bindHover} >
@@ -153,7 +140,7 @@ function App() {
       <Canvas style={h} invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
         <color attach="background" args={['0xe0e0e0']} />
         <Controls>
-          <BallLines camContext={camContext} />
+          <LettersAndLines camContext={camContext} />
           {ary}
         </Controls>
       </Canvas>
