@@ -4,7 +4,7 @@ import React, { Fragment, useRef, useEffect, useState, useCallback, useContext }
 import { Canvas, useThree } from 'react-three-fiber'
 import { OrbitControls, Html } from '@react-three/drei'
 import "./styles.css"
-import { getData, updateData, getLookup, getUpdatedData, getFromToCollection_recurse_step1 } from './js/utils.js';
+import { getHoL_fromAry, getData, updateData, getLookup, getUpdatedData, getFromToCollection_recurse_step1 } from './js/utils.js';
 // import BallLines from './BallLines.js'
   import LettersAndLines from './LettersAndLines.js'
 
@@ -34,7 +34,7 @@ function useDrag(onDrag, onEnd) {
   useEffect(() => void (activeRef.current = active))
   return { onPointerDown: down, onPointerUp: up, onPointerMove: move }
 }
-
+/* 
 function MyIcon({ position, onDrag, onEnd, letter }) {
   let [bindHover, hovered] = useHover()
   let bindDrag = useDrag(onDrag, onEnd)
@@ -47,18 +47,14 @@ function MyIcon({ position, onDrag, onEnd, letter }) {
       <sprite position={[-8, 10, -6]}>
         <Html distanceFactor={10}>
           <div class="content" onMouseEnter={() => giveFocusTo({ letter })}>
-            {/* {pos} */}
             {letter}
           </div>
         </Html>
       </sprite>
     </mesh>
   )
-
-
-
-
 }
+*/
 function giveFocusTo({ letter }) {
   var elems = document.querySelectorAll(".rowhighlight");
   [].forEach.call(elems, function (el) {
@@ -66,7 +62,7 @@ function giveFocusTo({ letter }) {
   })
   document.getElementById(letter).classList.add("rowhighlight");
 }
-
+/* 
 function Letter({ defaultStart, letter }) {
   const [start, setStart] = useState(defaultStart)
   return (
@@ -75,7 +71,7 @@ function Letter({ defaultStart, letter }) {
     </Fragment>
   )
 }
-
+*/
 const camContext = React.createContext()
 function Controls({ children }) {
   const { gl, camera } = useThree()
@@ -122,17 +118,35 @@ function App() {
 
   const [rows, setRows] = useState([])
   const [ary, setAry] = useState([])
-  const [real, setReal] = useState(getData())
+ const [real, setReal] = useState(getData())
+const [HoL, setHoL] = useState(getData())
   useEffect(() => {
     let a = []
     let r = []
+    const lookup = getLookup()
+    // console.log( JSON.stringify( lookup , null, 2 ))
+
+
+    let theArrayOfPoints = getFromToCollection_recurse_step1()
+    console.log(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ")
+    console.log(theArrayOfPoints.length   )
+    console.log( JSON.stringify( theArrayOfPoints , null, 2 )) 
+    console.log(" ...............................")
+
+    // let xHoL = getHoL_fromAry(theArrayOfPoints)
+    // console.log( JSON.stringify( xHoL, null, 2 ))
+
+
+
     real.forEach((item, i) => {
       const loc = [item.x, item.y, item.z]
-      a.push(<Letter key={i} defaultStart={loc} letter={item.l} ></Letter>)
+      // a.push(<Letter key={i} defaultStart={loc} letter={item.l} ></Letter>)
       r.push(<tr id={item.l}><td>{item.l}</td><td>{item.fullname}</td><td>{item.formalName}</td></tr>)
     })
-    setAry(a)
+    
+    // setAry(a)
     setRows(r)
+
   }, [real])
 
   return (
