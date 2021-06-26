@@ -4,7 +4,7 @@ import React, { Fragment, useRef, useEffect, useState, useCallback, useContext }
 import { Canvas, useThree } from 'react-three-fiber'
 import { OrbitControls, Html } from '@react-three/drei'
 import "./styles.css"
-import { getHoL_fromAry, getData, updateData, getLookup, getUpdatedData, getFromToCollection_recurse_step1 } from './js/utils.js';
+import { greenlog, redlog, bluelog, getHoL_fromAry, getData, updateData, getLookup, getUpdatedData, getFromToCollection_recurse_step1 } from './js/utils.js';
 // import BallLines from './BallLines.js'
   import LettersAndLines from './LettersAndLines.js'
 
@@ -86,14 +86,16 @@ function Controls({ children }) {
 
 function App() {
   const [fromTo, setFromTo] = useState([])
-
+/* 
   useEffect(() => {
+    if ( fromTo.length > 0 ) {
     if (fromTo.length === 0) {
       setFromTo(getFromToCollection_recurse_step1())
     }
-    console.log("fromTo: " + fromTo.length)
+    greenlog("fromTo: " + fromTo.length)
+  } 
   }, [fromTo])
-
+*/ 
 
 
   function jiggle() {
@@ -105,7 +107,7 @@ function App() {
     setReal([])
     const lookup = getLookup()
     for (let key in lookup) {
-      console.log(key + "    " + lookup[key])
+      bluelog(key + "    " + lookup[key])
       const x = -500 + (Math.random() * 1000)
       const y = -500 + (Math.random() * 1000)
       const z = -500 + (Math.random() * 1000)
@@ -124,17 +126,23 @@ const [HoL, setHoL] = useState(getData())
     let a = []
     let r = []
     const lookup = getLookup()
-    // console.log( JSON.stringify( lookup , null, 2 ))
-
+    // greenlog( JSON.stringify( lookup , null, 2 ))
+    const n = Object.keys( lookup).length 
+    greenlog( n + " =  len(lookup)")
 
     let theArrayOfPoints = getFromToCollection_recurse_step1()
-    console.log(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ")
-    console.log(theArrayOfPoints.length   )
-    console.log( JSON.stringify( theArrayOfPoints , null, 2 )) 
-    console.log(" ...............................")
+    greenlog( theArrayOfPoints.length + " = len(theArrayOfPoints)")
+    greenlog( real.length + " = len(real)")
+    // con sole.log(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ")
+    // con sole.log(theArrayOfPoints.length   )
+    // con sole.log( JSON.stringify( theArrayOfPoints , null, 2 )) 
+    // con sole.log(" ...............................")
 
-    // let xHoL = getHoL_fromAry(theArrayOfPoints)
-    // console.log( JSON.stringify( xHoL, null, 2 ))
+     let HoL = getHoL_fromAry(theArrayOfPoints)
+     const n2 = Object.keys( HoL).length 
+     greenlog( n2 + " =  len(HoL)")
+ 
+    // con sole.log( JSON.stringify( xHoL, null, 2 ))
 
 
 

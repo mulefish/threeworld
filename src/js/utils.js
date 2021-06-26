@@ -139,6 +139,18 @@ function sortData_byDepth() {
     data = data.sort((a, b) => (a.ary.length > b.ary.length) ? 1 : -1)
 }
 
+const greenlog = (msg) => { 
+    console.log(`%c${msg}`, "color:black; background:#90ee90;")
+}
+
+const redlog = (msg) => { 
+    console.log(`%c${msg}`, "color:black; background:red;")
+}
+
+const bluelog = (msg) => { 
+    console.log(`%c${msg}`, "color:white; background:blue;")
+}
+
 
 const getFromToCollection_recurse_step1 = () => {
     let max = 0
@@ -147,6 +159,7 @@ const getFromToCollection_recurse_step1 = () => {
             max = item.ancestors.length
         }
     })
+    // con sole(  data.length + " getFromToCollection_recurse_step1 ")
     const accumulated = getFromToCollection_recurse_step2("A", 0, data, [])
     return accumulated
 }
@@ -204,6 +217,9 @@ module.exports = {
     getComplexIds,
     getUpdatedData,
     getFromToCollection_recurse_step1,
-    getHoL_fromAry
+    getHoL_fromAry, 
+    greenlog,
+    bluelog,
+    redlog
 
 }

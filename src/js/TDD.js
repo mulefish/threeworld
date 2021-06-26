@@ -113,9 +113,9 @@ function test_getHoL_fromAry(arrayOfPoints) {
     let j = 0 
     keys.forEach((k) => {
         let ary = HoL[k]
-        console.log(k)
+        // console.log(k)
         ary.forEach((a) => {
-            console.log("\t", j, a)
+            // console.log("\t", j, a)
             j++
         })
     })
