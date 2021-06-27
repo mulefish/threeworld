@@ -143,6 +143,16 @@ const [HoL, setHoL] = useState(getData())
      greenlog( n2 + " =  len(HoL)")
  
     // con sole.log( JSON.stringify( xHoL, null, 2 ))
+    let j = 0 
+    const keys = Object.keys( HoL )
+    keys.forEach((k) => {
+      let ary = HoL[k]
+      bluelog( " KEY " + k )
+      ary.forEach((a) => {
+      bluelog("\t" +  "   " + j + "  " +  a)
+          j++
+      })
+  })
 
 
 

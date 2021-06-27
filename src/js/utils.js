@@ -192,10 +192,38 @@ function getFromToCollection_recurse_step2(letter, loop, data, ary) {
     })
     return ary
 }
-
-function getHoL_fromAry(arrayOfPoints) {
+function getPosition(id) {
+    const index = lookup[id]
+    const obj = data[index]
+    const xyz = [ obj.x, obj.y, obj.z]
+    return xyz
+}
+/*
+function getHoL_fromAry(fromTo, theLookup) {
     let HoL = {}
-    arrayOfPoints.forEach((item) => {
+    fromTo.forEach((item) => {
+        if (!HoL.hasOwnProperty(item.from)) {
+            HoL[item.from] = []
+        }
+        HoL[item.from].push(item.to)
+    })
+//    console.log( JSON.stringify( theLookup , null, 2 ))
+//    console.log( JSON.stringify( arrayOfPoints , null, 2 ))
+fromTo.forEach((item, i)=>{
+    const f = theLookup[item.from]
+    const t = theLookup[item.to]
+    const fObj = data[f]
+    const tObj = data[t]
+    console.log(i,  item.from, item.to, f, t, fObj.x,fObj.y,fObj.z, tObj.x, tObj.y,tObj.z )
+})
+
+    return HoL
+}
+*/ 
+
+function getHoL_fromAry(fromTo ) {
+    let HoL = {}
+    fromTo.forEach((item) => {
         if (!HoL.hasOwnProperty(item.from)) {
             HoL[item.from] = []
         }
@@ -218,6 +246,7 @@ module.exports = {
     getUpdatedData,
     getFromToCollection_recurse_step1,
     getHoL_fromAry, 
+    getPosition,
     greenlog,
     bluelog,
     redlog

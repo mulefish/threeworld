@@ -1,4 +1,4 @@
-const { getHoL_fromAry, numberToExcelLikeLetters, getNewXY_fromAngleAndDistance, getRawData, getData, updateData, getLookup, getFromToCollection_recurse_step1 } = require('./utils.js');
+const { getPosition, getHoL_fromAry, numberToExcelLikeLetters, getNewXY_fromAngleAndDistance, getRawData, getData, updateData, getLookup, getFromToCollection_recurse_step1 } = require('./utils.js');
 
 const test_getNewXY_fromAngleAndDistance = () => {
     const givens = [
@@ -95,25 +95,26 @@ function test_getFromToCollection_recurse_step1() {
     // This is a test of one of the more complex things in this project.
 
     getData()
-    const arrayOfPoints = getFromToCollection_recurse_step1()
+    const fromToList = getFromToCollection_recurse_step1()
     // console.log(JSON.stringify(arrayOfPoints, null, 2))
-    const isOk = arrayOfPoints.length > 5 && arrayOfPoints[0].hasOwnProperty("from") && arrayOfPoints[0].hasOwnProperty("to")
+    const isOk = fromToList.length > 5 && fromToList[0].hasOwnProperty("from") && fromToList[0].hasOwnProperty("to")
     if (isOk === true) {
         console.log("PASS test_getFromToCollection_recurse_step1 ( recursive magic! )")
     } else {
         console.log("FAIL test_getFromToCollection_recurse_step1 ( recursive magic! )")
     }
-    return arrayOfPoints
+    return fromToList
 }
-function test_getHoL_fromAry(arrayOfPoints) {
-    const HoL = getHoL_fromAry(arrayOfPoints)
-
+function test_getHoL_fromAry(fromToList) {
+    const myData = getData()
+    const lookup = getLookup(); 
+    const HoL = getHoL_fromAry(fromToList, lookup)
     let keys = Object.keys(HoL)
     keys = keys.sort()
     let j = 0 
     keys.forEach((k) => {
         let ary = HoL[k]
-        // console.log(k)
+        //console.log(k)
         ary.forEach((a) => {
             // console.log("\t", j, a)
             j++
@@ -126,7 +127,36 @@ function test_getHoL_fromAry(arrayOfPoints) {
     } else {
         console.log("FAIL test_getHoL_fromAry j " + j + " and " + keys.length + "  isOk " + isOk)
     }
+    return HoL
 }
+
+
+function test_howTheObjectsVennDiagramTogether_notReallyTestingAFunctionPerSe(fromTo, HoL) {
+    const theLookup = getLookup()
+    const data = getData()
+
+    fromTo.forEach((item, i)=>{
+        const f = theLookup[item.from]
+        const t = theLookup[item.to]
+        console.log(`${i}  from: ${item.from} | to: ${item.to}` )
+
+        const fObj = data[f]
+        const tObj = data[t]
+        console.log("SSSS " + i,  item.from, item.to, f, t, fObj.x,fObj.y,fObj.z, tObj.x, tObj.y,tObj.z )
+    })
+}
+
+
+function test_getPosition(fromTo, HoL) {
+    const xyz = getPosition("A")
+    const isOk = ! isNaN(xyz[0]) &&  ! isNaN(xyz[1]) &&  ! isNaN(xyz[2])  
+    if (isOk === true ) {
+        console.log("PASS test_getPosition => " + JSON.stringify(xyz))
+    } else {
+        console.log("FAIL test_getPosition => " + JSON.stringify( xyz))
+    }
+}
+
 
 const init = () => {
     test_letter()
@@ -135,7 +165,9 @@ const init = () => {
     test_getData()
     test_getLookup()
     test_updateData()
-    let theArrayOfPoints = test_getFromToCollection_recurse_step1()
-    test_getHoL_fromAry(theArrayOfPoints)
+    const fromToList = test_getFromToCollection_recurse_step1()
+    const HoL = test_getHoL_fromAry(fromToList)
+    // test_howTheObjectsVennDiagramTogether_notReallyTestingAFunctionPerSe(fromToList, HoL)
+    test_getPosition()
 }
 init()
