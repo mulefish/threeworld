@@ -2,6 +2,7 @@
 import React, { Fragment, useRef, useEffect, useState, useCallback, useContext, useMemo } from 'react'
 import * as THREE from 'three'
 import { Html } from '@react-three/drei'
+const { getPosition } = require('./js/utils.js');
 
 function useHover() {
   const [hovered, setHover] = useState(false)
