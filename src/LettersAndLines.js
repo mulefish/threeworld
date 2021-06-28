@@ -68,11 +68,33 @@ function LettersAndLines({
   HoL,
   camContext
 }) {
-  console.log( JSON.stringify( HoL, null, 2 ))
+  // console.log( JSON.stringify( HoL, null, 2 ))
+ const keys = Object.keys( HoL)
+ let paintThese = [] 
+  keys.forEach((k) => {
+      let ary = HoL[k]
+      const xyz1 = getPosition(k)
+      console.log(k , xyz1 )
+      ary.forEach((a) => {
+        const xyz2 = getPosition(a)
+          // console.log("\t", a, xyz2 )
+
+     paintThese.push(<Line letter={k} camContext={camContext} defaultStart={xyz1} defaultEnd={xyz2} />)
+     paintThese.push(<Line letter={a} camContext={camContext} defaultStart={xyz1} defaultEnd={xyz2} />)
+          // <Line letter='B' camContext={camContext} defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} />
+    
+
+
+        })
+  })
+
+
+
   return (
     <>
-      <Line letter='A' camContext={camContext} defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
-      <Line letter='B' camContext={camContext} defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} />
+      {/* <Line letter='A' camContext={camContext} defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
+      // <Line letter='B' camContext={camContext} defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} /> */}
+      {paintThese}
     </>
   )
 }
