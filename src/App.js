@@ -4,7 +4,7 @@ import React, { Fragment, useRef, useEffect, useState, useCallback, useContext }
 import { Canvas, useThree } from 'react-three-fiber'
 import { OrbitControls, Html } from '@react-three/drei'
 import "./styles.css"
-import { greenlog, redlog, bluelog, getHoL_fromAry, getData, updateData, getLookup, getUpdatedData, getFromToCollection_recurse_step1 } from './js/utils.js';
+import { len, greenlog, redlog, bluelog, getHoL_fromAry, getData, updateData, getLookup, getUpdatedData, getFromToCollection_recurse_step1 } from './js/utils.js';
 // import BallLines from './BallLines.js'
   import LettersAndLines from './LettersAndLines.js'
 
@@ -121,58 +121,35 @@ function App() {
   const [rows, setRows] = useState([])
   const [ary, setAry] = useState([])
  const [real, setReal] = useState(getData())
-const [HoL, setHoL] = useState(getData())
+const [HoL, setHoL] = useState({})
+
   useEffect(() => {
-    let a = []
+    redlog(" len is " + len(HoL) + " and  " + Math.random())
+    if ( len(HoL) === 0 ) {
     let r = []
     const lookup = getLookup()
-    // greenlog( JSON.stringify( lookup , null, 2 ))
     const n = Object.keys( lookup).length 
-    greenlog( n + " =  len(lookup)")
 
     let theArrayOfPoints = getFromToCollection_recurse_step1()
-    greenlog( theArrayOfPoints.length + " = len(theArrayOfPoints)")
-    greenlog( real.length + " = len(real)")
-    // con sole.log(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ")
-    // con sole.log(theArrayOfPoints.length   )
-    // con sole.log( JSON.stringify( theArrayOfPoints , null, 2 )) 
-    // con sole.log(" ...............................")
-
-     let HoL = getHoL_fromAry(theArrayOfPoints)
+     const xHoL = getHoL_fromAry(theArrayOfPoints)
+     setHoL(xHoL)
      const n2 = Object.keys( HoL).length 
-     greenlog( n2 + " =  len(HoL)")
- 
-    // con sole.log( JSON.stringify( xHoL, null, 2 ))
-    let j = 0 
-    const keys = Object.keys( HoL )
-    keys.forEach((k) => {
-      let ary = HoL[k]
-      bluelog( " KEY " + k )
-      ary.forEach((a) => {
-      bluelog("\t" +  "   " + j + "  " +  a)
-          j++
-      })
-  })
-
-
 
     real.forEach((item, i) => {
       const loc = [item.x, item.y, item.z]
       // a.push(<Letter key={i} defaultStart={loc} letter={item.l} ></Letter>)
       r.push(<tr id={item.l}><td>{item.l}</td><td>{item.fullname}</td><td>{item.formalName}</td></tr>)
     })
-    
-    // setAry(a)
     setRows(r)
-
-  }, [real])
+  }
+  }, [real, HoL])
 
   return (
     <div class="flexbox-container">
       <Canvas style={h} invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
         <color attach="background" args={['0xe0e0e0']} />
         <Controls>
-          <LettersAndLines camContext={camContext} />
+          <LettersAndLines HoL={HoL} camContext={camContext} />
           {ary}
         </Controls>
       </Canvas>

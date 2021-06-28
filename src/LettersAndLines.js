@@ -22,7 +22,7 @@ function useDrag(onDrag, onEnd, camContext) {
   return { onPointerDown: down, onPointerUp: up, onPointerMove: move }
 }
 
-function Line({ defaultStart, defaultEnd, camContext }) {
+function Line({ letter, defaultStart, defaultEnd, camContext }) {
   const [start, setStart] = useState(defaultStart)
   const [end, setEnd] = useState(defaultEnd)
   const vertices = useMemo(() => [start, end].map((v) => new THREE.Vector3(...v)), [start, end])
@@ -36,8 +36,8 @@ function Line({ defaultStart, defaultEnd, camContext }) {
         <geometry vertices={vertices} onUpdate={update} />
         <lineBasicMaterial color="black" transparent opacity={0.5} />
       </line>
-      <EndPoint position={start} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />
-      <EndPoint position={end} onDrag={(v) => setEnd(v.toArray())} camContext={camContext} />
+      <EndPoint letter={letter} position={start} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />
+      <EndPoint letter={letter} position={end} onDrag={(v) => setEnd(v.toArray())} camContext={camContext} />
     </Fragment>
   )
 }
@@ -45,10 +45,9 @@ function giveFocusTo(letter) {
 
 }
 
-function EndPoint({ position, onDrag, onEnd, camContext }) {
+function EndPoint({ letter, position, onDrag, onEnd, camContext }) {
   let [bindHover, hovered] = useHover()
   let bindDrag = useDrag(onDrag, onEnd, camContext)
-  const letter = "A"
   return (
     <mesh position={position} {...bindDrag} {...bindHover} >
       <sphereGeometry attach="geometry" args={[6, 16, 16]} />
@@ -66,13 +65,14 @@ function EndPoint({ position, onDrag, onEnd, camContext }) {
 
 
 function LettersAndLines({
+  HoL,
   camContext
 }) {
-
+  console.log( JSON.stringify( HoL, null, 2 ))
   return (
     <>
-      <Line camContext={camContext} defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
-      <Line camContext={camContext} defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} />
+      <Line letter='A' camContext={camContext} defaultStart={[-100, -100, 0]} defaultEnd={[0, 100, 0]} />
+      <Line letter='B' camContext={camContext} defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} />
     </>
   )
 }

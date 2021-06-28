@@ -1,5 +1,11 @@
 const { WrapAroundEnding, sRGBEncoding } = require("three");
-
+function len(map) {
+    if ( map === undefined ) {
+        return 0 
+    }
+    const k = Object.keys(map)
+    return k.length
+}
 let data = undefined
 let lookup = {}
 let complexIds = {}
@@ -249,6 +255,7 @@ module.exports = {
     getPosition,
     greenlog,
     bluelog,
-    redlog
+    redlog,
+    len
 
 }

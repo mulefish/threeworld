@@ -1,4 +1,4 @@
-const { getPosition, getHoL_fromAry, numberToExcelLikeLetters, getNewXY_fromAngleAndDistance, getRawData, getData, updateData, getLookup, getFromToCollection_recurse_step1 } = require('./utils.js');
+const { len, getPosition, getHoL_fromAry, numberToExcelLikeLetters, getNewXY_fromAngleAndDistance, getRawData, getData, updateData, getLookup, getFromToCollection_recurse_step1 } = require('./utils.js');
 
 const test_getNewXY_fromAngleAndDistance = () => {
     const givens = [
@@ -157,7 +157,22 @@ function test_getPosition(fromTo, HoL) {
     }
 }
 
+function test_len() { 
+    const m1  = {
+        a:1,
+        b:2,
+        c:3
+    }
+    const m2 = {}
+    const m3 = undefined
+    const isOk = len(m1) === 3  && len(m2) === 0 && len(m3) === 0
+    if  (isOk === true ) {
+        console.log("PASS test_len()")
+    } else {
+        console.log("FAIL test_len()")
+    }
 
+}
 const init = () => {
     test_letter()
     test_getNewXY_fromAngleAndDistance()
@@ -169,5 +184,6 @@ const init = () => {
     const HoL = test_getHoL_fromAry(fromToList)
     // test_howTheObjectsVennDiagramTogether_notReallyTestingAFunctionPerSe(fromToList, HoL)
     test_getPosition()
+    test_len()
 }
 init()
