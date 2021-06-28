@@ -116,7 +116,7 @@ function getData() {
         const obj = {
             x: xy.x,
             y: xy.y,
-            z: 0,
+            z: parseInt(Math.random() * 500 ) ,
             l: name,
             id: name,
             depth: ancestors.length - 1,
