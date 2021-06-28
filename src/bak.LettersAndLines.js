@@ -31,32 +31,20 @@ function Line({ letter1, letter2, defaultStart, defaultEnd, camContext }) {
   }, [])
 
   let emit = []
-  if (  alreadySeen.hasOwnProperty(letter1)) {
-    emit.push(<EndPoint letter={letter2} position={end} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />)
-    alreadySeen[letter1]++ 
+  if ( ! alreadySeen.hasOwnProperty(letter1)) {
+      // console.log( "! " + letter1 + " xyz " + xyz  )
+      emit.push(<EndPoint letter={letter1} position={start} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />)
+      emit.push(<EndPoint letter={letter2} position={start} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />)
+      alreadySeen[letter1] = 1
+
+      console.log("BOTH  " + letter1 + " and " + letter2  + "   xyz " + defaultStart + "  end "+  defaultStart  )
+
   } else {
-    emit.push(<EndPoint letter={letter1} position={start} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />)
-    emit.push(<EndPoint letter={letter2} position={end} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />)
-    alreadySeen[letter1] = 1
+    emit.push(<EndPoint letter={letter2} position={start} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />)
+    alreadySeen[letter1]++
+    console.log("NOPE " + letter1 + " and " + letter2  + "   xyz " + defaultStart + "  end "+  defaultStart  )
+
   }
-
-
-
-
-  // if (  alreadySeen.hasOwnProperty(letter1)) {
-  //     // console.log( "! " + letter1 + " xyz " + xyz  )
-  //     emit.push(<EndPoint letter={letter1} position={start} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />)
-  //     emit.push(<EndPoint letter={letter2} position={start} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />)
-  //     alreadySeen[letter1] = 1
-
-  //     console.log("BOTH  " + letter1 + " and " + letter2  + "   xyz " + defaultStart + "  end "+  defaultStart  )
-
-  // } else {
-  //   emit.push(<EndPoint letter={letter2} position={start} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />)
-  //   alreadySeen[letter1]++
-  //   console.log("NOPE " + letter1 + " and " + letter2  + "   xyz " + defaultStart + "  end "+  defaultStart  )
-
-  // }
 
   return (
     <Fragment>
