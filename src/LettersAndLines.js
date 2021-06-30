@@ -20,7 +20,7 @@ function useDrag(onDrag, onEnd, camContext) {
   useEffect(() => void (activeRef.current = active))
   return { onPointerDown: down, onPointerUp: up, onPointerMove: move }
 }
-let alreadySeen = {} 
+let alreadySeen = {}
 function Line({ letter1, letter2, defaultStart, defaultEnd, camContext }) {
   const [start, setStart] = useState(defaultStart)
   const [end, setEnd] = useState(defaultEnd)
@@ -31,32 +31,18 @@ function Line({ letter1, letter2, defaultStart, defaultEnd, camContext }) {
   }, [])
 
   let emit = []
-  if (  alreadySeen.hasOwnProperty(letter1)) {
-    emit.push(<EndPoint letter={letter2} position={end} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />)
-    alreadySeen[letter1]++ 
+  if (alreadySeen.hasOwnProperty(letter1)) {
+    emit.push(<EndPoint letter={letter2} position={end} onDrag={(v) => setEnd(v.toArray())} camContext={camContext} />)
+    alreadySeen[letter1]++
   } else {
     emit.push(<EndPoint letter={letter1} position={start} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />)
-    emit.push(<EndPoint letter={letter2} position={end} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />)
+    emit.push(<EndPoint letter={letter2} position={end} onDrag={(v) => setEnd(v.toArray())} camContext={camContext} />)
     alreadySeen[letter1] = 1
   }
 
+  // <EndPoint letter={sletter} position={start} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />
+  // <EndPoint letter={eletter} position={end} onDrag={(v) => setEnd(v.toArray())} camContext={camContext} />
 
-
-
-  // if (  alreadySeen.hasOwnProperty(letter1)) {
-  //     // console.log( "! " + letter1 + " xyz " + xyz  )
-  //     emit.push(<EndPoint letter={letter1} position={start} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />)
-  //     emit.push(<EndPoint letter={letter2} position={start} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />)
-  //     alreadySeen[letter1] = 1
-
-  //     console.log("BOTH  " + letter1 + " and " + letter2  + "   xyz " + defaultStart + "  end "+  defaultStart  )
-
-  // } else {
-  //   emit.push(<EndPoint letter={letter2} position={start} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />)
-  //   alreadySeen[letter1]++
-  //   console.log("NOPE " + letter1 + " and " + letter2  + "   xyz " + defaultStart + "  end "+  defaultStart  )
-
-  // }
 
   return (
     <Fragment>
@@ -65,13 +51,11 @@ function Line({ letter1, letter2, defaultStart, defaultEnd, camContext }) {
         <lineBasicMaterial color="black" transparent opacity={0.5} />
       </line>
       {emit}
-      {/* <EndPoint letter={letter} position={start} onDrag={(v) => setStart(v.toArray())} camContext={camContext} />
-      <EndPoint letter={letter} position={end} onDrag={(v) => setEnd(v.toArray())} camContext={camContext} /> */}
     </Fragment>
   )
 }
 function giveFocusTo(letter) {
-
+  console.log("Give focus to " + JSON.stringify(letter))
 }
 
 function EndPoint({ letter, position, onDrag, onEnd, camContext }) {
@@ -79,7 +63,7 @@ function EndPoint({ letter, position, onDrag, onEnd, camContext }) {
   let bindDrag = useDrag(onDrag, onEnd, camContext)
   return (
     <mesh position={position} {...bindDrag} {...bindHover} >
-      <sphereGeometry attach="geometry" args={[6, 16, 16]} />
+      <sphereGeometry attach="geometry" args={[12, 16, 16]} />
       <meshBasicMaterial color={hovered ? 'black' : 'pink'} transparent opacity={1.0} roughness={0.1} metalness={0.1} />
       <sprite position={[-8, 10, -6]}>
         <Html distanceFactor={10}>
@@ -92,29 +76,28 @@ function EndPoint({ letter, position, onDrag, onEnd, camContext }) {
   )
 }
 
-
 function LettersAndLines({
   HoL,
   camContext
 }) {
   // console.log( JSON.stringify( HoL, null, 2 ))
- const keys = Object.keys( HoL)
- let paintThese = [] 
+  const keys = Object.keys(HoL)
+  let paintThese = []
   keys.forEach((k) => {
-      let ary = HoL[k]
-      const xyz1 = getPosition(k)
-      console.log(k , xyz1 )
-      ary.forEach((a) => {
-        const xyz2 = getPosition(a)
-          // console.log("\t", a, xyz2 )
+    let ary = HoL[k]
+    const xyz1 = getPosition(k)
+    console.log(k, xyz1)
+    ary.forEach((a) => {
+      const xyz2 = getPosition(a)
+      // console.log("\t", a, xyz2 )
 
-     paintThese.push(<Line letter1={k} letter2={a} camContext={camContext} defaultStart={xyz1} defaultEnd={xyz2} />)
-    //  paintThese.push(<Line letter={a} camContext={camContext} defaultStart={xyz1} defaultEnd={xyz2} />)
-          // <Line letter='B' camContext={camContext} defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} />
-    
+      paintThese.push(<Line letter1={k} letter2={a} camContext={camContext} defaultStart={xyz1} defaultEnd={xyz2} />)
+      //  paintThese.push(<Line letter={a} camContext={camContext} defaultStart={xyz1} defaultEnd={xyz2} />)
+      // <Line letter='B' camContext={camContext} defaultStart={[0, 100, 0]} defaultEnd={[100, -100, 0]} />
 
 
-        })
+
+    })
   })
 
 
