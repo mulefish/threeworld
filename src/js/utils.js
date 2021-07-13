@@ -1,7 +1,7 @@
 const { WrapAroundEnding, sRGBEncoding } = require("three");
 function len(map) {
-    if ( map === undefined ) {
-        return 0 
+    if (map === undefined) {
+        return 0
     }
     const k = Object.keys(map)
     return k.length
@@ -116,7 +116,7 @@ function getData() {
         const obj = {
             x: xy.x,
             y: xy.y,
-            z: parseInt(Math.random() * 500 ) ,
+            z: parseInt(Math.random() * 500),
             l: name,
             id: name,
             depth: ancestors.length - 1,
@@ -145,15 +145,15 @@ function sortData_byDepth() {
     data = data.sort((a, b) => (a.ary.length > b.ary.length) ? 1 : -1)
 }
 
-const greenlog = (msg) => { 
+const greenlog = (msg) => {
     console.log(`%c${msg}`, "color:black; background:#90ee90;")
 }
 
-const redlog = (msg) => { 
+const redlog = (msg) => {
     console.log(`%c${msg}`, "color:black; background:red;")
 }
 
-const bluelog = (msg) => { 
+const bluelog = (msg) => {
     console.log(`%c${msg}`, "color:white; background:blue;")
 }
 
@@ -201,7 +201,7 @@ function getFromToCollection_recurse_step2(letter, loop, data, ary) {
 function getPosition(id) {
     const index = lookup[id]
     const obj = data[index]
-    const xyz = [ obj.x, obj.y, obj.z]
+    const xyz = [obj.x, obj.y, obj.z]
     return xyz
 }
 /*
@@ -225,9 +225,9 @@ fromTo.forEach((item, i)=>{
 
     return HoL
 }
-*/ 
+*/
 
-function getHoL_fromAry(fromTo ) {
+function getHoL_fromAry(fromTo) {
     let HoL = {}
     fromTo.forEach((item) => {
         if (!HoL.hasOwnProperty(item.from)) {
@@ -251,7 +251,7 @@ module.exports = {
     getComplexIds,
     getUpdatedData,
     getFromToCollection_recurse_step1,
-    getHoL_fromAry, 
+    getHoL_fromAry,
     getPosition,
     greenlog,
     bluelog,

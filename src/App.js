@@ -1,12 +1,12 @@
 
 import React, { Fragment, useRef, useEffect, useState, useCallback, useContext } from 'react'
-  
+
 import { Canvas, useThree } from 'react-three-fiber'
 import { OrbitControls, Html } from '@react-three/drei'
 import "./styles.css"
 import { len, greenlog, redlog, bluelog, getHoL_fromAry, getData, updateData, getLookup, getUpdatedData, getFromToCollection_recurse_step1 } from './js/utils.js';
 // import BallLines from './BallLines.js'
-  import LettersAndLines from './LettersAndLines.js'
+import LettersAndLines from './LettersAndLines.js'
 
 
 
@@ -86,16 +86,16 @@ function Controls({ children }) {
 
 function App() {
   const [fromTo, setFromTo] = useState([])
-/* 
-  useEffect(() => {
-    if ( fromTo.length > 0 ) {
-    if (fromTo.length === 0) {
-      setFromTo(getFromToCollection_recurse_step1())
-    }
-    greenlog("fromTo: " + fromTo.length)
-  } 
-  }, [fromTo])
-*/ 
+  /* 
+    useEffect(() => {
+      if ( fromTo.length > 0 ) {
+      if (fromTo.length === 0) {
+        setFromTo(getFromToCollection_recurse_step1())
+      }
+      greenlog("fromTo: " + fromTo.length)
+    } 
+    }, [fromTo])
+  */
 
 
   function jiggle() {
@@ -120,28 +120,28 @@ function App() {
 
   const [rows, setRows] = useState([])
   const [ary, setAry] = useState([])
- const [real, setReal] = useState(getData())
-const [HoL, setHoL] = useState({})
+  const [real, setReal] = useState(getData())
+  const [HoL, setHoL] = useState({})
 
   useEffect(() => {
     redlog(" len is " + len(HoL) + " and  " + Math.random())
-    if ( len(HoL) === 0 ) {
-    let r = []
-    const lookup = getLookup()
-    const n = Object.keys( lookup).length 
+    if (len(HoL) === 0) {
+      let r = []
+      const lookup = getLookup()
+      const n = Object.keys(lookup).length
 
-    let theArrayOfPoints = getFromToCollection_recurse_step1()
-     const xHoL = getHoL_fromAry(theArrayOfPoints)
-     setHoL(xHoL)
-     const n2 = Object.keys( HoL).length 
+      let theArrayOfPoints = getFromToCollection_recurse_step1()
+      const xHoL = getHoL_fromAry(theArrayOfPoints)
+      setHoL(xHoL)
+      const n2 = Object.keys(HoL).length
 
-    real.forEach((item, i) => {
-      const loc = [item.x, item.y, item.z]
-      // a.push(<Letter key={i} defaultStart={loc} letter={item.l} ></Letter>)
-      r.push(<tr id={item.l}><td>{item.l}</td><td>{item.fullname}</td><td>{item.formalName}</td></tr>)
-    })
-    setRows(r)
-  }
+      real.forEach((item, i) => {
+        const loc = [item.x, item.y, item.z]
+        // a.push(<Letter key={i} defaultStart={loc} letter={item.l} ></Letter>)
+        r.push(<tr id={item.l}><td>{item.l}</td><td>{item.fullname}</td><td>{item.formalName}</td></tr>)
+      })
+      setRows(r)
+    }
   }, [real, HoL])
 
   return (
