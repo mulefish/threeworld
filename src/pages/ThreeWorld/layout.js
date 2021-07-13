@@ -4,9 +4,9 @@ import React, { Fragment, useRef, useEffect, useState, useCallback, useContext }
 import { Canvas, useThree } from 'react-three-fiber'
 import { OrbitControls, Html } from '@react-three/drei'
 import "./styles.css"
-import { getData, updateData, getLookup, getUpdatedData, getFromToCollection_recurse_step1 } from './js/utils.js';
+import { len, greenlog, redlog, bluelog, getHoL_fromAry, getData, updateData, getLookup, getUpdatedData, getFromToCollection_recurse_step1 } from '../../js/utils.js';
 // import BallLines from './BallLines.js'
-  import LettersAndLines from './LettersAndLines.js'
+import LettersAndLines from './LettersAndLines.js'
 
 
 
@@ -34,7 +34,7 @@ function useDrag(onDrag, onEnd) {
   useEffect(() => void (activeRef.current = active))
   return { onPointerDown: down, onPointerUp: up, onPointerMove: move }
 }
-
+/* 
 function MyIcon({ position, onDrag, onEnd, letter }) {
   let [bindHover, hovered] = useHover()
   let bindDrag = useDrag(onDrag, onEnd)
@@ -47,18 +47,14 @@ function MyIcon({ position, onDrag, onEnd, letter }) {
       <sprite position={[-8, 10, -6]}>
         <Html distanceFactor={10}>
           <div class="content" onMouseEnter={() => giveFocusTo({ letter })}>
-            {/* {pos} */}
             {letter}
           </div>
         </Html>
       </sprite>
     </mesh>
   )
-
-
-
-
 }
+*/
 function giveFocusTo({ letter }) {
   var elems = document.querySelectorAll(".rowhighlight");
   [].forEach.call(elems, function (el) {
@@ -66,7 +62,7 @@ function giveFocusTo({ letter }) {
   })
   document.getElementById(letter).classList.add("rowhighlight");
 }
-
+/* 
 function Letter({ defaultStart, letter }) {
   const [start, setStart] = useState(defaultStart)
   return (
@@ -75,7 +71,7 @@ function Letter({ defaultStart, letter }) {
     </Fragment>
   )
 }
-
+*/
 const camContext = React.createContext()
 function Controls({ children }) {
   const { gl, camera } = useThree()
@@ -88,16 +84,18 @@ function Controls({ children }) {
   )
 }
 
-function App() {
+function ThreeWorld() {
   const [fromTo, setFromTo] = useState([])
-
-  useEffect(() => {
-    if (fromTo.length === 0) {
-      setFromTo(getFromToCollection_recurse_step1())
-    }
-    console.log("fromTo: " + fromTo.length)
-  }, [fromTo])
-
+  /* 
+    useEffect(() => {
+      if ( fromTo.length > 0 ) {
+      if (fromTo.length === 0) {
+        setFromTo(getFromToCollection_recurse_step1())
+      }
+      greenlog("fromTo: " + fromTo.length)
+    } 
+    }, [fromTo])
+  */
 
 
   function jiggle() {
@@ -109,7 +107,7 @@ function App() {
     setReal([])
     const lookup = getLookup()
     for (let key in lookup) {
-      console.log(key + "    " + lookup[key])
+      bluelog(key + "    " + lookup[key])
       const x = -500 + (Math.random() * 1000)
       const y = -500 + (Math.random() * 1000)
       const z = -500 + (Math.random() * 1000)
@@ -123,24 +121,35 @@ function App() {
   const [rows, setRows] = useState([])
   const [ary, setAry] = useState([])
   const [real, setReal] = useState(getData())
+  const [HoL, setHoL] = useState({})
+
   useEffect(() => {
-    let a = []
-    let r = []
-    real.forEach((item, i) => {
-      const loc = [item.x, item.y, item.z]
-      a.push(<Letter key={i} defaultStart={loc} letter={item.l} ></Letter>)
-      r.push(<tr id={item.l}><td>{item.l}</td><td>{item.fullname}</td><td>{item.formalName}</td></tr>)
-    })
-    setAry(a)
-    setRows(r)
-  }, [real])
+    redlog(" len is " + len(HoL) + " and  " + Math.random())
+    if (len(HoL) === 0) {
+      let r = []
+      const lookup = getLookup()
+      const n = Object.keys(lookup).length
+
+      let theArrayOfPoints = getFromToCollection_recurse_step1()
+      const xHoL = getHoL_fromAry(theArrayOfPoints)
+      setHoL(xHoL)
+      const n2 = Object.keys(HoL).length
+
+      real.forEach((item, i) => {
+        const loc = [item.x, item.y, item.z]
+        // a.push(<Letter key={i} defaultStart={loc} letter={item.l} ></Letter>)
+        r.push(<tr id={item.l}><td>{item.l}</td><td>{item.fullname}</td><td>{item.formalName}</td></tr>)
+      })
+      setRows(r)
+    }
+  }, [real, HoL])
 
   return (
     <div class="flexbox-container">
       <Canvas style={h} invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
         <color attach="background" args={['0xe0e0e0']} />
         <Controls>
-          <LettersAndLines camContext={camContext} />
+          <LettersAndLines HoL={HoL} camContext={camContext} />
           {ary}
         </Controls>
       </Canvas>
@@ -156,4 +165,4 @@ function App() {
     </div>
   )
 }
-export default App;
+export default ThreeWorld;
