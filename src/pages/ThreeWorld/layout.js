@@ -7,12 +7,15 @@ import "./styles.css"
 import { len, greenlog, redlog, bluelog, getHoL_fromAry, getData, updateData, getLookup, getUpdatedData, getFromToCollection_recurse_step1 } from '../../js/utils.js';
 // import BallLines from './BallLines.js'
 import LettersAndLines from './LettersAndLines.js'
+import { PropTypes } from 'prop-types';
+
+
 
 
 
 
 const h = {
-  height: (window.innerHeight * 1.0) + "px",
+  height: (window.innerHeight * 0.8) + "px",
   width: (window.innerWidth * 0.6) + "px",
   border: '3px solid #e0e0e0'
 }
@@ -34,27 +37,7 @@ function useDrag(onDrag, onEnd) {
   useEffect(() => void (activeRef.current = active))
   return { onPointerDown: down, onPointerUp: up, onPointerMove: move }
 }
-/* 
-function MyIcon({ position, onDrag, onEnd, letter }) {
-  let [bindHover, hovered] = useHover()
-  let bindDrag = useDrag(onDrag, onEnd)
-  let pos = position[0].toFixed(0) + " " + position[1].toFixed(0) + " " + position[2].toFixed(0)
 
-  return (
-    <mesh position={position} {...bindDrag} {...bindHover} >
-      <sphereGeometry attach="geometry" args={[12, 16, 16]} />
-      <meshBasicMaterial color={hovered ? '#e0e0e0' : '#afafaf'} transparent opacity={0.1} roughness={0.1} metalness={0.1} />
-      <sprite position={[-8, 10, -6]}>
-        <Html distanceFactor={10}>
-          <div class="content" onMouseEnter={() => giveFocusTo({ letter })}>
-            {letter}
-          </div>
-        </Html>
-      </sprite>
-    </mesh>
-  )
-}
-*/
 function giveFocusTo({ letter }) {
   var elems = document.querySelectorAll(".rowhighlight");
   [].forEach.call(elems, function (el) {
@@ -62,16 +45,7 @@ function giveFocusTo({ letter }) {
   })
   document.getElementById(letter).classList.add("rowhighlight");
 }
-/* 
-function Letter({ defaultStart, letter }) {
-  const [start, setStart] = useState(defaultStart)
-  return (
-    <Fragment>
-      <MyIcon letter={letter} position={start} onDrag={(v) => setStart(v.toArray())} />
-    </Fragment>
-  )
-}
-*/
+
 const camContext = React.createContext()
 function Controls({ children }) {
   const { gl, camera } = useThree()
@@ -84,18 +58,27 @@ function Controls({ children }) {
   )
 }
 
-function ThreeWorld() {
+function ThreeWorld(
+  getABCFunc,
+  abcValue,
+) {
+
+  function showValue() {
+    getABCFunc()
+  }
+
+  // function setKittyCatValue() {
+  //   let tmp = [
+  //     'a',
+  //     'b',
+  //     Math.random()
+  //   ]
+  //   setKittyCat(tmp)
+  // }
+
+
+
   const [fromTo, setFromTo] = useState([])
-  /* 
-    useEffect(() => {
-      if ( fromTo.length > 0 ) {
-      if (fromTo.length === 0) {
-        setFromTo(getFromToCollection_recurse_step1())
-      }
-      greenlog("fromTo: " + fromTo.length)
-    } 
-    }, [fromTo])
-  */
 
 
   function jiggle() {
@@ -145,24 +128,43 @@ function ThreeWorld() {
   }, [real, HoL])
 
   return (
-    <div class="flexbox-container">
-      <Canvas style={h} invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
-        <color attach="background" args={['0xe0e0e0']} />
-        <Controls>
-          <LettersAndLines HoL={HoL} camContext={camContext} />
-          {ary}
-        </Controls>
-      </Canvas>
-      <div class='right-box'>
-        <button onClick={jiggle}>jiggle</button>
-        <button onClick={jiggle2}>jiggle2</button>
-        <table border='1'>
-          <tbody>
-            {rows}
-          </tbody>
-        </table>
+    <>
+      <div class="flexbox-container">
+        <Canvas style={h} invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
+          <color attach="background" args={['0xe0e0e0']} />
+          <Controls>
+            <LettersAndLines HoL={HoL} camContext={camContext} />
+            {ary}
+          </Controls>
+        </Canvas>
+        <div class='right-box'>
+          <button onClick={jiggle}>jiggle</button>
+          <button onClick={jiggle2}>jiggle2</button>
+          <table border='1'>
+            <tbody>
+              {rows}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+      <hr />
+
+      <button onClick={showValue}>showValue</button>
+
+      {JSON.stringify(abcValue, null, 10)}
+      <br></br>
+      {/* kittyValue */}
+      {/* <button onClick={setKittyCatValue}>setKittyCatValue</button>
+      {JSON.stringify(kittyValue, null, 10)} */}
+
+
+    </>
   )
 }
+
+ThreeWorld.propTypes = {
+  abcValue: PropTypes.array,
+  getABCFunc: PropTypes.func,
+};
+
 export default ThreeWorld;
