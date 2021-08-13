@@ -3,41 +3,11 @@
 import * as THREE from 'three'
 import ReactDOM from 'react-dom'
 import React, { Fragment, useRef, useEffect, useState, useCallback, useContext, useMemo } from 'react'
-import { extend, Canvas, useThree } from 'react-three-fiber'
-//import { OrbitControls } from '@react-three/drei/OrbitControls'
-import { Text } from "troika-three-text";
-// import fonts from "./fonts";
+import { Canvas, useThree } from 'react-three-fiber'
 import { OrbitControls, Stars } from "drei";
 import { Html } from '@react-three/drei'
 
-// import { Physics, usePlane, useBox } from "use-cannon";
-//import { Physics, usePlane, useBox } from "use-cannon";
-
-import './styles.css'
-
-// extend({ Text });
-
-// const text =
-//     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-
-
-
-// function Box(props) {
-//     // const [ref, api] = useBox(() => ({ mass: 1, position: props.position }));
-//     return (
-//         <mesh
-//             // onClick={() => {
-//             //     api.velocity.set(0, 2, 0);
-//             // }}
-//             // ref={ref}
-//             position={[props.position]}
-//         >
-//             <boxBufferGeometry attach="geometry" />
-//             <meshLambertMaterial attach="material" color="red" />
-//         </mesh>
-//     );
-// }
-
+// import './styles.css'
 
 const opts = {
     font: "Philosopher",
@@ -69,16 +39,6 @@ function useDrag(onDrag, onEnd) {
     return { onPointerDown: down, onPointerUp: up, onPointerMove: move }
 }
 
-// function EndPoint({ position, onDrag, onEnd }) {
-//     let [bindHover, hovered] = useHover()
-//     let bindDrag = useDrag(onDrag, onEnd)
-//     return (
-//         <mesh position={position} {...bindDrag} {...bindHover}>
-//             <sphereBufferGeometry args={[2, 16, 16]} />
-//             <meshBasicMaterial color={hovered ? 'red' : 'blue'} />
-//         </mesh>
-//     )
-// }
 function giveFocusTo(l) {
     console.log("This is giveRocusTo and it got " + l)
 }
@@ -102,50 +62,14 @@ function EndPoint({ letter, position, onDrag, onEnd, camContext }) {
     )
 }
 
-
-
-// function Line({ defaultStart, defaultEnd, defaultFinch }) {
-//     const [start, setStart] = useState(defaultStart)
-//     const [end, setEnd] = useState(defaultEnd)
-//     const [finch, setFinch] = useState(defaultFinch)
-//     const vertices = useMemo(() => [start, end, finch].map((v) => new THREE.Vector3(...v)), [start, end, finch])
-//     const update = useCallback((self) => {
-//         self.verticesNeedUpdate = true
-//         self.computeBoundingSphere()
-//     }, [])
-//     return (
-//         <Fragment>
-//             <line>
-//                 <geometry vertices={vertices} onUpdate={update} />
-//                 <lineBasicMaterial color="red" />
-//             </line>
-//             <EndPoint position={start} onDrag={(v) => setStart(v.toArray())} />
-//             <EndPoint position={end} onDrag={(v) => setEnd(v.toArray())} />
-//             {/* <EndPoint position={finch} onDrag={(v) => setFinch(v.toArray())} /> */}
-//         </Fragment>
-//     )
-// }
-
-
 function Agogo({ defaultPlace, letter }) {
     const [start, setStart] = useState(defaultPlace)
-    // const [end, setEnd] = useState(defaultEnd)
-    // const [finch, setFinch] = useState(defaultFinch)
-    const vertices = useMemo(() => [start].map((v) => new THREE.Vector3(...v)), [start])
     const update = useCallback((self) => {
         self.verticesNeedUpdate = true
         self.computeBoundingSphere()
     }, [])
     return (
-        <Fragment>
-            {/* <line>
-                <geometry vertices={vertices} onUpdate={update} />
-                <lineBasicMaterial color="red" />
-            </line> */}
-            <EndPoint letter={letter} position={start} onDrag={(v) => setStart(v.toArray())} />
-            {/* <EndPoint position={end} onDrag={(v) => setEnd(v.toArray())} /> */}
-            {/* <EndPoint position={finch} onDrag={(v) => setFinch(v.toArray())} /> */}
-        </Fragment>
+        <EndPoint letter={letter} position={start} onDrag={(v) => setStart(v.toArray())} />
     )
 }
 
