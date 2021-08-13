@@ -13,7 +13,7 @@ import { Html } from '@react-three/drei'
 // import { Physics, usePlane, useBox } from "use-cannon";
 //import { Physics, usePlane, useBox } from "use-cannon";
 
-// import './styles.css'
+import './styles2.css'
 
 // extend({ Text });
 
@@ -81,7 +81,7 @@ function EndPoint({ letter, position, onDrag, onEnd, camContext }) {
     return (
         <mesh position={position} {...bindDrag} {...bindHover} >
             <sphereGeometry attach="geometry" args={[12, 16, 16]} />
-            <meshBasicMaterial color={hovered ? 'black' : 'pink'} transparent opacity={1.0} roughness={0.1} metalness={0.1} />
+            <meshBasicMaterial color={hovered ? 'orange' : 'cyan'} transparent opacity={1.0} roughness={0.1} metalness={0.1} />
             <sprite position={[-8, 10, -6]}>
                 <Html distanceFactor={10}>
                     <div class="content" onMouseEnter={() => giveFocusTo({ letter })}>
@@ -97,7 +97,7 @@ function EndPoint({ letter, position, onDrag, onEnd, camContext }) {
 function Agogo({ defaultPlace, letter }) {
     const [start, setStart] = useState(defaultPlace)
     // const update = useCallback((self) => {
-    //     alert("update you")
+    //     alert("update you"
     //     self.verticesNeedUpdate = true
     //     self.computeBoundingSphere()
     // }, [])
@@ -131,8 +131,22 @@ export default function DragThing() {
             <Controls>
                 {/* <Agogo defaultStart={[r(), r(), r()]} defaultEnd={[r(), r(), r()]} defaultFinch={[r(), r(), r()]} />
                 <Agogo defaultStart={[0, 0, 0]} defaultEnd={[0, 0, 200]} defaultFinch={[0, 0, 300]} /> */}
+                <Agogo letter='A' defaultPlace={[r(), r(), r()]} />
                 <Agogo letter='B' defaultPlace={[r(), r(), r()]} />
                 <Agogo letter='C' defaultPlace={[0, 0, 0]} />
+                <Agogo letter='D' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='E' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='F' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='G' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='H' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='I' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='J' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='K' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='L' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='M' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='N' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='O' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='P' defaultPlace={[r(), r(), r()]} />
 
             </Controls>
         </Canvas>
