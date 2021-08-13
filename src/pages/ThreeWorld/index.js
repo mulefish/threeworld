@@ -3,10 +3,8 @@ import ThreeWorld from './layout'
 import { ABCDocumentsThunks } from '../ABCDocuments/redux';
 
 const mapStateToProps = ({ abcReducer }) => ({
-    abcValue:
-        abcReducer.abcValue,
+    abcValue: abcReducer.abcValue,
     kittyValue: abcReducer.kittyValue
-
 });
 
 const mapDispatchToProps = {

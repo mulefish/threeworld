@@ -5,8 +5,8 @@ import { Canvas, useThree } from 'react-three-fiber'
 import { OrbitControls, Html } from '@react-three/drei'
 import "./styles.css"
 import { len, greenlog, redlog, bluelog, getHoL_fromAry, getData, updateData, getLookup, getUpdatedData, getFromToCollection_recurse_step1 } from '../../js/utils.js';
-// import BallLines from './BallLines.js'
-import LettersAndLines from './LettersAndLines.js'
+import SecondPass from './SecondPass.js'
+
 import { PropTypes } from 'prop-types';
 
 
@@ -66,18 +66,6 @@ function ThreeWorld(
   function showValue() {
     getABCFunc()
   }
-
-  // function setKittyCatValue() {
-  //   let tmp = [
-  //     'a',
-  //     'b',
-  //     Math.random()
-  //   ]
-  //   setKittyCat(tmp)
-  // }
-
-
-
   const [fromTo, setFromTo] = useState([])
 
 
@@ -105,7 +93,6 @@ function ThreeWorld(
   const [ary, setAry] = useState([])
   const [real, setReal] = useState(getData())
   const [HoL, setHoL] = useState({})
-
   useEffect(() => {
     redlog(" len is " + len(HoL) + " and  " + Math.random())
     if (len(HoL) === 0) {
@@ -133,7 +120,7 @@ function ThreeWorld(
         <Canvas style={h} invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
           <color attach="background" args={['0xe0e0e0']} />
           <Controls>
-            <LettersAndLines HoL={HoL} camContext={camContext} />
+            <SecondPass HoL={HoL} camContext={camContext} />
             {ary}
           </Controls>
         </Canvas>
@@ -153,11 +140,6 @@ function ThreeWorld(
 
       {JSON.stringify(abcValue, null, 10)}
       <br></br>
-      {/* kittyValue */}
-      {/* <button onClick={setKittyCatValue}>setKittyCatValue</button>
-      {JSON.stringify(kittyValue, null, 10)} */}
-
-
     </>
   )
 }
