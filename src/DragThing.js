@@ -82,7 +82,7 @@ function EndPoint({ letter, position, onDrag, onEnd, camContext }) {
         <mesh position={position} {...bindDrag} {...bindHover} >
             <sphereGeometry attach="geometry" args={[12, 16, 16]} />
             <meshBasicMaterial color={hovered ? 'orange' : 'cyan'} transparent opacity={1.0} roughness={0.1} metalness={0.1} />
-            <sprite position={[-8, 10, -6]}>
+            <sprite color={hovered ? 'orange' : 'cyan'} position={[-8, 10, -6]}>
                 <Html distanceFactor={10}>
                     <div class="content" onMouseEnter={() => giveFocusTo({ letter })}>
                         {letter}
@@ -92,6 +92,8 @@ function EndPoint({ letter, position, onDrag, onEnd, camContext }) {
         </mesh >
     )
 }
+
+
 
 
 function Agogo({ defaultPlace, letter }) {

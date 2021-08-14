@@ -4,79 +4,11 @@ import * as THREE from 'three'
 import ReactDOM from 'react-dom'
 import React, { Fragment, useRef, useEffect, useState, useCallback, useContext, useMemo } from 'react'
 import { extend, Canvas, useThree } from 'react-three-fiber'
-//import { OrbitControls } from '@react-three/drei/OrbitControls'
 import { Text } from "troika-three-text";
-import fonts from "./fonts";
 import { OrbitControls, Stars } from "drei";
+import { Html } from '@react-three/drei'
 
-import { Physics, usePlane, useBox } from "use-cannon";
-
-import './styles.css'
-
-extend({ Text });
-
-const text =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-
-
-
-function Box(props) {
-    const [ref, api] = useBox(() => ({ mass: 1, position: props.position }));
-    return (
-        <mesh
-            onClick={() => {
-                api.velocity.set(0, 2, 0);
-            }}
-            ref={ref}
-            position={[props.position]}
-        >
-            <boxBufferGeometry attach="geometry" />
-            <meshLambertMaterial attach="material" color="hotpink" />
-        </mesh>
-    );
-}
-
-// function Plane(props) {
-//     const [ref] = usePlane(() => ({
-//         rotation: [-Math.PI / 2, -20, 0],
-//     }));
-//     return (
-//         <mesh rotation={[-Math.PI / 2, -20, 0]}>
-//             {/* <planeBufferGeometry attach="geometry" args={[100, 100]} />
-//               <meshLambertMaterial attach="material" color="lightblue" /> */}
-//             <planeBufferGeometry attach="geometry" args={[100, 100]} />
-//             <meshBasicMaterial
-//                 attach="material"
-//                 color="red"
-//                 opacity={1}
-//                 transparent
-//             />
-//         </mesh>
-//     );
-// }
-
-
-
-function Plane(props) {
-    const [ref] = usePlane(() => ({
-        rotation: [-Math.PI / 2, 0, 0],
-    }));
-    return (
-        <mesh rotation={[-Math.PI / 2, 0, 0]}>
-            {/* <planeBufferGeometry attach="geometry" args={[100, 100]} />
-          <meshLambertMaterial attach="material" color="lightblue" /> */}
-            <planeBufferGeometry attach="geometry" args={[500, 500]} />
-            <meshBasicMaterial
-                attach="material"
-                color="green"
-                opacity={1}
-                transparent
-            />
-        </mesh>
-    );
-}
-
-
+import './styles2.css'
 
 const opts = {
     font: "Philosopher",
@@ -108,38 +40,61 @@ function useDrag(onDrag, onEnd) {
     return { onPointerDown: down, onPointerUp: up, onPointerMove: move }
 }
 
-function EndPoint({ position, onDrag, onEnd }) {
+
+function giveFocusTo(l) {
+    console.log("This is giveRocusTo and it got " + l)
+}
+
+
+// function EndPoint({ letter, position, onDrag, onEnd, camContext }) {
+//     let [bindHover, hovered] = useHover()
+//     let bindDrag = useDrag(onDrag, onEnd, camContext)
+//     return (
+//         <mesh position={position} {...bindDrag} {...bindHover} >
+//             {/* <sphereGeometry attach="geometry" args={[12, 16, 16]} />
+//             <meshBasicMaterial color={hovered ? 'orange' : 'cyan'} transparent opacity={1.0} roughness={0.1} metalness={0.1} /> */}
+//             <sprite position={[-8, 10, -6]}>
+//                 <Html distanceFactor={10}>
+//                     <div class="content" onMouseEnter={() => giveFocusTo({ letter })}>
+//                         {letter}
+//                     </div>
+//                 </Html>
+//             </sprite>
+//         </mesh >
+//     )
+// }
+
+function EndPoint({ letter, position, onDrag, onEnd, camContext }) {
     let [bindHover, hovered] = useHover()
-    let bindDrag = useDrag(onDrag, onEnd)
+    let bindDrag = useDrag(onDrag, onEnd, camContext)
     return (
-        <mesh position={position} {...bindDrag} {...bindHover}>
-            <sphereBufferGeometry args={[2, 16, 16]} />
-            <meshBasicMaterial color={hovered ? 'red' : 'blue'} />
-        </mesh>
+        <div>
+            <sprite position={[-8, 10, -6]}>
+                <Html distanceFactor={10}>
+                    <div class="content" onMouseEnter={() => giveFocusTo({ letter })}>
+                        {letter}
+                    </div>
+                </Html>
+            </sprite>
+            <mesh position={position} {...bindDrag} {...bindHover} >
+                <sphereGeometry attach="geometry" args={[12, 16, 16]} />
+                <meshBasicMaterial color={hovered ? 'black' : 'pink'} transparent opacity={1.0} roughness={0.1} metalness={0.1} />
+
+            </mesh >
+        </div>
     )
 }
 
-function Line({ defaultStart, defaultEnd, defaultFinch }) {
-    const [start, setStart] = useState(defaultStart)
-    const [end, setEnd] = useState(defaultEnd)
-    const [finch, setFinch] = useState(defaultFinch)
-    const vertices = useMemo(() => [start, end, finch].map((v) => new THREE.Vector3(...v)), [start, end, finch])
-    const update = useCallback((self) => {
-        self.verticesNeedUpdate = true
-        self.computeBoundingSphere()
-    }, [])
+
+function Agogo({ defaultPlace, letter }) {
+    const [start, setStart] = useState(defaultPlace)
     return (
         <Fragment>
-            <line>
-                <geometry vertices={vertices} onUpdate={update} />
-                <lineBasicMaterial color="white" />
-            </line>
-            <EndPoint position={start} onDrag={(v) => setStart(v.toArray())} />
-            <EndPoint position={end} onDrag={(v) => setEnd(v.toArray())} />
-            <EndPoint position={finch} onDrag={(v) => setFinch(v.toArray())} />
+            <EndPoint letter={letter} position={start} onDrag={(v) => setStart(v.toArray())} />
         </Fragment>
     )
 }
+
 
 const camContext = React.createContext()
 function Controls({ children }) {
@@ -157,51 +112,30 @@ const r = (range = 200) => {
 }
 export default function DragThing() {
 
-    let boxes = [
-        <Box position={[10, 100, r()]} />,
-        <Box position={[11, 80, r()]} />,
-        <Box position={[12, 70, r()]} />,
-        <Box position={[13, 60, r()]} />,
-        <Box position={[14, 50, r()]} />,
-        <Box position={[15, 40, r()]} />,
-        <Box position={[16, 30, r()]} />,
-        <Box position={[17, 20, r()]} />,
-        <Box position={[18, 15, r()]} />,
-        <Box position={[19, 11, r()]} />,
-        <Box position={[20, 10, r()]} />,
-
-    ]
 
     return (
         <Canvas invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
             <Controls>
-                <Line defaultStart={[r(), r(), r()]} defaultEnd={[r(), r(), r()]} defaultFinch={[r(), r(), r()]} />
-                <Line defaultStart={[0, 0, 0]} defaultEnd={[0, 0, 200]} defaultFinch={[0, 0, 300]} />
-
-
-                <Stars />
-                <ambientLight intensity={0.5} />
-                <spotLight position={[10, 15, 10]} angle={0.3} />
-                <Physics>
-                    {boxes}
-                    <Plane />
-                </Physics>
+                {/* <Agogo defaultStart={[r(), r(), r()]} defaultEnd={[r(), r(), r()]} defaultFinch={[r(), r(), r()]} />
+                <Agogo defaultStart={[0, 0, 0]} defaultEnd={[0, 0, 200]} defaultFinch={[0, 0, 300]} /> */}
+                <Agogo letter='A' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='B' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='C' defaultPlace={[0, 0, 0]} />
+                <Agogo letter='D' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='E' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='F' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='G' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='H' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='I' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='J' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='K' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='L' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='M' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='N' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='O' defaultPlace={[r(), r(), r()]} />
+                <Agogo letter='P' defaultPlace={[r(), r(), r()]} />
 
             </Controls>
-            <text
-                // position-z={-180}
-                // rotation={rotation}
-                {...opts}
-                text={text}
-                font={fonts[opts.font]}
-                anchorX="center"
-                anchorY="middle"
-            >
-                {opts.materialType === "MeshPhongMaterial" ? (
-                    <meshPhongMaterial attach="material" color={opts.color} />
-                ) : null}
-            </text>
-
         </Canvas>
     )
 }

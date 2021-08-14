@@ -4,7 +4,7 @@
   
   html,
   body,
-  /* #root {
+  #root {
     width: 100vw;
     height: 100vh;
     margin: 0;
@@ -15,8 +15,9 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background: #272727;
-  } */
+    /* overflow: hidden; */
+    background: #ff0000;
+  }
   
   body {
     font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
