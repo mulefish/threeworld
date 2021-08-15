@@ -109,10 +109,13 @@ function getData() {
                 fullname += "_"
             }
         }
-        // console.log(`${name} --->  ${fullname}   ---> ${aryAsString}`)
         const angle = Math.random() * 360
+        // console.log(`${angle} : ${name} --->  ${fullname}   ---> ${aryAsString}`)
+
         const xy = getNewXY_fromAngleAndDistance({ x: 0, y: 0, angle: angle, distance: 200 })
         const obj = {
+            // x: (Math.random() * 1000) - 500,
+            // y: (Math.random() * 1000) - 500,
             x: xy.x,
             y: xy.y,
             z: parseInt(Math.random() * 500),
@@ -133,16 +136,16 @@ function getData() {
 function getLookup() {
     return lookup
 }
-function updateData(letter, newPosAry) {
-    const index = lookup[letter]
-    data[index].x = newPosAry[0]
-    data[index].y = newPosAry[1]
-    data[index].z = newPosAry[2]
-}
+// function updateData(letter, newPosAry) {
+//     const index = lookup[letter]
+//     data[index].x = newPosAry[0]
+//     data[index].y = newPosAry[1]
+//     data[index].z = newPosAry[2]
+// }
 
-function sortData_byDepth() {
-    data = data.sort((a, b) => (a.ary.length > b.ary.length) ? 1 : -1)
-}
+// function sortData_byDepth() {
+//     data = data.sort((a, b) => (a.ary.length > b.ary.length) ? 1 : -1)
+// }
 
 const greenlog = (msg) => {
     console.log(`%c${msg}`, "color:black; background:#90ee90;")
@@ -188,6 +191,7 @@ function getFromToCollection_recurse_step2(letter, loop, data, ary) {
                     }
                     ary.push(fromTo)
                     getFromToCollection_recurse_step2(item.id, loop, data, ary)
+                    // console.log("From " + fromTo.from + " to: " + fromTo.to)
                 }
             }
         }
@@ -200,28 +204,6 @@ function getPosition(id) {
     const xyz = [obj.x, obj.y, obj.z]
     return xyz
 }
-/*
-function getHoL_fromAry(fromTo, theLookup) {
-    let HoL = {}
-    fromTo.forEach((item) => {
-        if (!HoL.hasOwnProperty(item.from)) {
-            HoL[item.from] = []
-        }
-        HoL[item.from].push(item.to)
-    })
-//    console.log( JSON.stringify( theLookup , null, 2 ))
-//    console.log( JSON.stringify( arrayOfPoints , null, 2 ))
-fromTo.forEach((item, i)=>{
-    const f = theLookup[item.from]
-    const t = theLookup[item.to]
-    const fObj = data[f]
-    const tObj = data[t]
-    console.log(i,  item.from, item.to, f, t, fObj.x,fObj.y,fObj.z, tObj.x, tObj.y,tObj.z )
-})
-
-    return HoL
-}
-*/
 
 function getHoL_fromAry(fromTo) {
     let HoL = {}
@@ -241,9 +223,9 @@ module.exports = {
     getNewXY_fromAngleAndDistance,
     getRawData,
     getData,
-    updateData,
+    // updateData,
     getLookup,
-    sortData_byDepth,
+    // sortData_byDepth,
     getComplexIds,
     getUpdatedData,
     getFromToCollection_recurse_step1,
