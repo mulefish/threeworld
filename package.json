@@ -7,12 +7,11 @@
     "drei": "^1.5.7",
     "react": "",
     "react-dom": "",
+    "react-redux": "^7.2.2",
     "react-scripts": "",
     "react-three-fiber": "",
-    "three": "",
-    "three-text2d": "^0.6.0",
-    "troika-three-text": "0.33.1",
-    "use-cannon": "^0.5.3"
+    "redux-thunk": "^2.3.0",
+    "three": ""
   },
   "scripts": {
     "start": "react-scripts start",
