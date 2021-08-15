@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './pages/Home/index.js'
 import ThreeWorld from './pages/ThreeWorld/index.js'
 import ABCDocuments from './pages/ABCDocuments/index.js'
-
+import Viewport from './pages/Viewport/index.js'
 const App = () => {
 
   return (
@@ -22,6 +22,9 @@ const App = () => {
           </Route>
           <Route exact path="/ThreeWorld">
             <ThreeWorld />
+          </Route>
+          <Route exact path="/Viewport">
+            <Viewport />
           </Route>
         </Switch>
       </Router>

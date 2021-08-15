@@ -15,6 +15,9 @@ const Home = () => {
         history.push('/ThreeWorld')
     }
 
+    function gotoViewport() {
+        history.push('/Viewport')
+    }
 
     const style_big = {
         margin: 10, fontSize: '180px', color: "#000"
@@ -59,6 +62,22 @@ const Home = () => {
                                     <hr></hr>
                                     <div style={style_mid}>
                                         gotoThreeWorld
+                                    </div>
+
+
+                                </button>
+                            </td>
+
+
+
+                            <td valign='top'>
+                                <button onClick={gotoViewport}>
+                                    <div style={style_big2}>
+                                        🐙
+                                    </div>
+                                    <hr></hr>
+                                    <div style={style_mid}>
+                                        gotoViewport
                                     </div>
 
 
