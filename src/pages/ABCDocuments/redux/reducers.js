@@ -4,10 +4,6 @@ const initialState = {
     abcValue: [],
 };
 
-const API_STATUS = {
-    GETTING: "dummy value"
-}
-
 export default function classifyDocumentsReducer(state = initialState, action) {
     switch (action.type) {
         case TYPES.ABC_SUCCESS:

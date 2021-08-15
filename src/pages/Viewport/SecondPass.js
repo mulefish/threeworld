@@ -1,7 +1,8 @@
-import React, { Fragment, useRef, useEffect, useState, useCallback, useContext, useMemo } from 'react'
-import * as THREE from 'three'
+import React, { Fragment, useRef, useEffect, useState, useCallback, useContext } from 'react'
+//import * as THREE from 'three'
 import { Html } from '@react-three/drei'
 const { getPosition } = require('../../js/utils.js');
+
 
 function useHover() {
     const [hovered, setHover] = useState(false)
@@ -46,7 +47,7 @@ function EndPoint({ id, position, onDrag, onEnd, camContext }) {
             <meshBasicMaterial color={hovered ? 'black' : 'pink'} transparent opacity={1.0} roughness={0.1} metalness={0.1} />
             <sprite position={[-8, 10, -6]}>
                 <Html distanceFactor={10}>
-                    <div class="content" onMouseEnter={() => giveFocusTo({ id })}>
+                    <div class="content" onMouseEnter={() => giveFocusTo({ id })} key={id}>
                         {id}
                     </div>
                 </Html>

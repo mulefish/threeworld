@@ -50,7 +50,7 @@ const SearchMechanism = ({
     //     })();
     // }, [getABCFunc]);
 
-    return <>Hello
+    return <>
         <button onClick={showValue}>showValue</button>
 
         {JSON.stringify(abcValue, null, 10)}

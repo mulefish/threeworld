@@ -5,17 +5,10 @@ import React from 'react'
 
 const Home = () => {
 
-
     const history = useHistory()
+
     function gotoABCDocument() {
         history.push('/ABCDocuments')
-    }
-
-    function gotoThreeWorld() {
-        history.push('/ThreeWorld')
-    }
-    function gotoSecondPass() {
-        history.push('/SecondPass')
     }
 
     function gotoViewport() {
@@ -40,67 +33,31 @@ const Home = () => {
 
                             <td valign='top'>
                                 <button onClick={gotoABCDocument}>
-                                    <div style={style_big2}>
+                                    <span style={style_big2} role="img" aria-label="ABCDoc">
                                         🚀
                                         {/* 試 */}
-                                    </div>
+                                    </span>
                                     <hr></hr>
                                     <div style={style_mid}>
                                         ABCDoc
                                     </div>
-
-
                                 </button>
                             </td>
-
-
-                            <td valign='top'>
-                                <button onClick={gotoThreeWorld}>
-                                    <div style={style_big2}>
-                                        🐙
-                                    </div>
-                                    <hr></hr>
-                                    <div style={style_mid}>
-                                        gotoThreeWorld
-                                    </div>
-
-
-                                </button>
-                            </td>
-
-                            <td valign='top'>
-                                <button onClick={gotoSecondPass}>
-                                    <div style={style_big2}>
-                                        🐙
-                                    </div>
-                                    <hr></hr>
-                                    <div style={style_mid}>
-                                        gotoSecondPass
-                                    </div>
-
-
-                                </button>
-                            </td>
-
 
                             <td valign='top'>
                                 <button onClick={gotoViewport}>
-                                    <div style={style_big2}>
+                                    <span style={style_big2} role="img" aria-label="Viewport">
+
                                         🐙
-                                    </div>
+                                    </span>
                                     <hr></hr>
                                     <div style={style_mid}>
                                         gotoViewport
                                     </div>
-
-
                                 </button>
                             </td>
-
-
                         </tr>
                     </tbody>
-
                 </table>
                 <a href="https://www.public.asu.edu/~rjansen/glyph_encoding.html">https://www.public.asu.edu/~rjansen/glyph_encoding.html</a>
             </center>

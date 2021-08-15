@@ -1,4 +1,3 @@
-const { WrapAroundEnding, sRGBEncoding } = require("three");
 function len(map) {
     if (map === undefined) {
         return 0
@@ -170,7 +169,6 @@ const getFromToCollection_recurse_step1 = () => {
     return accumulated
 }
 let alreadySeen = {}
-let emitcount = 0
 function getFromToCollection_recurse_step2(letter, loop, data, ary) {
     const index = lookup[letter]
     const obj = data[index]
@@ -182,8 +180,6 @@ function getFromToCollection_recurse_step2(letter, loop, data, ary) {
                 // skip!
             } else {
                 if (item.fullname.includes(obj.fullname)) {
-                    emitcount++
-                    // console.log(`${data.length - 1} ${emitcount} ${parent_to_child} and ${item.fullname} ${item.id}   and   ${obj.fullname}  ${item.formalName}`)
                     alreadySeen[parent_to_child] = 1
                     loop++
                     const fromTo = {

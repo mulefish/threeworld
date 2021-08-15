@@ -1,9 +1,10 @@
 
 import React, { Fragment, useEffect, useState } from 'react'
 import { Canvas, useThree } from 'react-three-fiber'
-import { OrbitControls, Html } from '@react-three/drei'
+import { OrbitControls } from '@react-three/drei'
 import "./styles.css"
-import { len, redlog, getHoL_fromAry, getData, getLookup, getFromToCollection_recurse_step1 } from '../../js/utils.js';
+//import { len, redlog, getHoL_fromAry, getData, getLookup, getFromToCollection_recurse_step1 } from '../../js/utils.js';
+import { len, redlog, getHoL_fromAry, getData, getFromToCollection_recurse_step1 } from '../../js/utils.js';
 import SecondPass from './SecondPass.js'
 //import { PropTypes } from 'prop-types';
 
@@ -27,22 +28,21 @@ function Controls({ children }) {
 
 function Viewport() {
 
-  const [fromTo, setFromTo] = useState([])
+  // const [fromTo, setFromTo] = useState([])
   const [rows, setRows] = useState([])
-  const [ary, setAry] = useState([])
-  const [real, setReal] = useState(getData())
+  let ary = []
+  //const [ary, setAry] = useState([])
+  const [real,] = useState(getData())
   const [HoL, setHoL] = useState({})
   useEffect(() => {
     redlog(" len is " + len(HoL) + " and  " + Math.random())
     if (len(HoL) === 0) {
       let r = []
-      const lookup = getLookup()
-      const n = Object.keys(lookup).length
+      // const lookup = getLookup()
 
       let theArrayOfPoints = getFromToCollection_recurse_step1()
       const xHoL = getHoL_fromAry(theArrayOfPoints)
       setHoL(xHoL)
-      const n2 = Object.keys(HoL).length
 
       real.forEach((item, i) => {
         const loc = [item.x, item.y, item.z]
@@ -63,7 +63,7 @@ function Viewport() {
             {ary}
           </Controls>
         </Canvas>
-        <div class='right-box'>
+        <div className='right-box'>
           <table border='1'>
             <tbody>
               {rows}
