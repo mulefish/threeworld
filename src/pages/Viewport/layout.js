@@ -1,11 +1,11 @@
 
-import React, { Fragment, useRef, useEffect, useState, useCallback, useContext } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Canvas, useThree } from 'react-three-fiber'
 import { OrbitControls, Html } from '@react-three/drei'
 import "./styles.css"
-import { len, greenlog, redlog, bluelog, getHoL_fromAry, getData, updateData, getLookup, getUpdatedData, getFromToCollection_recurse_step1 } from '../../js/utils.js';
+import { len, redlog, getHoL_fromAry, getData, getLookup, getFromToCollection_recurse_step1 } from '../../js/utils.js';
 import SecondPass from './SecondPass.js'
-import { PropTypes } from 'prop-types';
+//import { PropTypes } from 'prop-types';
 
 const style = {
   height: (window.innerHeight * 0.8) + "px",
@@ -46,8 +46,8 @@ function Viewport() {
 
       real.forEach((item, i) => {
         const loc = [item.x, item.y, item.z]
-        // a.push(<Letter key={i} defaultStart={loc} letter={item.l} ></Letter>)
-        r.push(<tr id={item.l}><td>{item.l}</td><td>{item.fullname}</td><td>{item.formalName}</td></tr>)
+        console.log(item.id + " " + JSON.stringify(loc))
+        r.push(<tr id={item.id}><td>{item.l}</td><td>{item.fullname}</td><td>{item.formalName}</td></tr>)
       })
       setRows(r)
     }
@@ -55,7 +55,7 @@ function Viewport() {
 
   return (
     <>
-      <div class="flexbox-container">
+      <div className="flexbox-container">
         <Canvas style={style} invalidateFrameloop orthographic camera={{ position: [0, 0, 500] }}>
           <color attach="background" args={['0xe0e0e0']} />
           <Controls>

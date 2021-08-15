@@ -22,9 +22,6 @@ const Home = () => {
         history.push('/Viewport')
     }
 
-    const style_big = {
-        margin: 10, fontSize: '180px', color: "#000"
-    }
     const style_big2 = {
         margin: 10, fontSize: '180px', color: "#000"
     }
