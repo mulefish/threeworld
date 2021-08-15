@@ -14,6 +14,9 @@ const Home = () => {
     function gotoThreeWorld() {
         history.push('/ThreeWorld')
     }
+    function gotoSecondPass() {
+        history.push('/SecondPass')
+    }
 
     function gotoViewport() {
         history.push('/Viewport')
@@ -68,6 +71,19 @@ const Home = () => {
                                 </button>
                             </td>
 
+                            <td valign='top'>
+                                <button onClick={gotoSecondPass}>
+                                    <div style={style_big2}>
+                                        🐙
+                                    </div>
+                                    <hr></hr>
+                                    <div style={style_mid}>
+                                        gotoSecondPass
+                                    </div>
+
+
+                                </button>
+                            </td>
 
 
                             <td valign='top'>
