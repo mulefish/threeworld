@@ -7,6 +7,7 @@ import "./styles.css"
 import { len, redlog, getHoL_fromAry, getData, getLookup, getFromToCollection_recurse_step1 } from '../../js/utils.js';
 import SecondPass from './SecondPass.js'
 //import { PropTypes } from 'prop-types';
+import * as THREE from 'three'
 
 const style = {
   height: (window.innerHeight * 0.8) + "px",
