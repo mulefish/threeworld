@@ -1,6 +1,6 @@
 import React, { Fragment, useRef, useEffect, useState, useCallback, useContext } from 'react'
 import { Html } from '@react-three/drei'
-import { getData, getLookup } from '../../js/utils.js';
+import { getData, getLookup, redlog } from '../../js/utils.js';
 import * as THREE from 'three'
 
 
@@ -54,10 +54,11 @@ const stopDragging = (id, pos, parent, camContext) => {
     // console.log("What " + JSON.stringify(item) + "  " + JSON.stringify(item2))
     const start = [item.x, item.y, item.z]
     const end = [item2.x, item2.y, item2.z]
+    console.log("start " + JSON.stringify(start) + " and " + JSON.stringify(end))
     return (
-
-        <Scene start={start} end={end} camContext={camContext} />
-
+        <>
+            < Scene start={start} end={end} camContext={camContext} />
+        </>
     )
 
 }
@@ -113,19 +114,20 @@ const Scene = (start, stop, camContext) => {
     // console.log("BFORE: " + JSON.stringify(start));
     // console.log(" stop: " + JSON.stringify(stop));
     const points = []
-    // points.push(new THREE.Vector3(start[0], start[1], start[2]))
-    // points.push(new THREE.Vector3(stop[0], stop[1], stop[2]))
-    points.push(new THREE.Vector3(-100, -100, -100))
+    //points.push(new THREE.Vector3(start[0], start[1], start[2]))
+    //points.push(new THREE.Vector3(stop[0], stop[1], stop[2]))
+    //    points.push(new THREE.Vector3(-100, -100, -100))
 
-    points.push(new THREE.Vector3(-100, 100, 100))
-    //    points.push(new THREE.Vector3(0, 10, 0))
+    points.push(new THREE.Vector3(-100, -100, -100))
+    points.push(new THREE.Vector3(0, 0, 0))
+    //    points.push(new THREE.Vector3(100, 100, 100))
     // points.push(new THREE.Vector3(10, 0, 0))
     console.log("POINT: " + JSON.stringify(points))
 
     const lineGeometry = new THREE.BufferGeometry().setFromPoints(points)
     return (
         <>
-            <group position={[0, -2.5, -100]}>
+            <group position={[0, 0, 0]}>
                 <line geometry={lineGeometry}>
                     <lineBasicMaterial attach="material" color={'#9c88ff'} linewidth={10} linecap={'round'} linejoin={'round'} />
                 </line>
@@ -134,26 +136,79 @@ const Scene = (start, stop, camContext) => {
     )
 }
 
+// const lookup = getLookup()
+// const index = lookup[id]
+// const d = getData()
+// const item = d[index]
+// //console.log(`${id} ${pos} ${index}  ${JSON.stringify(item)}  parent ${parent}`)
+
+// const index2 = lookup[parent]
+// const item2 = d[index2]
+// // console.log(item.id, parent, item.x, item.y, item.z)
+// // console.log(item2.id, parent, item2.x, item2.y, item2.z)
+// // console.log(lookup)
+
+
+// // const data = getData()
+// // if (parent === id) {
+// //     const index = lookup[id]
+// //     const item = data[index]
+// //     console.log(JSON.stringify(item))
+
+// // } else {
+// //     console.log(" NOPE! " + parent + "  and " + id);
+// // }
+// // console.log("What " + JSON.stringify(item) + "  " + JSON.stringify(item2))
+// const start = [item.x, item.y, item.z]
+// const end = [item2.x, item2.y, item2.z]
 function SecondPass({
     HoL,
     camContext
 }) {
+    const [lines, setLines] = useState([])
+
+
     const keys = Object.keys(HoL)
     let paintThese = []
-    keys.forEach((k) => {
+    const lookup = getLookup()
+    // const data = getData()
+    const temp = []
+    keys.forEach((k, myindex) => {
         let ary = HoL[k]
 
-        //
 
+        const index = lookup[k]
 
-        ary.forEach((a) => {
+        let parent = {}
+        parent.x = Math.random() * 200
+        parent.y = Math.random() * 200
+        parent.z = Math.random() * 200
+
+        // console.log(JSON.stringify(parent, null, 1))
+        // console.log(" ............ " + parent.x)
+        // console.log(" >>>>>>>>> " + JSON.stringify(parent, null, 1) + " <<<<<<<< ")
+
+        ary.forEach((a, i) => {
+            ///  console.log(i + "   " + a + " ............................ ")
             const pos = getPosition(a)
+            const index2 = lookup[k]
+            const child = getData(index2)
+            console.log(i + "  : " + JSON.stringify(child))
+            temp.push(< Scene start={parent.x, parent.y, parent.z} stop={child.x, child.y, child.z} camContext={camContext} />)
+
             paintThese.push(<VerticeOuter key={a} id={a} parent={k} defaultStart={pos} camContext={camContext} />)
         })
+        //        setLines(temp)
     })
+
+    // lines.forEach((l) => {
+
+    // })
+
     return (
         <>
-            <Scene camContext={camContext} />
+            {/* <Scene camContext={camContext} /> */}
+            {temp}
             {paintThese}
         </>
     )
